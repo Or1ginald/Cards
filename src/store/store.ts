@@ -1,9 +1,10 @@
 import { combineReducers, createStore } from 'redux';
 
-import { cardReducer } from 'store';
+import { cardReducer, loginReducer } from 'store';
 
 export const rootReducer = combineReducers({
   cards: cardReducer,
+  login: loginReducer,
 });
 export const store = createStore(rootReducer);
 

@@ -9,15 +9,9 @@ const instance = axios.create({
 
 // api
 
-export type LoginParamsType = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-};
-
 export const authAPI = {
   login(params: LoginParamsType) {
-    return instance.post<any>('auth/login', params);
+    return instance.post<LoginParamsType>('auth/login', params);
   },
   logOut() {
     return instance.delete<any>('auth/login');
@@ -30,9 +24,14 @@ export const authAPI = {
   },
 };
 
+// types
+
+export type LoginParamsType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
 export type dataType = {
   email: string;
   password: string;
 };
-
-// types

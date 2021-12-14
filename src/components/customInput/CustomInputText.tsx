@@ -4,6 +4,7 @@ import React, {
   InputHTMLAttributes,
   KeyboardEvent,
 } from 'react';
+
 import s from './CustomInputText.module.css';
 
 // тип пропсов обычного инпута
