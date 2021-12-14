@@ -2,12 +2,13 @@ import { combineReducers, createStore } from 'redux';
 
 import { cardReducer } from 'store';
 
-const reducers = combineReducers({
+export const rootReducer = combineReducers({
   cards: cardReducer,
 });
-export const store = createStore(reducers);
+export const store = createStore(rootReducer);
 
-export type RootStoreType = ReturnType<typeof reducers>;
+export type RootStoreType = ReturnType<typeof rootReducer>;
 
 // @ts-ignore
+
 window.store = store;
