@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, NavLink } from 'react-router-dom';
 
 import { authAPI } from './api/api';
 import { ConfirmPassword } from './components/ConfirmPassword/ConfirmPassword';
@@ -23,8 +23,11 @@ const App = (): ReturnComponentType => {
       console.log(res.data);
     });
   }, []);
+
   return (
     <div>
+      <NavLink to="/createNewPassword/*"> create new password</NavLink>---
+      <NavLink to="/confirmPassword"> confirm password</NavLink>---
       <Routes>
         <Route
           path="/login"

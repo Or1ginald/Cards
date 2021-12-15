@@ -4,6 +4,7 @@ import React, {
   InputHTMLAttributes,
   KeyboardEvent,
 } from 'react';
+
 import s from './CustomInputText.module.css';
 
 // тип пропсов обычного инпута
@@ -64,7 +65,7 @@ export const CustomInputText: React.FC<SuperInputTextPropsType> = ({
   } ${className}`; // need to fix with (?:) and s.superInput
 
   return (
-    <>
+    <div>
       <input
         type="text"
         onChange={onChangeCallback}
@@ -73,6 +74,6 @@ export const CustomInputText: React.FC<SuperInputTextPropsType> = ({
         {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
       />
       {error && <span className={finalSpanClassName}>{error}</span>}
-    </>
+    </div>
   );
 };
