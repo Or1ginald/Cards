@@ -3,9 +3,10 @@ import React, { ChangeEvent, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
-import { ReturnComponentType } from '../../types';
 
 import style from './ConfirmPassword.module.css';
+
+import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [email, setEmail] = useState('');
