@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 import { Nullable } from '../types';
 
-/* import { instance } from './apiConfig'; */
+import { instance } from './apiConfig';
 
 export type AddNewPassType = {
   email: Nullable<string>;
@@ -15,12 +15,14 @@ export type SetNewPassType = {
   resetPasswordToken: Nullable<string>;
 };
 
+/*
 const baseUrl = process.env.REACT_APP_BASE_URL; // Достаем базовый юрл из .env(ссылка на хироку)
 
 export const instance = axios.create({
   baseURL: baseUrl,
   withCredentials: true,
 });
+*/
 
 export const addNewPassAPI = {
   addNewPass(params: AddNewPassType) {

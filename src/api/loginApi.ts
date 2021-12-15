@@ -1,13 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+
+import { instance } from './apiConfig';
 
 // api
-
-const baseUrl = process.env.REACT_APP_BASE_URL; // Достаем базовый юрл из .env(ссылка на хироку)
-
-export const instance = axios.create({
-  baseURL: baseUrl,
-  withCredentials: true,
-});
 
 export const authAPI = {
   login(params: LoginParamsType) {
