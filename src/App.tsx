@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
-import './App.css';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { authAPI } from './api/loginApi';
+import './App.css';
 import { ConfirmPassword, Login } from './components';
 import { CreateNewPassword } from './components/confirmPassword/CreateNewPassword';
 import { Popup } from './components/confirmPassword/Popup';
@@ -23,7 +23,7 @@ export const App = (): ReturnComponentType => {
     });
   }, []);
   return (
-    <div>
+    <div className="app">
       <NavLink to="/createNewPassword/*"> create new password</NavLink>---
       <NavLink to="/confirmPassword"> confirm password</NavLink>---
       <NavLink to="/login"> login </NavLink>---
@@ -62,30 +62,9 @@ export const App = (): ReturnComponentType => {
             </div>
           }
         />
-        <Route
-          path="/confirmPassword"
-          element={
-            <div>
-              <ConfirmPassword />
-            </div>
-          }
-        />
-        <Route
-          path="/popup"
-          element={
-            <div>
-              <Popup />
-            </div>
-          }
-        />
-        <Route
-          path="/createNewPassword/*"
-          element={
-            <div>
-              <CreateNewPassword />
-            </div>
-          }
-        />
+        <Route path="/confirmPassword" element={<ConfirmPassword />} />
+        <Route path="/popup" element={<Popup />} />
+        <Route path="/createNewPassword/*" element={<CreateNewPassword />} />
         <Route path="/" element={<Test />} />
       </Routes>
     </div>
