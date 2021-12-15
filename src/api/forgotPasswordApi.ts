@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const baseUrl = 'https://neko-back.herokuapp.com/2.0';
-
-const instance = axios.create({
-  baseURL: baseUrl,
-  withCredentials: true,
-});
+import { instance } from './apiConfig';
 
 export type addNewPassType = {
   email: string;

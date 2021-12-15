@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -7,12 +7,14 @@ import { addNewPassAPI, setNewPassType } from '../../api/forgotPasswordApi';
 import style from './ConfirmPassword.module.css';
 import { PopupError } from './Popup';
 
-export const CreateNewPassword = (): any => {
+import { ReturnComponentType } from 'types';
+
+export const CreateNewPassword = (): ReturnComponentType => {
   const [newPassword, setPassword] = useState('');
   const [isData, setData] = useState(false);
   const [isError, setError] = useState(false);
 
-  const onPasswordInputEnter = (e: any): any => {
+  const onPasswordInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.currentTarget.value);
   };
 

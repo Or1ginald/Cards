@@ -1,23 +1,18 @@
-import axios from 'axios';
+import { AxiosResponse } from 'axios';
 
-const baseUrl = process.env.REACT_APP_BASE_URL; // Достаем базовый юрл из .env(ссылка на хироку)
-
-const instance = axios.create({
-  baseURL: baseUrl /* "http://localhost:7542/2.0/" */,
-  withCredentials: true, // браузер разбирайся с куками сам
-});
+import { instance } from './apiConfig';
 
 // api
 
-export type LoginParamsType = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-};
-
 export const authAPI = {
   login(params: LoginParamsType) {
-    return instance.post<any>('auth/login', params);
+    return instance.post<
+      LoginParamsType,
+      AxiosResponse<{
+        /* 'сам объект сервераб который отправляет игнат' */
+        /* AxiosResponse нужен только у методов put и post */
+      }>
+    >('auth/login', params);
   },
   logOut() {
     return instance.delete<any>('auth/login');
@@ -30,9 +25,14 @@ export const authAPI = {
   },
 };
 
+// types
+
+export type LoginParamsType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
 export type dataType = {
   email: string;
   password: string;
 };
-
-// types
