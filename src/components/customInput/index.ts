@@ -1,1 +1,1 @@
-export { CustomInputText } from './CustomInputText';
+export { CustomInput } from './CustomInput';

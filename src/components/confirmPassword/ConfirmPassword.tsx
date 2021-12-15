@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { Link, Navigate } from 'react-router-dom';
 
-import { addNewPassAPI, addNewPassType } from '../../api/forgotPasswordApi';
+import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
 import { ReturnComponentType } from '../../types';
 
 import style from './ConfirmPassword.module.css';
@@ -12,7 +12,7 @@ export const ConfirmPassword = (): ReturnComponentType => {
   const [loading, setLoading] = useState(false);
   const [isShown, setShowMessage] = useState(false);
 
-  const dataPayload: addNewPassType = {
+  const dataPayload: AddNewPassType = {
     email,
     from: 'test-front-admin <samutic40@gmail.com>',
     message: `<div style='background-color: #ffd500; 
@@ -23,7 +23,7 @@ height: 30px'>
 password recovery link: <a href='http://localhost:3000/#/createNewPassword/$token$'> recovery link </a></div>`,
   };
 
-  const onSendButtonClick = (): any => {
+  const onSendButtonClick = (): void => {
     setEmail('');
     setLoading(true);
     addNewPassAPI
@@ -33,10 +33,10 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         setShowMessage(true);
       })
       .catch(error => {
-        console.log(error.data.message);
+        console.log(error.data);
       });
   };
-  const onEmailInputEnter = (e: any): any => {
+  const onEmailInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
   };
 
@@ -52,6 +52,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         <div className={style.content}>
           <span>it-incubator</span>
           <span>Forgot your password?</span>
+          {/* <CustomInput title="Email" /> */}
 
           <input
             className={style.inputEmail}

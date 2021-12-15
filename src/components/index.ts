@@ -1,4 +1,6 @@
 export { CustomButton } from './customButton';
 export { CustomCheckbox } from './customCheckBox';
-export { CustomInputText } from './customInput';
-export { Login } from './login-page';
+export { CustomInput } from './customInput';
+export { Login } from './loginPage';
+export { ConfirmPassword } from './confirmPassword';
+export { CreateNewPassword } from './confirmPassword';

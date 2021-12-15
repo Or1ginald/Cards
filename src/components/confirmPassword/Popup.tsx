@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 
 import errorSign from '../../assets/error.png';
 import letter from '../../assets/letter.png';
+import { ReturnComponentType } from '../../types';
 
 import style from './ConfirmPassword.module.css';
 
-export const Popup = (): any => (
+export const Popup = (): ReturnComponentType => (
   <div>
     <div className={style.mainContainer}>
       <div className={style.content}>
@@ -22,7 +23,12 @@ export const Popup = (): any => (
   </div>
 );
 
-export const PopupError = ({ error, setError }: any): any => (
+type PopupErrorType = {
+  error: boolean;
+  setError: (error: boolean) => void;
+};
+
+export const PopupError = ({ error, setError }: PopupErrorType): ReturnComponentType => (
   <div>
     <div className={style.mainContainer}>
       <div className={style.content}>

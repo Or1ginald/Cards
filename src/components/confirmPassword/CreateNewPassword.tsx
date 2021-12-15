@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { addNewPassAPI, setNewPassType } from '../../api/forgotPasswordApi';
+import { addNewPassAPI, SetNewPassType } from '../../api/forgotPasswordApi';
 
 import style from './ConfirmPassword.module.css';
 import { PopupError } from './Popup';
@@ -23,12 +23,12 @@ export const CreateNewPassword = (): ReturnComponentType => {
   const token =
     location.pathname.split('/')[location.pathname.split('/').length - lastElement];
 
-  const data: setNewPassType = {
+  const data: SetNewPassType = {
     password: newPassword,
     resetPasswordToken: token,
   };
 
-  const onCreateButtonClick = (): any => {
+  const onCreateButtonClick = (): void => {
     addNewPassAPI
       .setNewPass(data)
       .then(() => {

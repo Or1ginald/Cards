@@ -9,7 +9,7 @@ export const authAPI = {
     return instance.post<
       LoginParamsType,
       AxiosResponse<{
-        /* 'сам объект сервераб который отправляет игнат' */
+        /* 'сам объект сервера который отправляет игнат' */
         /* AxiosResponse нужен только у методов put и post */
       }>
     >('auth/login', params);
@@ -20,7 +20,7 @@ export const authAPI = {
   me() {
     return instance.post<any>('auth/me');
   },
-  register(data: dataType) {
+  register(data: DataType) {
     return instance.post<any>('auth/register', data);
   },
 };
@@ -32,7 +32,7 @@ export type LoginParamsType = {
   password: string;
   rememberMe: boolean;
 };
-export type dataType = {
+export type DataType = {
   email: string;
   password: string;
 };

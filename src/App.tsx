@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
 
 import './App.css';
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
-import { authAPI } from './api/api';
-import { ConfirmPassword } from './components/ConfirmPassword/ConfirmPassword';
-import { CreateNewPassword } from './components/ConfirmPassword/CreateNewPassword';
+import { authAPI } from './api/loginApi';
+import { ConfirmPassword, Login } from './components';
+import { CreateNewPassword } from './components/confirmPassword/CreateNewPassword';
+import { Popup } from './components/confirmPassword/Popup';
 import Test from './components/Test';
 import { ReturnComponentType } from './types';
 
-import { Popup } from 'components/ConfirmPassword/Popup';
-
-const App = (): ReturnComponentType => {
+export const App = (): ReturnComponentType => {
   useEffect(() => {
     authAPI
-      .login({ email: 'samutic40@gmail.com', password: '123456789', rememberMe: false })
+      .register({ email: 'samutic40@gmail.com', password: '123456789' })
       .then(res => {
         console.log(res.data);
       });
@@ -23,17 +22,19 @@ const App = (): ReturnComponentType => {
       console.log(res.data);
     });
   }, []);
-
   return (
     <div>
       <NavLink to="/createNewPassword/*"> create new password</NavLink>---
       <NavLink to="/confirmPassword"> confirm password</NavLink>---
+      <NavLink to="/login"> login </NavLink>---
+      <NavLink to="/registration"> registration </NavLink>---
+      <NavLink to="/profile"> profile </NavLink>---
       <Routes>
         <Route
           path="/login"
           element={
             <div>
-              <h1>login</h1>
+              <Login />
             </div>
           }
         />
@@ -90,5 +91,3 @@ const App = (): ReturnComponentType => {
     </div>
   );
 };
-
-export default App;
