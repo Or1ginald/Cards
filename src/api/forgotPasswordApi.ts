@@ -15,15 +15,6 @@ export type SetNewPassType = {
   resetPasswordToken: Nullable<string>;
 };
 
-/*
-const baseUrl = process.env.REACT_APP_BASE_URL; // Достаем базовый юрл из .env(ссылка на хироку)
-
-export const instance = axios.create({
-  baseURL: baseUrl,
-  withCredentials: true,
-});
-*/
-
 export const addNewPassAPI = {
   addNewPass(params: AddNewPassType) {
     return instance.post<AddNewPassType, AxiosResponse<any>>('auth/forgot', params);
