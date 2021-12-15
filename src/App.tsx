@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 
-import './App.css';
 import { Route, Routes } from 'react-router-dom';
 
 import { authAPI } from './api/api';
-import { ConfirmPassword } from './components/ConfirmPassword/ConfirmPassword';
-import { CreateNewPassword } from './components/ConfirmPassword/CreateNewPassword';
+import s from './App.module.css';
+import { Login } from './components';
+import { ConfirmPassword } from './components/confirmPassword/ConfirmPassword';
+import { CreateNewPassword } from './components/confirmPassword/CreateNewPassword';
 import Test from './components/Test';
 import { ReturnComponentType } from './types';
 
-import { Popup } from 'components/ConfirmPassword/Popup';
+import { Popup } from 'components/confirmPassword/Popup';
 
 const App = (): ReturnComponentType => {
   useEffect(() => {
@@ -24,64 +25,15 @@ const App = (): ReturnComponentType => {
     });
   }, []);
   return (
-    <div>
+    <div className={s.app}>
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <div>
-              <h1>login</h1>
-            </div>
-          }
-        />
-        <Route
-          path="/registration"
-          element={
-            <div>
-              <h1>registration</h1>
-            </div>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <div>
-              <h1>profile</h1>
-            </div>
-          }
-        />
-        <Route
-          path={'/*'}
-          element={
-            <div style={{ textAlign: 'center' }}>
-              <h1>404:page NOT found</h1>
-            </div>
-          }
-        />
-        <Route
-          path="/confirmPassword"
-          element={
-            <div>
-              <ConfirmPassword />
-            </div>
-          }
-        />
-        <Route
-          path="/popup"
-          element={
-            <div>
-              <Popup />
-            </div>
-          }
-        />
-        <Route
-          path="/createNewPassword/*"
-          element={
-            <div>
-              <CreateNewPassword />
-            </div>
-          }
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<h1>registration</h1>} />
+        <Route path="/profile" element={<h1>profile</h1>} />
+        <Route path={'/*'} element={<h1>404:page NOT found</h1>} />
+        <Route path="/confirmPassword" element={<ConfirmPassword />} />
+        <Route path="/popup" element={<Popup />} />
+        <Route path="/createNewPassword/*" element={<CreateNewPassword />} />
         <Route path="/" element={<Test />} />
       </Routes>
     </div>
