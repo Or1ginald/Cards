@@ -31,6 +31,7 @@ export const Login: React.FC<LoginPagePropsType> = () => {
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
+        <h1> LOGIN </h1>
         <input
           type="text"
           onChange={onChangeEmail}
@@ -47,6 +48,9 @@ export const Login: React.FC<LoginPagePropsType> = () => {
           className={style.inputEmail}
         />
 
+        <div>
+          <Link to="/confirmPassword"> forgot password </Link>
+        </div>
         <button onClick={onClickHandlerSignIn} className={style.btn}>
           Sign In
         </button>
