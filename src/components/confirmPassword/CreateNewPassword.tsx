@@ -1,22 +1,22 @@
 import React, { ChangeEvent, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { addNewPassAPI, SetNewPassType } from '../../api/forgotPasswordApi';
-import style from '../../style/Common.module.css';
+import { SetNewPassType } from '../../api/forgotPasswordApi';
+import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
 
-import { PopupError } from './Popup';
+import style from './ConfirmPassword.module.css';
+import { PopupError } from './PopupError';
 
 import { ReturnComponentType } from 'types';
 
 export const CreateNewPassword = (): ReturnComponentType => {
   const [newPassword, setPassword] = useState('');
-  const [isData, setData] = useState(false);
+  const [isLoadedData, setLoadedData] = useState(false);
   const [isError, setError] = useState(false);
 
-  const onPasswordInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.currentTarget.value);
-  };
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const lastElement = 1;
@@ -27,21 +27,18 @@ export const CreateNewPassword = (): ReturnComponentType => {
     password: newPassword,
     resetPasswordToken: token,
   };
-
-  const onCreateButtonClick = (): void => {
-    addNewPassAPI
-      .setNewPass(data)
-      .then(() => {
-        setData(true);
-      })
-      .catch(() => {
-        setError(true);
-      });
+  const onPasswordInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
+    setPassword(e.currentTarget.value);
   };
 
-  if (isData) {
+  const onCreateButtonClick = (): void => {
+    dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
+  };
+
+  if (isLoadedData) {
     return <Navigate to="/login" />;
   }
+  console.log();
 
   return (
     <div className={style.mainContainer}>
@@ -49,8 +46,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
         <PopupError error={isError} setError={setError} />
       ) : (
         <div className={style.content}>
-          <span>it-incubator</span>
-          <span>Create new password</span>
+          <h2>Create new password</h2>
           <input
             className={style.inputPassword}
             type="password"

@@ -5,15 +5,17 @@ import { Link, Navigate } from 'react-router-dom';
 
 import { LoginParamsType } from '../../api/loginApi';
 import { RootStoreType, logIn } from '../../store';
-import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
+import style from '../confirmPassword/ConfirmPassword.module.css';
+
+import st from './Login.module.css';
 
 export const Login = (): ReturnComponentType => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
+  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.verified);
   const errorMessage = useSelector<RootStoreType>(state => state.login.error);
   const data = { email, password, rememberMe: true };
 
@@ -39,13 +41,13 @@ export const Login = (): ReturnComponentType => {
   };
 
   if (isDataLoaded) {
-    return <Navigate to="profile" />;
+    return <Navigate to="/profile" />;
   }
 
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
-        <h3> LOGIN </h3>
+        <h2> Login </h2>
         {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
         <input
           type="text"
@@ -61,17 +63,17 @@ export const Login = (): ReturnComponentType => {
           placeholder="Password"
           className={style.inputEmail}
         />
-        <div>
-          remember me
+        <div className={st.rememberMeInput}>
+          <p>remember me</p>
           <input type="checkbox" checked={rememberMe} onChange={onChangeCheckBox} />
         </div>
         <div>
-          <Link to="/confirmPassword"> forgot password </Link>
+          <Link to="/confirmPassword"> Forgot password </Link>
         </div>
         <button onClick={onClickHandlerSignIn} className={style.btn}>
           Sign In
         </button>
-        <span> Don`t have an account? </span>
+        <p> Do not have an account? </p>
         <Link to="/registration"> Sign Up </Link>
       </div>
     </div>

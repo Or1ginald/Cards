@@ -1,9 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
-import style from '../../style/Common.module.css';
+import { AddNewPassType } from '../../api/forgotPasswordApi';
+import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
+
+import style from './ConfirmPassword.module.css';
 
 import { ReturnComponentType } from 'types';
 
@@ -11,6 +14,8 @@ export const ConfirmPassword = (): ReturnComponentType => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [isShown, setShowMessage] = useState(false);
+
+  const dispatch = useDispatch();
 
   const dataPayload: AddNewPassType = {
     email,
@@ -26,15 +31,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
   const onSendButtonClick = (): void => {
     setEmail('');
     setLoading(true);
-    addNewPassAPI
-      .addNewPass(dataPayload)
-      .then(() => {
-        setLoading(false);
-        setShowMessage(true);
-      })
-      .catch(error => {
-        console.log(error.data);
-      });
+    dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
   };
   const onEmailInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
@@ -50,8 +47,8 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         <div>Sending...</div>
       ) : (
         <div className={style.content}>
-          <span>it-incubator</span>
-          <span>Forgot your password?</span>
+          <h2>Forgot your password?</h2>
+          {/* <CustomInput title="Email" /> */}
 
           <input
             className={style.inputEmail}
@@ -61,6 +58,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
             onChange={onEmailInputEnter}
             required
           />
+
           <p> Enter your email and we will send you further instructions</p>
           <div>
             <button className={style.btn} onClick={onSendButtonClick}>

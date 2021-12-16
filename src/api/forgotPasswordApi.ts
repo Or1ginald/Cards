@@ -15,12 +15,20 @@ export type SetNewPassType = {
   resetPasswordToken: Nullable<string>;
 };
 
+export type AddNewPassResponseType = {
+  info: Nullable<string>;
+  error: Nullable<string>;
+};
+
 export const addNewPassAPI = {
   addNewPass(params: AddNewPassType) {
-    return instance.post<AddNewPassType, AxiosResponse<any>>('auth/forgot', params);
+    return instance.post<AddNewPassType, AxiosResponse<AddNewPassResponseType>>(
+      'auth/forgot',
+      params,
+    );
   },
   setNewPass(params: SetNewPassType) {
-    return instance.post<SetNewPassType, AxiosResponse<any>>(
+    return instance.post<SetNewPassType, AxiosResponse<AddNewPassResponseType>>(
       'auth/set-new-password',
       params,
     );

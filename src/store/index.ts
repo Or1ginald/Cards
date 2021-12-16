@@ -1,3 +1,3 @@
 export { cardReducer } from './reducers';
 export type { RootStoreType } from './store';
-export { loginReducer, logIn, logOut } from './reducers';
+export { loginReducer, logIn, logOutTC } from './reducers';

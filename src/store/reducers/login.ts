@@ -12,6 +12,7 @@ export type InitialStateDataType = {
   password: Nullable<string>;
   rememberMe: boolean;
   isAuth: boolean;
+  verified: boolean;
   error?: Nullable<string>;
 };
 
@@ -23,6 +24,7 @@ const initialState: InitialStateDataType = {
   password: null,
   rememberMe: false,
   isAuth: false,
+  verified: false,
   error: null,
 };
 
@@ -55,17 +57,20 @@ export const setLoginData = (
   email: Nullable<string>,
   password: Nullable<string>,
   rememberMe: boolean,
-  isAuth: boolean,
 ) =>
   ({
     type: 'SET_LOGIN_DATA',
-    payload: { email, password, rememberMe, isAuth },
+    payload: { email, password, rememberMe },
   } as const);
 
-export const setUserData = (_id: Nullable<string>, name: Nullable<string>) =>
+export const setUserData = (
+  _id: Nullable<string>,
+  name: Nullable<string>,
+  verified: boolean,
+) =>
   ({
     type: 'SET_USER_DATA',
-    payload: { _id, name },
+    payload: { _id, name, verified },
   } as const);
 
 export const setErrorMessage = (error: Nullable<string>) =>
@@ -88,8 +93,8 @@ export const logIn =
     authAPI
       .login(data)
       .then(response => {
-        const { _id, name } = response.data;
-        dispatch(setUserData(_id, name));
+        const { _id, name, verified } = response.data;
+        dispatch(setUserData(_id, name, verified));
       })
       .catch(e => {
         const error = e.response
@@ -99,10 +104,10 @@ export const logIn =
       });
   };
 
-export const logOut =
+export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
     authAPI.logOut().then(() => {
-      dispatch(setLoginData(null, null, false, false));
+      dispatch(setLoginData(null, null, false));
     });
   };
 

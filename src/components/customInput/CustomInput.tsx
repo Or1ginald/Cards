@@ -13,7 +13,7 @@ export const CustomInput: FC<CustomInputType> = memo(({ title }): ReturnComponen
     <div>
       <input
         type="text"
-        value={inputValue}
+        value={inputValue.value}
         onChange={onInputValueChange}
         placeholder={title}
       />

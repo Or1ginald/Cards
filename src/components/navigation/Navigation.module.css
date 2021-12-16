@@ -1,0 +1,31 @@
+.nav {
+    display: flex;
+    width: 300px;
+    position: absolute;
+    flex-direction: column;
+    margin: 20px;
+    height: 200px;
+    justify-content: space-between;
+}
+
+.navElement {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 16px;
+    color: lightgrey;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: yellowgreen;
+}
+
+.p{
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 20px;
+    color: yellowgreen;
+}
+li{
+    color: yellowgreen;
+
+}
