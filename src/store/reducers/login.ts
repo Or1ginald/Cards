@@ -9,7 +9,6 @@ export type InitialStateDataType = {
   avatar?: Nullable<string>;
   name: Nullable<string>;
   email: Nullable<string>;
-  password: Nullable<string>;
   rememberMe: boolean;
   isAuth: boolean;
   verified: boolean;
@@ -21,7 +20,6 @@ const initialState: InitialStateDataType = {
   avatar: null,
   name: null,
   email: null,
-  password: null,
   rememberMe: false,
   isAuth: false,
   verified: false,
@@ -33,7 +31,7 @@ export const loginReducer = (
   action: ActionTypes,
 ): InitialStateDataType => {
   switch (action.type) {
-    case 'SET_LOGIN_DATA':
+    case 'LOGIN/SET_AUTH_LOGIN_DATA':
       return {
         ...state,
         ...action.payload,
@@ -53,14 +51,14 @@ export const loginReducer = (
   }
 };
 
-export const setLoginData = (
+export const setAuthLoginData = (
   email: Nullable<string>,
-  password: Nullable<string>,
   rememberMe: boolean,
+  isAuth: boolean,
 ) =>
   ({
-    type: 'SET_LOGIN_DATA',
-    payload: { email, password, rememberMe },
+    type: 'LOGIN/SET_AUTH_LOGIN_DATA',
+    payload: { email, rememberMe, isAuth },
   } as const);
 
 export const setUserData = (
@@ -93,8 +91,8 @@ export const logIn =
     authAPI
       .login(data)
       .then(response => {
-        const { _id, name, verified } = response.data;
-        dispatch(setUserData(_id, name, verified));
+        const { email, rememberMe } = response.data;
+        dispatch(setAuthLoginData(email, rememberMe, true));
       })
       .catch(e => {
         const error = e.response
@@ -104,15 +102,24 @@ export const logIn =
       });
   };
 
+// export const getUserData = () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+//   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+//     authAPI.logOut().then(() => {
+//       const { _id, name, verified } = response.data;
+//       dispatch(setUserData(_id, name, verified));
+//     }
+//     });
+// }
+
 export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
     authAPI.logOut().then(() => {
-      dispatch(setLoginData(null, null, false));
+      dispatch(setAuthLoginData(null, false, false));
     });
   };
 
 // type;
-type setAuthLoginData = ReturnType<typeof setLoginData>;
+type setLoginData = ReturnType<typeof setAuthLoginData>;
 type setAuthUserData = ReturnType<typeof setUserData>;
 type setErrorMessageLogin = ReturnType<typeof setErrorMessage>;
-type ActionTypes = setAuthLoginData | setAuthUserData | setErrorMessageLogin;
+type ActionTypes = setLoginData | setAuthUserData | setErrorMessageLogin;
