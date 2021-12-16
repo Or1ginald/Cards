@@ -42,6 +42,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   return (
     <div className={style.mainContainer}>
+      {/* {!isLoadedData ? <Preloader /> : null} */}
       {isError ? (
         <PopupError error={isError} setError={setError} />
       ) : (

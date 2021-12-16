@@ -6,6 +6,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { AddNewPassType } from '../../api/forgotPasswordApi';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import style from '../../style/Common.module.css';
+import { Preloader } from '../preloader/Preloader';
 
 import { ReturnComponentType } from 'types';
 
@@ -43,7 +44,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
   return (
     <div className={style.mainContainer}>
       {loading ? (
-        <div>Sending...</div>
+        <Preloader />
       ) : (
         <div className={style.content}>
           <h2>Forgot your password?</h2>
