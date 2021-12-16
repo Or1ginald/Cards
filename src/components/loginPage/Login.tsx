@@ -13,7 +13,7 @@ export const Login = (): ReturnComponentType => {
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.verified);
+  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
   const errorMessage = useSelector<RootStoreType>(state => state.login.error);
   const data = { email, password, rememberMe: true };
 
@@ -39,7 +39,7 @@ export const Login = (): ReturnComponentType => {
   };
 
   if (isDataLoaded) {
-    return <Navigate to="/profile" />;
+    return <Navigate to="profile" />;
   }
 
   return (

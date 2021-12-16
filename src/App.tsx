@@ -11,6 +11,10 @@ import { ReturnComponentType } from './types';
 import { CreateNewPassword, Popup } from 'components';
 import { Test } from 'components/Test';
 
+// const PATH = {
+//   LOGIN: '/login',
+//   PROFILE: '/profile',
+// };
 export const App = (): ReturnComponentType => (
   <div className={s.app}>
     <Navigation />
