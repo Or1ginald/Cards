@@ -1,12 +1,5 @@
-.content {
-    display: flex;
-    width:150px;
-    justify-content: space-between;
-}
-
 .rememberMeInput {
     display: flex;
     justify-content: flex-end;
     width: 200px;
-
 }

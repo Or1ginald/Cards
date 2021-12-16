@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
 import { LoginParamsType } from '../../api/loginApi';
-import { RootStoreType, logIn } from '../../store';
+import { RootStoreType, logInTC } from '../../store';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
@@ -15,7 +15,7 @@ export const Login = (): ReturnComponentType => {
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.verified);
+  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
   const errorMessage = useSelector<RootStoreType>(state => state.login.error);
   const data = { email, password, rememberMe: true };
 
@@ -28,7 +28,7 @@ export const Login = (): ReturnComponentType => {
 
   const authLogin = useCallback(
     (dataItem: LoginParamsType): any => {
-      dispatch(logIn(dataItem));
+      dispatch(logInTC(dataItem));
     },
     [dispatch],
   );
