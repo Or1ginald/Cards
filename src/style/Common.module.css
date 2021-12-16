@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
 .mainContainer {
     display: flex;
     justify-content: center;
@@ -14,9 +15,12 @@
     height: 500px;
     align-items: center;
     text-align: center;
-    border: 2px solid white;
+    /* border: 2px solid white;*/
     background-color: #dccf84;
     border-radius: 10px;
+    border: solid 2px #424242;
+    box-shadow: 0 0 37px 0 rgba(255, 255, 255, 0.49);
+
 
 }
 
@@ -37,7 +41,7 @@ p {
     font-size: 12px;
 }
 
-a{
+a {
     text-decoration: none;
 }
 

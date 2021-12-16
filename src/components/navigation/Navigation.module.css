@@ -4,11 +4,12 @@
     flex-direction: column;
     height: 250px;
     justify-content: space-between;
-    border: 2px solid white;
     background-color: #dccf84;
     border-radius: 10px;
     margin-left: 20px;
     margin-top: 30px;
+    border: solid 2px #424242;
+    box-shadow: 0 0 37px 0 rgba(255, 255, 255, 0.49);
 }
 
 .navElement {
