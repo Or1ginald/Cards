@@ -4,12 +4,33 @@ import { NavLink } from 'react-router-dom';
 
 import { ReturnComponentType } from '../../types';
 
+import style from './Navigation.module.css';
+
 export const Navigation = (): ReturnComponentType => (
-  <div>
-    <NavLink to="/login"> login </NavLink>---
-    <NavLink to="/registration"> registration </NavLink>---
-    <NavLink to="/profile"> profile </NavLink>---
-    <NavLink to="/createNewPassword/*"> create new password</NavLink>---
-    <NavLink to="/confirmPassword"> confirm password</NavLink>---
+  <div className={style.nav}>
+    <NavLink className={style.navElement} to="/login">
+      {' '}
+      login{' '}
+    </NavLink>
+
+    <NavLink className={style.navElement} to="/registration">
+      {' '}
+      registration{' '}
+    </NavLink>
+
+    <NavLink className={style.navElement} to="/profile">
+      {' '}
+      profile{' '}
+    </NavLink>
+
+    <NavLink className={style.navElement} to="/createNewPassword/*">
+      {' '}
+      create new password
+    </NavLink>
+
+    <NavLink className={style.navElement} to="/confirmPassword">
+      {' '}
+      confirm password
+    </NavLink>
   </div>
 );

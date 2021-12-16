@@ -12,13 +12,13 @@ export const authAPI = {
     >('auth/login', params);
   },
   logOut() {
-    return instance.delete<ResponseType>('auth/login');
+    return instance.delete<ResponseType>('auth/login', {});
   },
   me() {
     return instance.post<any>('auth/me');
   },
-  register(data: DataType) {
-    return instance.post<any>('auth/register', data);
+  register(params: RegisterParamsType) {
+    return instance.post<RegisterParamsType, any>('auth/register', params);
   },
 };
 
@@ -29,7 +29,7 @@ export type LoginParamsType = {
   password: string;
   rememberMe: boolean;
 };
-export type DataType = {
+export type RegisterParamsType = {
   email: string;
   password: string;
 };
