@@ -60,6 +60,7 @@ export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
+      dispatch(setErrorMessageAC(''));
     });
   };
 

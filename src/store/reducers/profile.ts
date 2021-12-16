@@ -36,14 +36,10 @@ export const profileReducer = (
   }
 };
 
-export const setUserData = (
-  _id: Nullable<string>,
-  name: Nullable<string>,
-  verified: boolean,
-) =>
+export const setUserData = (_id: Nullable<string>, name: Nullable<string>) =>
   ({
     type: 'SET_USER_DATA',
-    payload: { _id, name, verified },
+    payload: { _id, name },
   } as const);
 
 export const setErrorMessage = (error: Nullable<string>) =>
@@ -76,7 +72,7 @@ export const setErrorMessage = (error: Nullable<string>) =>
 //           dispatch(setErrorMessage(error));
 //         });
 //     };
-
+//
 // export const getUserData = () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
 //   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
 //     authAPI.logOut().then(() => {
