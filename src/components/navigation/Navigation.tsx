@@ -8,7 +8,7 @@ import style from './Navigation.module.css';
 
 export const Navigation = (): ReturnComponentType => (
   <div className={style.nav}>
-    <h2>Menu</h2>
+    <h3 className={style.menu}>Menu</h3>
     <ul>
       <li>
         <NavLink className={style.navElement} to="/login">
