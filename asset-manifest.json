@@ -1,24 +1,25 @@
 {
   "files": {
-    "main.css": "/gameCards/static/css/main.df46c143.chunk.css",
-    "main.js": "/gameCards/static/js/main.4654a18f.chunk.js",
-    "main.js.map": "/gameCards/static/js/main.4654a18f.chunk.js.map",
-    "runtime-main.js": "/gameCards/static/js/runtime-main.0534e6a6.js",
-    "runtime-main.js.map": "/gameCards/static/js/runtime-main.0534e6a6.js.map",
-    "static/js/2.e8ec8955.chunk.js": "/gameCards/static/js/2.e8ec8955.chunk.js",
-    "static/js/2.e8ec8955.chunk.js.map": "/gameCards/static/js/2.e8ec8955.chunk.js.map",
-    "static/js/3.f09ef5be.chunk.js": "/gameCards/static/js/3.f09ef5be.chunk.js",
-    "static/js/3.f09ef5be.chunk.js.map": "/gameCards/static/js/3.f09ef5be.chunk.js.map",
+    "main.css": "/gameCards/static/css/main.aaba6280.chunk.css",
+    "main.js": "/gameCards/static/js/main.ce24a7a8.chunk.js",
+    "main.js.map": "/gameCards/static/js/main.ce24a7a8.chunk.js.map",
+    "runtime-main.js": "/gameCards/static/js/runtime-main.e1d4ce59.js",
+    "runtime-main.js.map": "/gameCards/static/js/runtime-main.e1d4ce59.js.map",
+    "static/js/2.277ff82c.chunk.js": "/gameCards/static/js/2.277ff82c.chunk.js",
+    "static/js/2.277ff82c.chunk.js.map": "/gameCards/static/js/2.277ff82c.chunk.js.map",
+    "static/js/3.4a3c83cd.chunk.js": "/gameCards/static/js/3.4a3c83cd.chunk.js",
+    "static/js/3.4a3c83cd.chunk.js.map": "/gameCards/static/js/3.4a3c83cd.chunk.js.map",
     "index.html": "/gameCards/index.html",
-    "static/css/main.df46c143.chunk.css.map": "/gameCards/static/css/main.df46c143.chunk.css.map",
-    "static/js/2.e8ec8955.chunk.js.LICENSE.txt": "/gameCards/static/js/2.e8ec8955.chunk.js.LICENSE.txt",
+    "static/css/main.aaba6280.chunk.css.map": "/gameCards/static/css/main.aaba6280.chunk.css.map",
+    "static/js/2.277ff82c.chunk.js.LICENSE.txt": "/gameCards/static/js/2.277ff82c.chunk.js.LICENSE.txt",
     "static/media/error.6b88fd10.png": "/gameCards/static/media/error.6b88fd10.png",
-    "static/media/letter.3761fe05.png": "/gameCards/static/media/letter.3761fe05.png"
+    "static/media/letter.3761fe05.png": "/gameCards/static/media/letter.3761fe05.png",
+    "static/media/App.module.css": "/gameCards/static/media/science.0d520537.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0534e6a6.js",
-    "static/js/2.e8ec8955.chunk.js",
-    "static/css/main.df46c143.chunk.css",
-    "static/js/main.4654a18f.chunk.js"
+    "static/js/runtime-main.e1d4ce59.js",
+    "static/js/2.277ff82c.chunk.js",
+    "static/css/main.aaba6280.chunk.css",
+    "static/js/main.ce24a7a8.chunk.js"
   ]
 }
