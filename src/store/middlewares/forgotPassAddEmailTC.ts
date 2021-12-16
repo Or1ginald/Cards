@@ -8,7 +8,7 @@ export const forgotPassAddEmailTC =
         setLoading(false);
         setShowMessage(true);
       })
-      .catch(error => {
-        console.log(error.data);
-      });
+      .catch(e =>
+        e.response ? e.response.data.error : `${e.message}, more details in the console`,
+      );
   };

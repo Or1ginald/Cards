@@ -6,7 +6,7 @@ import s from './App.module.css';
 import { ConfirmPassword, Login } from './components';
 import { Navigation } from './components/navigation/Navigation';
 import { Profile } from './components/profile/Profile';
-import Registrations from './components/registrations/Registrations';
+import { Registrations } from './components/registrations/Registrations';
 import { ReturnComponentType } from './types';
 
 import { CreateNewPassword, Popup } from 'components';

@@ -1,46 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { Navigate } from 'react-router-dom';
+
+import { authAPI } from '../../api/loginApi';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
 import st from './Registrations.module.css';
 
-const Registrations = (): ReturnComponentType => (
-  <div className={style.mainContainer}>
-    <div className={style.content}>
-      <h2>Registration</h2>
-      <input
-        className={style.inputPassword}
-        type="Email"
-        placeholder="Email"
-        /* value={email}
-              onChange={onEmailInputEnter} */
-        required
-      />
-      <input
-        className={style.inputPassword}
-        type="Password"
-        placeholder="Password"
-        /* value={password}
-             onChange={onPasswordInputEnter} */
-        required
-      />
-      <input
-        className={style.inputPassword}
-        type="Password"
-        placeholder="Confirm Password"
-        /*  value={passwordAgain}
-             onChange={onPasswordAgainInputEnter} */
-        required
-      />
+export const Registrations = (): ReturnComponentType => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoadedData, setLoadedData] = useState<boolean>(false);
 
-      <p> Have fun! </p>
-      <div className={st.btns}>
-        <button className={style.btn}>cancel</button>
-        <button className={style.btn}>send</button>
+  const onEmailInputEnter = (e: any): void => {
+    setEmail(e.currentTarget.value);
+  };
+
+  const onPasswordInputEnter = (e: any): void => {
+    setPassword(e.currentTarget.value);
+  };
+  const onPasswordAgainInputEnter = (e: any): void => {
+    setConfirmPassword(e.currentTarget.value);
+  };
+
+  const data: any = {
+    email,
+    password,
+  };
+
+  const onSendButtonCLick = (): void => {
+    if (password === confirmPassword) {
+      authAPI.register(data).then(() => {
+        setLoadedData(true);
+      });
+    }
+  };
+  if (isLoadedData) {
+    return <Navigate to="/login" />;
+  }
+  return (
+    <div className={style.mainContainer}>
+      <div className={style.content}>
+        <h2>Registration</h2>
+        <input
+          className={style.inputPassword}
+          type="Email"
+          placeholder="Email"
+          value={email}
+          onChange={onEmailInputEnter}
+          required
+        />
+        <input
+          className={style.inputPassword}
+          type="Password"
+          placeholder="Password"
+          value={password}
+          onChange={onPasswordInputEnter}
+          required
+        />
+        <input
+          className={style.inputPassword}
+          type="Password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={onPasswordAgainInputEnter}
+          required
+        />
+
+        <p> Have fun! </p>
+        <div className={st.btns}>
+          <button className={style.btn}>cancel</button>
+          <button className={style.btn} onClick={onSendButtonCLick}>
+            send
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-export default Registrations;
+  );
+};
