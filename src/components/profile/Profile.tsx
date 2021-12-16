@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 import { RootStoreType } from '../../store';
 import { logOutTC } from '../../store/reducers/login';
+import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
 export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
@@ -15,16 +16,18 @@ export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
     dispatch(logOutTC());
   };
   return (
-    <div>
-      <h2> Profile </h2>
-      <span>{userName}</span>
-      {isAuthUser ? (
-        <div>
-          <button onClick={onClickLogOut}>LOG OUT</button>
-        </div>
-      ) : (
-        <NavLink to="/login">Login</NavLink>
-      )}
+    <div className={style.mainContainer}>
+      <div className={style.content}>
+        <h2> Profile </h2>
+        <span>{userName}</span>
+        {isAuthUser ? (
+          <div>
+            <button onClick={onClickLogOut}>LOG OUT</button>
+          </div>
+        ) : (
+          <NavLink to="/login">Login</NavLink>
+        )}
+      </div>
     </div>
   );
 };

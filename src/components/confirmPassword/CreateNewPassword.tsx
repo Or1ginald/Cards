@@ -5,8 +5,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 import { SetNewPassType } from '../../api/forgotPasswordApi';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
+import style from '../../style/Common.module.css';
 
-import style from './ConfirmPassword.module.css';
 import { PopupError } from './PopupError';
 
 import { ReturnComponentType } from 'types';
