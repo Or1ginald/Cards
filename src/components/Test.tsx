@@ -1,9 +1,13 @@
 import React from 'react';
 
+import style from '../style/Common.module.css';
+
 import { ReturnComponentType } from 'types';
 
 export const Test = (): ReturnComponentType => (
-  <div style={{ textAlign: 'center', width: '700px', margin: '50px' }}>
-    <p> Test page </p>
+  <div className={style.mainContainer}>
+    <div className={style.container}>
+      <p style={{ color: 'white' }}> Test page </p>
+    </div>
   </div>
 );
