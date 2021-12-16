@@ -24,7 +24,9 @@ export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
         <h2> Profile </h2>
         {isAuthUser ? (
           <div>
-            <button onClick={onClickLogOut}>LOG OUT</button>
+            <button className={style.btn} onClick={onClickLogOut}>
+              Log out
+            </button>
           </div>
         ) : (
           <NavLink to="/login">Login</NavLink>
