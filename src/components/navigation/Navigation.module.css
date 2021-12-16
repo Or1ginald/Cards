@@ -4,28 +4,32 @@
     position: absolute;
     flex-direction: column;
     margin: 20px;
-    height: 200px;
+    height: 250px;
     justify-content: space-between;
+    border: 2px solid white;
+    background-color: #dccf84;
+    border-radius: 10px;
 }
 
 .navElement {
     font-family: 'Mochiy Pop P One', sans-serif;
     font-size: 16px;
-    color: lightgrey;
+    color: #4d594d;
     text-decoration: none;
     cursor: pointer;
 }
-
-a:hover {
-    color: yellowgreen;
+.menu {
+    margin-left: 120px;
 }
 
-.p{
+
+.p {
     font-family: 'Mochiy Pop P One', sans-serif;
     font-size: 20px;
     color: yellowgreen;
 }
-li{
-    color: yellowgreen;
+
+li {
+    color: black;
 
 }

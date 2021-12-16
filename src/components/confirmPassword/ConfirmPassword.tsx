@@ -5,8 +5,7 @@ import { Link, Navigate } from 'react-router-dom';
 
 import { AddNewPassType } from '../../api/forgotPasswordApi';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
-
-import style from './ConfirmPassword.module.css';
+import style from '../../style/Common.module.css';
 
 import { ReturnComponentType } from 'types';
 

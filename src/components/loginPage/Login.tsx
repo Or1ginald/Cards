@@ -5,8 +5,8 @@ import { Link, Navigate } from 'react-router-dom';
 
 import { LoginParamsType } from '../../api/loginApi';
 import { RootStoreType, logIn } from '../../store';
+import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
-import style from '../confirmPassword/ConfirmPassword.module.css';
 
 import st from './Login.module.css';
 
