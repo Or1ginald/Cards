@@ -1,31 +1,37 @@
 .nav {
     display: flex;
     width: 300px;
-    position: absolute;
     flex-direction: column;
-    margin: 20px;
-    height: 200px;
+    height: 250px;
     justify-content: space-between;
+    background-color: #dccf84;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-top: 30px;
+    border: solid 2px #424242;
+    box-shadow: 0 0 37px 0 rgba(255, 255, 255, 0.49);
 }
 
 .navElement {
     font-family: 'Mochiy Pop P One', sans-serif;
     font-size: 16px;
-    color: lightgrey;
+    color: #4d594d;
     text-decoration: none;
     cursor: pointer;
 }
 
-a:hover {
-    color: yellowgreen;
+.menu {
+    margin-left: 120px;
 }
 
-.p{
+
+.p {
     font-family: 'Mochiy Pop P One', sans-serif;
     font-size: 20px;
     color: yellowgreen;
 }
-li{
-    color: yellowgreen;
+
+li {
+    color: black;
 
 }
