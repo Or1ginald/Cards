@@ -10,6 +10,10 @@ import { ReturnComponentType } from './types';
 
 import { Popup, CreateNewPassword } from 'components';
 
+// const PATH = {
+//   LOGIN: '/login',
+//   PROFILE: '/profile',
+// };
 export const App = (): ReturnComponentType => (
   // useEffect(() => {
   //   authAPI
