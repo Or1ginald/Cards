@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 
 import errorSign from '../../assets/error.png';
 import letter from '../../assets/letter.png';
+import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
-import style from './ConfirmPassword.module.css';
+import st from './ConfirmPassword.module.css';
 
 export const Popup = (): ReturnComponentType => (
   <div>
@@ -15,7 +16,7 @@ export const Popup = (): ReturnComponentType => (
         <div className={style.closeBtn}>
           <span className={style.spanClose}>it-incubator</span>
         </div>
-        <img className={style.letterImg} src={letter} alt="letter" />
+        <img className={st.letterImg} src={letter} alt="letter" />
         <span>Check Email</span>
         <p>We have sent the Email with instructions to your email </p>
       </div>
@@ -34,7 +35,7 @@ export const PopupError = ({ error, setError }: PopupErrorType): ReturnComponent
       <div className={style.content}>
         <span className={style.spanClose}>it-incubator</span>
 
-        <img className={style.errorImg} src={errorSign} alt="error" />
+        <img className={st.errorImg} src={errorSign} alt="error" />
         <span>Try again</span>
         <span>Something goes wrong</span>
         <Link

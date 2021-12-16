@@ -3,8 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
-
-import style from './ConfirmPassword.module.css';
+import style from '../../style/Common.module.css';
 
 import { ReturnComponentType } from 'types';
 
@@ -53,7 +52,6 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         <div className={style.content}>
           <span>it-incubator</span>
           <span>Forgot your password?</span>
-          {/* <CustomInput title="Email" /> */}
 
           <input
             className={style.inputEmail}

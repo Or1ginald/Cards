@@ -3,8 +3,8 @@ import React, { ChangeEvent, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { addNewPassAPI, SetNewPassType } from '../../api/forgotPasswordApi';
+import style from '../../style/Common.module.css';
 
-import style from './ConfirmPassword.module.css';
 import { PopupError } from './Popup';
 
 import { ReturnComponentType } from 'types';
