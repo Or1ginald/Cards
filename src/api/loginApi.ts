@@ -2,8 +2,6 @@ import { AxiosResponse } from 'axios';
 
 import { instance } from './apiConfig';
 
-// api
-
 export const authAPI = {
   login(params: LoginParamsType) {
     return instance.post<
