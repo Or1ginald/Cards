@@ -29,7 +29,7 @@ padding: 15px;
 border-color: #ff9900; 
 width: 250px;
 height: 30px'> 
-password recovery link: <a href='http://localhost:3000/#/createNewPassword/$token$'> recovery link </a></div>`,
+password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createNewPassword/$token$'> recovery link </a></div>`,
   };
 
   const onSendButtonClick = (): void => {
