@@ -3,9 +3,11 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
+import { PATH } from '../../enum/pathes';
 import { RootStoreType, logInTC } from '../../store';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
+import { isEmailValid, isPasswordValid } from '../../utils';
 
 import st from './Login.module.css';
 
@@ -25,11 +27,14 @@ export const Login = (): ReturnComponentType => {
     setRememberMe(e.currentTarget.checked);
 
   const onClickHandlerLogin = (): void => {
-    dispatch(logInTC({ email, password, rememberMe }));
+    if (isEmailValid(email) && isPasswordValid(password)) {
+      dispatch(logInTC({ email, password, rememberMe }));
+    } else {
+      console.log('error');
+    }
   };
-
   if (isDataLoaded) {
-    return <Navigate to="/profile" />;
+    return <Navigate to={PATH.PROFILE} />;
   }
 
   return (
@@ -57,13 +62,13 @@ export const Login = (): ReturnComponentType => {
             <input type="checkbox" checked={rememberMe} onChange={onChangeCheckBox} />
           </div>
           <div>
-            <Link to="/confirmPassword"> Forgot password </Link>
+            <Link to={PATH.CONFIRM_PASSWORD}> Forgot password </Link>
           </div>
           <button onClick={onClickHandlerLogin} className={style.btn}>
             Sign In
           </button>
           <p> Do not have an account? </p>
-          <Link to="/registration"> Sign Up </Link>
+          <Link to={PATH.REGISTRATION}> Sign Up </Link>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import style from '../../style/Common.module.css';
 
 import st from './Registrations.module.css';
 
+import { PATH } from 'enum/pathes';
 import { ReturnComponentType } from 'types';
 
 export const Registrations = (): ReturnComponentType => {
@@ -39,7 +40,7 @@ export const Registrations = (): ReturnComponentType => {
     }
   };
   if (isLoadedData) {
-    return <Navigate to="/login" />;
+    return <Navigate to={PATH.LOGIN} />;
   }
   return (
     <div className={style.mainContainer}>
