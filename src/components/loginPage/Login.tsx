@@ -1,37 +1,37 @@
 import React, { ChangeEvent, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { PATH } from '../../enum/pathes';
-import { RootStoreType, logInTC } from '../../store';
-import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
-import { isEmailValid, isPasswordValid } from '../../utils';
+import { CustomInput } from '../customInput';
 
 import st from './Login.module.css';
 
-export const Login = (): ReturnComponentType => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const dispatch = useDispatch();
-  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
-  const errorMessage = useSelector<RootStoreType>(state => state.login.error);
+import { PATH } from 'enum';
+import { useAppSelector } from 'hooks';
+import { useInput } from 'hooks/useInput/useInput';
+import { logInTC } from 'store';
+import { getErrorMessage, getIsDataLoaded } from 'store/selectors';
+import style from 'style/Common.module.css';
+import { ReturnComponentType } from 'types';
+import { isEmailValid, isPasswordValid } from 'utils';
 
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>): void =>
-    setEmail(e.currentTarget.value);
-  const onChangePassword = (e: ChangeEvent<HTMLInputElement>): void =>
-    setPassword(e.currentTarget.value);
+export const Login = (): ReturnComponentType => {
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const { value: email, bind: bindEmail } = useInput('');
+  const { value: password, bind: bindPassword } = useInput('');
+  const dispatch = useDispatch();
+  const isDataLoaded = useAppSelector(getIsDataLoaded);
+  const errorMessage = useAppSelector(getErrorMessage);
   const onChangeCheckBox = (e: ChangeEvent<HTMLInputElement>): void =>
     setRememberMe(e.currentTarget.checked);
 
   const onClickHandlerLogin = (): void => {
     if (isEmailValid(email) && isPasswordValid(password)) {
       dispatch(logInTC({ email, password, rememberMe }));
-    } else {
-      console.log('error');
+      return;
     }
+    console.log('error');
   };
   if (isDataLoaded) {
     return <Navigate to={PATH.PROFILE} />;
@@ -43,19 +43,17 @@ export const Login = (): ReturnComponentType => {
         <div className={style.contentWrap}>
           <h2> Login </h2>
           {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
-          <input
-            type="text"
-            onChange={onChangeEmail}
-            value={email}
+          <CustomInput
+            bind={bindEmail}
             placeholder="Email"
+            typeInput="email"
             className={style.inputEmail}
           />
-          <input
-            type="password"
-            onChange={onChangePassword}
-            value={password}
-            placeholder="Password"
-            className={style.inputEmail}
+          <CustomInput
+            bind={bindPassword}
+            placeholder="password"
+            typeInput="password"
+            className={style.inputPassword}
           />
           <div className={st.rememberMeInput}>
             remember me
