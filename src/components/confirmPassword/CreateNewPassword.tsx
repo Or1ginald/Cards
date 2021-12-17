@@ -7,6 +7,7 @@ import { SetNewPassType } from '../../api/forgotPasswordApi';
 import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
 import style from '../../style/Common.module.css';
+import { isPasswordValid } from '../../utils';
 import { CustomInput } from '../customInput';
 
 import { PopupError } from './PopupError';
@@ -31,14 +32,17 @@ export const CreateNewPassword = (): ReturnComponentType => {
   };
 
   const onCreateButtonClick = (): void => {
-    resetPassword('');
-    dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
+    if (isPasswordValid(newPassword)) {
+      resetPassword('');
+      dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
+    } else {
+      console.log('error password');
+    }
   };
 
   if (isLoadedData) {
     return <Navigate to="/login" />;
   }
-  console.log();
 
   return (
     <div className={style.mainContainer}>
