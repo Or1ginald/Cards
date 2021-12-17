@@ -70,7 +70,6 @@ export const Registrations = (): ReturnComponentType => {
             onChange={onPasswordAgainInputEnter}
             required
           />
-
           <p> Have fun! </p>
           <div className={st.btns}>
             <button className={style.btn}>cancel</button>
