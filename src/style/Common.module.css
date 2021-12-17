@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 80%;
+    height: 100%;
 }
 
 .contentWrap {
@@ -12,6 +12,9 @@
     flex-direction: column;
     padding: 1em 2em;
     gap: 0.5em;
+}
+input[type=checkbox]{
+    margin-top: 3px;
 }
 
 .content {
