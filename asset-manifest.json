@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/gameCards/static/css/main.7306455d.chunk.css",
-    "main.js": "/gameCards/static/js/main.52b22fe2.chunk.js",
-    "main.js.map": "/gameCards/static/js/main.52b22fe2.chunk.js.map",
+    "main.js": "/gameCards/static/js/main.d828d8c5.chunk.js",
+    "main.js.map": "/gameCards/static/js/main.d828d8c5.chunk.js.map",
     "runtime-main.js": "/gameCards/static/js/runtime-main.97b89627.js",
     "runtime-main.js.map": "/gameCards/static/js/runtime-main.97b89627.js.map",
     "static/js/2.0cb96168.chunk.js": "/gameCards/static/js/2.0cb96168.chunk.js",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.97b89627.js",
     "static/js/2.0cb96168.chunk.js",
     "static/css/main.7306455d.chunk.css",
-    "static/js/main.52b22fe2.chunk.js"
+    "static/js/main.d828d8c5.chunk.js"
   ]
 }
