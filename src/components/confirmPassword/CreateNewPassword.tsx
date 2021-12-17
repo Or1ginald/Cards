@@ -1,22 +1,24 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { SetNewPassType } from '../../api/forgotPasswordApi';
+import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
 import style from '../../style/Common.module.css';
+import { CustomInput } from '../customInput';
 
 import { PopupError } from './PopupError';
 
 import { ReturnComponentType } from 'types';
 
 export const CreateNewPassword = (): ReturnComponentType => {
-  const [newPassword, setPassword] = useState('');
   const [isLoadedData, setLoadedData] = useState(false);
   const [isError, setError] = useState(false);
 
   const dispatch = useDispatch();
+  const { value: newPassword, bind: bindPassword, reset: resetPassword } = useInput('');
 
   const location = useLocation();
   const lastElement = 1;
@@ -27,11 +29,9 @@ export const CreateNewPassword = (): ReturnComponentType => {
     password: newPassword,
     resetPasswordToken: token,
   };
-  const onPasswordInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.currentTarget.value);
-  };
 
   const onCreateButtonClick = (): void => {
+    resetPassword('');
     dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
   };
 
@@ -42,7 +42,6 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   return (
     <div className={style.mainContainer}>
-      {/* {!isLoadedData ? <Preloader /> : null} */}
       {isError ? (
         <PopupError error={isError} setError={setError} />
       ) : (
@@ -51,13 +50,11 @@ export const CreateNewPassword = (): ReturnComponentType => {
             {' '}
             <h2>Create new password</h2>
             <div className={style.inputCentering}>
-              <input
-                className={style.inputPassword}
-                type="password"
+              <CustomInput
                 placeholder="Password"
-                value={newPassword}
-                onChange={onPasswordInputEnter}
-                required
+                typeInput="password"
+                className={style.inputPassword}
+                bind={bindPassword}
               />
             </div>
             <p> Create new password and we will send you further instructions to email</p>

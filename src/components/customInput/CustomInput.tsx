@@ -1,22 +1,21 @@
-import { FC, memo } from 'react';
-
-import { useInput } from '../../hooks/useInput/useInput';
-
-import { CustomInputType } from './types';
+import { memo } from 'react';
 
 import { ReturnComponentType } from 'types';
 
-export const CustomInput: FC<CustomInputType> = memo(({ title }): ReturnComponentType => {
-  const { inputValue, handleInputValueChange: onInputValueChange } = useInput();
+type InputProps = {
+  placeholder: string;
+  typeInput: string;
+  className: string;
+  bind: any;
+};
 
-  return (
-    <div>
-      <input
-        type="text"
-        value={inputValue.value}
-        onChange={onInputValueChange}
-        placeholder={title}
-      />
-    </div>
-  );
-});
+export const CustomInput = memo(
+  ({
+    placeholder,
+    typeInput = 'text',
+    className,
+    bind,
+  }: InputProps): ReturnComponentType => (
+    <input type={typeInput} {...bind} placeholder={placeholder} className={className} />
+  ),
+);

@@ -1,19 +1,27 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import { UseInputReturnType } from './types';
+type useInputPropsType = {
+  value: string;
+  setValue: any;
+  reset: any;
+  bind: {
+    value: string;
+    onChange: (event: any) => void;
+  };
+};
 
-const EMPTY_STRING = '';
+export const useInput = (initialValue: string): useInputPropsType => {
+  const [value, setValue] = useState(initialValue);
 
-export const useInput = (): UseInputReturnType => {
-  const [inputValue, setInputValue] = useState(EMPTY_STRING);
-
-  const handleInputValueChange = useCallback(
-    (newValue: string) => setInputValue(newValue),
-    [],
-  );
-
-  return useMemo(
-    () => ({ inputValue, handleInputValueChange }),
-    [inputValue, handleInputValueChange],
-  );
+  return {
+    value,
+    setValue,
+    reset: () => setValue(''),
+    bind: {
+      value,
+      onChange: (event: any) => {
+        setValue(event.target.value);
+      },
+    },
+  };
 };

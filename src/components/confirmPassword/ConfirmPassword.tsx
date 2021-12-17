@@ -1,21 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
 import { AddNewPassType } from '../../api/forgotPasswordApi';
+import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import style from '../../style/Common.module.css';
+import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader/Preloader';
 
 import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
-  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [isShown, setShowMessage] = useState(false);
 
   const dispatch = useDispatch();
+  const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
 
   const dataPayload: AddNewPassType = {
     email,
@@ -29,12 +31,9 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
   };
 
   const onSendButtonClick = (): void => {
-    setEmail('');
+    resetEmail();
     setLoading(true);
     dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
-  };
-  const onEmailInputEnter = (e: ChangeEvent<HTMLInputElement>): void => {
-    setEmail(e.currentTarget.value);
   };
 
   if (isShown) {
@@ -49,15 +48,12 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         <div className={style.content}>
           <div className={style.contentWrap}>
             <h2>Forgot your password?</h2>
-            {/* <CustomInput title="Email" /> */}
             <div className={style.inputCentering}>
-              <input
-                className={style.inputEmail}
-                type="email"
+              <CustomInput
+                bind={bindEmail}
                 placeholder="Email"
-                value={email}
-                onChange={onEmailInputEnter}
-                required
+                typeInput="email"
+                className={style.inputEmail}
               />
             </div>
             <p> Enter your email and we will send you further instructions</p>
