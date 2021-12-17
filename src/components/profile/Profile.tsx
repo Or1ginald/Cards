@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
 
-import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
+import { useAppSelector } from '../../hooks';
+import { getIsDataLoaded } from '../../store/selectors';
 
 import { PATH } from 'enum/pathes';
-import { logOutTC, RootStoreType } from 'store';
+import { logOutTC } from 'store';
+import style from 'style/Common.module.css';
+import { ReturnComponentType } from 'types';
 
 export const Profile = (): ReturnComponentType => {
   // const userName = useSelector<RootStoreType, any>(state => state.login.name);
-  const isAuthUser = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
+  const isAuthUser = useAppSelector(getIsDataLoaded);
   const dispatch = useDispatch();
   const onClickLogOut = (): void => {
     dispatch(logOutTC());
