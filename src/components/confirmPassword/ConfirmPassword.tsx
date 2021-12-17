@@ -7,6 +7,7 @@ import { AddNewPassType } from '../../api/forgotPasswordApi';
 import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import style from '../../style/Common.module.css';
+import { isEmailValid } from '../../utils/emailValidation';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader/Preloader';
 
@@ -32,9 +33,13 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
   };
 
   const onSendButtonClick = (): void => {
-    resetEmail();
-    setLoading(true);
-    dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
+    if (isEmailValid(email)) {
+      resetEmail('');
+      setLoading(true);
+      dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
+    } else {
+      console.log('ERROR EMAIL');
+    }
   };
 
   if (isShown) {
