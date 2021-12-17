@@ -1,23 +1,25 @@
 import React, { ChangeEvent, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { PATH } from '../../enum/pathes';
-import { RootStoreType, logInTC } from '../../store';
-import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
-import { isEmailValid, isPasswordValid } from '../../utils';
-
 import st from './Login.module.css';
+
+import { PATH } from 'enum';
+import { useAppSelector } from 'hooks';
+import { logInTC } from 'store';
+import { getErrorMessage, getIsDataLoaded } from 'store/selectors';
+import style from 'style/Common.module.css';
+import { ReturnComponentType } from 'types';
+import { isEmailValid, isPasswordValid } from 'utils';
 
 export const Login = (): ReturnComponentType => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const isDataLoaded = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
-  const errorMessage = useSelector<RootStoreType>(state => state.login.error);
+  const isDataLoaded = useAppSelector(getIsDataLoaded);
+  const errorMessage = useAppSelector(getErrorMessage);
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>): void =>
     setEmail(e.currentTarget.value);
@@ -29,9 +31,9 @@ export const Login = (): ReturnComponentType => {
   const onClickHandlerLogin = (): void => {
     if (isEmailValid(email) && isPasswordValid(password)) {
       dispatch(logInTC({ email, password, rememberMe }));
-    } else {
-      console.log('error');
+      return;
     }
+    console.log('error');
   };
   if (isDataLoaded) {
     return <Navigate to={PATH.PROFILE} />;
