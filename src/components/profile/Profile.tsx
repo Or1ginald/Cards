@@ -9,7 +9,7 @@ import { ReturnComponentType } from '../../types';
 import { PATH } from 'enum/pathes';
 import { logOutTC, RootStoreType } from 'store';
 
-export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
+export const Profile = (): ReturnComponentType => {
   // const userName = useSelector<RootStoreType, any>(state => state.login.name);
   const isAuthUser = useSelector<RootStoreType, boolean>(state => state.login.isAuth);
   const dispatch = useDispatch();
@@ -36,5 +36,3 @@ export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
     </div>
   );
 };
-
-export type ProfilePropsType = {};
