@@ -35,34 +35,36 @@ export const Login = (): ReturnComponentType => {
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
-        <h2> Login </h2>
-        {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
-        <input
-          type="text"
-          onChange={onChangeEmail}
-          value={email}
-          placeholder="Email"
-          className={style.inputEmail}
-        />
-        <input
-          type="password"
-          onChange={onChangePassword}
-          value={password}
-          placeholder="Password"
-          className={style.inputEmail}
-        />
-        <div className={st.rememberMeInput}>
-          <p>remember me</p>
-          <input type="checkbox" checked={rememberMe} onChange={onChangeCheckBox} />
+        <div className={style.contentWrap}>
+          <h2> Login </h2>
+          {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
+          <input
+            type="text"
+            onChange={onChangeEmail}
+            value={email}
+            placeholder="Email"
+            className={style.inputEmail}
+          />
+          <input
+            type="password"
+            onChange={onChangePassword}
+            value={password}
+            placeholder="Password"
+            className={style.inputEmail}
+          />
+          <div className={st.rememberMeInput}>
+            remember me
+            <input type="checkbox" checked={rememberMe} onChange={onChangeCheckBox} />
+          </div>
+          <div>
+            <Link to="/confirmPassword"> Forgot password </Link>
+          </div>
+          <button onClick={onClickHandlerLogin} className={style.btn}>
+            Sign In
+          </button>
+          <p> Do not have an account? </p>
+          <Link to="/registration"> Sign Up </Link>
         </div>
-        <div>
-          <Link to="/confirmPassword"> Forgot password </Link>
-        </div>
-        <button onClick={onClickHandlerLogin} className={style.btn}>
-          Sign In
-        </button>
-        <p> Do not have an account? </p>
-        <Link to="/registration"> Sign Up </Link>
       </div>
     </div>
   );

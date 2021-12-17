@@ -4,9 +4,10 @@ import { Navigate } from 'react-router-dom';
 
 import { authAPI } from '../../api/loginApi';
 import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
 
 import st from './Registrations.module.css';
+
+import { ReturnComponentType } from 'types';
 
 export const Registrations = (): ReturnComponentType => {
   const [email, setEmail] = useState('');
@@ -43,38 +44,40 @@ export const Registrations = (): ReturnComponentType => {
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
-        <h2>Registration</h2>
-        <input
-          className={style.inputPassword}
-          type="Email"
-          placeholder="Email"
-          value={email}
-          onChange={onEmailInputEnter}
-          required
-        />
-        <input
-          className={style.inputPassword}
-          type="Password"
-          placeholder="Password"
-          value={password}
-          onChange={onPasswordInputEnter}
-          required
-        />
-        <input
-          className={style.inputPassword}
-          type="Password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={onPasswordAgainInputEnter}
-          required
-        />
+        <div className={style.contentWrap}>
+          <h2>Registration</h2>
+          <input
+            className={style.inputPassword}
+            type="Email"
+            placeholder="Email"
+            value={email}
+            onChange={onEmailInputEnter}
+            required
+          />
+          <input
+            className={style.inputPassword}
+            type="Password"
+            placeholder="Password"
+            value={password}
+            onChange={onPasswordInputEnter}
+            required
+          />
+          <input
+            className={style.inputPassword}
+            type="Password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={onPasswordAgainInputEnter}
+            required
+          />
 
-        <p> Have fun! </p>
-        <div className={st.btns}>
-          <button className={style.btn}>cancel</button>
-          <button className={style.btn} onClick={onSendButtonCLick}>
-            send
-          </button>
+          <p> Have fun! </p>
+          <div className={st.btns}>
+            <button className={style.btn}>cancel</button>
+            <button className={style.btn} onClick={onSendButtonCLick}>
+              send
+            </button>
+          </div>
         </div>
       </div>
     </div>

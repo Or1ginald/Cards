@@ -6,13 +6,18 @@
     align-items: center;
 }
 
+.contentWrap {
+    display: flex;
+    flex-direction: column;
+    padding: 17px 30px;
+    gap: 0.5em;
+}
 
 .content {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    width: 350px;
-    height: 500px;
+    min-width: 350px;
     align-items: center;
     text-align: center;
     /* border: 2px solid white;*/
@@ -45,4 +50,7 @@ a {
     text-decoration: none;
 }
 
-
+.inputCentering {
+    display: flex;
+    justify-content: center;
+}

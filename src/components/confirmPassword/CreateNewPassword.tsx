@@ -47,21 +47,25 @@ export const CreateNewPassword = (): ReturnComponentType => {
         <PopupError error={isError} setError={setError} />
       ) : (
         <div className={style.content}>
-          <h2>Create new password</h2>
-          <input
-            className={style.inputPassword}
-            type="password"
-            placeholder="Password"
-            value={newPassword}
-            onChange={onPasswordInputEnter}
-            required
-          />
-
-          <p> Create new password and we will send you further instructions to email</p>
-          <div>
-            <button className={style.btn} onClick={onCreateButtonClick}>
-              create new password
-            </button>
+          <div className={style.contentWrap}>
+            {' '}
+            <h2>Create new password</h2>
+            <div className={style.inputCentering}>
+              <input
+                className={style.inputPassword}
+                type="password"
+                placeholder="Password"
+                value={newPassword}
+                onChange={onPasswordInputEnter}
+                required
+              />
+            </div>
+            <p> Create new password and we will send you further instructions to email</p>
+            <div>
+              <button className={style.btn} onClick={onCreateButtonClick}>
+                Create new password
+              </button>
+            </div>
           </div>
         </div>
       )}

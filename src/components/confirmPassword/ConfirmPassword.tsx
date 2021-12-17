@@ -47,26 +47,28 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
         <Preloader />
       ) : (
         <div className={style.content}>
-          <h2>Forgot your password?</h2>
-          {/* <CustomInput title="Email" /> */}
-
-          <input
-            className={style.inputEmail}
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={onEmailInputEnter}
-            required
-          />
-
-          <p> Enter your email and we will send you further instructions</p>
-          <div>
-            <button className={style.btn} onClick={onSendButtonClick}>
-              send instructions
-            </button>
+          <div className={style.contentWrap}>
+            <h2>Forgot your password?</h2>
+            {/* <CustomInput title="Email" /> */}
+            <div className={style.inputCentering}>
+              <input
+                className={style.inputEmail}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={onEmailInputEnter}
+                required
+              />
+            </div>
+            <p> Enter your email and we will send you further instructions</p>
+            <div>
+              <button className={style.btn} onClick={onSendButtonClick}>
+                send instructions
+              </button>
+            </div>
+            <span>Did you remember your password?</span>
+            <Link to="/login"> Try logging in </Link>
           </div>
-          <span>Did you remember your password?</span>
-          <Link to="/login"> Try logging in </Link>
         </div>
       )}
     </div>
