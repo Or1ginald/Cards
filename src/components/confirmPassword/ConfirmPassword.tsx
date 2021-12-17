@@ -10,6 +10,7 @@ import style from '../../style/Common.module.css';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader/Preloader';
 
+import { PATH } from 'enum/pathes';
 import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
@@ -37,7 +38,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
   };
 
   if (isShown) {
-    return <Navigate to="/popup" />;
+    return <Navigate to={PATH.POPUP} />;
   }
 
   return (
@@ -63,7 +64,7 @@ password recovery link: <a href='http://localhost:3000/#/createNewPassword/$toke
               </button>
             </div>
             <span>Did you remember your password?</span>
-            <Link to="/login"> Try logging in </Link>
+            <Link to={PATH.LOGIN}> Try logging in </Link>
           </div>
         </div>
       )}

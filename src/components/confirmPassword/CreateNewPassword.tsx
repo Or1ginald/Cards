@@ -11,6 +11,7 @@ import { CustomInput } from '../customInput';
 
 import { PopupError } from './PopupError';
 
+import { PATH } from 'enum/pathes';
 import { ReturnComponentType } from 'types';
 
 export const CreateNewPassword = (): ReturnComponentType => {
@@ -36,7 +37,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
   };
 
   if (isLoadedData) {
-    return <Navigate to="/login" />;
+    return <Navigate to={PATH.LOGIN} />;
   }
   console.log();
 

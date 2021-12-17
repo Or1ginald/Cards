@@ -6,6 +6,7 @@ import { Navigate, NavLink } from 'react-router-dom';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
+import { PATH } from 'enum/pathes';
 import { logOutTC, RootStoreType } from 'store';
 
 export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
@@ -16,7 +17,7 @@ export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
     dispatch(logOutTC());
   };
   if (!isAuthUser) {
-    return <Navigate to="/login" />;
+    return <Navigate to={PATH.LOGIN} />;
   }
   return (
     <div className={style.mainContainer}>
@@ -29,7 +30,7 @@ export const Profile: React.FC<ProfilePropsType> = (): ReturnComponentType => {
             </button>
           </div>
         ) : (
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to={PATH.LOGIN}>Login</NavLink>
         )}
       </div>
     </div>
