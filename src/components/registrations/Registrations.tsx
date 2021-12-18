@@ -2,30 +2,36 @@ import React, { useState } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import { authAPI } from '../../api/loginApi';
 import style from '../../style/Common.module.css';
 
 import st from './Registrations.module.css';
 
+import { authAPI } from 'api';
 import { PATH } from 'enum/pathes';
+import { useInput } from 'hooks';
 import { ReturnComponentType } from 'types';
 
 export const Registrations = (): ReturnComponentType => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const { value: email, handleValue: handleEmail } = useInput('');
+  const { value: password, handleValue: handlePassword } = useInput('');
+  const { value: confirmPassword, handleValue: handleConfirmPassword } = useInput('');
+  // const { value: isLoadedData, handleValue: handleIsLoadedData } = useInput('');
+
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoadedData, setLoadedData] = useState<boolean>(false);
 
-  const onEmailInputEnter = (e: any): void => {
-    setEmail(e.currentTarget.value);
-  };
+  // const onEmailInputEnter = (e: any): void => {
+  //   setEmail(e.currentTarget.value);
+  // };
 
-  const onPasswordInputEnter = (e: any): void => {
-    setPassword(e.currentTarget.value);
-  };
-  const onPasswordAgainInputEnter = (e: any): void => {
-    setConfirmPassword(e.currentTarget.value);
-  };
+  // const onPasswordInputEnter = (e: any): void => {
+  //   setPassword(e.currentTarget.value);
+  // };
+  // const onPasswordAgainInputEnter = (e: any): void => {
+  //   setConfirmPassword(e.currentTarget.value);
+  // };
 
   const data: any = {
     email,
@@ -52,7 +58,7 @@ export const Registrations = (): ReturnComponentType => {
             type="Email"
             placeholder="Email"
             value={email}
-            onChange={onEmailInputEnter}
+            onChange={handleEmail}
             required
           />
           <input
@@ -60,7 +66,7 @@ export const Registrations = (): ReturnComponentType => {
             type="Password"
             placeholder="Password"
             value={password}
-            onChange={onPasswordInputEnter}
+            onChange={handlePassword}
             required
           />
           <input
@@ -68,7 +74,7 @@ export const Registrations = (): ReturnComponentType => {
             type="Password"
             placeholder="Confirm Password"
             value={confirmPassword}
-            onChange={onPasswordAgainInputEnter}
+            onChange={handleConfirmPassword}
             required
           />
           <p> Have fun! </p>

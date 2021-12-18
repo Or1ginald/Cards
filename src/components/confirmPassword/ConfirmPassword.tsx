@@ -3,23 +3,23 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { AddNewPassType } from '../../api/forgotPasswordApi';
-import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import style from '../../style/Common.module.css';
-import { isEmailValid } from '../../utils/emailValidation';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader/Preloader';
 
+import { AddNewPassType } from 'api';
 import { PATH } from 'enum/pathes';
+import { useInput } from 'hooks';
 import { ReturnComponentType } from 'types';
+import { isEmailValid } from 'utils';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [loading, setLoading] = useState(false);
   const [isShown, setShowMessage] = useState(false);
 
   const dispatch = useDispatch();
-  const { value: email, bind: bindEmail, reset: resetEmail } = useInput('');
+  const { value: email, handleValue: handleEmail, resetValue: resetEmail } = useInput('');
 
   const dataPayload: AddNewPassType = {
     email,
@@ -34,7 +34,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
 
   const onSendButtonClick = (): void => {
     if (isEmailValid(email)) {
-      resetEmail('');
+      resetEmail();
       setLoading(true);
       dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
     } else {
@@ -56,7 +56,9 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
             <h2>Forgot your password?</h2>
             <div className={style.inputCentering}>
               <CustomInput
-                bind={bindEmail}
+                // bind={bindEmail}
+                onChange={handleEmail}
+                value={email}
                 placeholder="Email"
                 typeInput="email"
                 className={style.inputEmail}

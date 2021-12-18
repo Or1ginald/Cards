@@ -8,8 +8,7 @@ import { CustomInput } from '../customInput';
 import st from './Login.module.css';
 
 import { PATH } from 'enum';
-import { useAppSelector } from 'hooks';
-import { useInput } from 'hooks/useInput/useInput';
+import { useAppSelector, useInput } from 'hooks';
 import { logInTC } from 'store';
 import { getErrorMessage, getIsDataLoaded } from 'store/selectors';
 import style from 'style/Common.module.css';
@@ -17,14 +16,14 @@ import { ReturnComponentType } from 'types';
 import { isEmailValid, isPasswordValid } from 'utils';
 
 export const Login = (): ReturnComponentType => {
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const { value: email, bind: bindEmail } = useInput('');
-  const { value: password, bind: bindPassword } = useInput('');
+  const [rememberMe, handleRememberMe] = useState<boolean>(false);
+  const { value: email, handleValue: handleEmail } = useInput('');
+  const { value: password, handleValue: handlePassword } = useInput('');
   const dispatch = useDispatch();
   const isDataLoaded = useAppSelector(getIsDataLoaded);
   const errorMessage = useAppSelector(getErrorMessage);
   const onChangeCheckBox = (e: ChangeEvent<HTMLInputElement>): void =>
-    setRememberMe(e.currentTarget.checked);
+    handleRememberMe(e.currentTarget.checked);
 
   const onClickHandlerLogin = (): void => {
     if (isEmailValid(email) && isPasswordValid(password)) {
@@ -44,16 +43,20 @@ export const Login = (): ReturnComponentType => {
           <h2> Login </h2>
           {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
           <CustomInput
-            bind={bindEmail}
+            // bind={handleEmail}
+            onChange={handleEmail}
+            value={email}
             placeholder="Email"
             typeInput="email"
             className={style.inputEmail}
           />
           <CustomInput
-            bind={bindPassword}
+            // bind={bindPassword}
             placeholder="password"
             typeInput="password"
             className={style.inputPassword}
+            value={password}
+            onChange={handlePassword}
           />
           <div className={st.rememberMeInput}>
             remember me

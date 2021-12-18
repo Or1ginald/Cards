@@ -3,24 +3,28 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { SetNewPassType } from '../../api/forgotPasswordApi';
-import { useInput } from '../../hooks/useInput/useInput';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
 import style from '../../style/Common.module.css';
-import { isPasswordValid } from '../../utils';
 import { CustomInput } from '../customInput';
 
 import { PopupError } from './PopupError';
 
+import { SetNewPassType } from 'api';
 import { PATH } from 'enum/pathes';
+import { useInput } from 'hooks';
 import { ReturnComponentType } from 'types';
+import { isPasswordValid } from 'utils';
 
 export const CreateNewPassword = (): ReturnComponentType => {
   const [isLoadedData, setLoadedData] = useState(false);
   const [isError, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const { value: newPassword, bind: bindPassword, reset: resetPassword } = useInput('');
+  const {
+    value: newPassword,
+    handleValue: handleNewPassword,
+    resetValue: resetNewPassword,
+  } = useInput('');
 
   const location = useLocation();
   const lastElement = 1;
@@ -34,7 +38,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   const onCreateButtonClick = (): void => {
     if (isPasswordValid(newPassword)) {
-      resetPassword('');
+      resetNewPassword(); // reset pass
       dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
     } else {
       console.log('error password');
@@ -59,7 +63,9 @@ export const CreateNewPassword = (): ReturnComponentType => {
                 placeholder="Password"
                 typeInput="password"
                 className={style.inputPassword}
-                bind={bindPassword}
+                value={newPassword}
+                onChange={handleNewPassword}
+                // bind={bindPassword}
               />
             </div>
             <p> Create new password and we will send you further instructions to email</p>

@@ -6,7 +6,9 @@ type InputProps = {
   placeholder: string;
   typeInput: string;
   className: string;
-  bind: any;
+  onChange: () => void;
+  value: string;
+  // bind: any;
 };
 
 export const CustomInput = memo(
@@ -14,8 +16,23 @@ export const CustomInput = memo(
     placeholder,
     typeInput = 'text',
     className,
-    bind,
+    value,
+    onChange,
   }: InputProps): ReturnComponentType => (
-    <input type={typeInput} {...bind} placeholder={placeholder} className={className} />
+    <input
+      type={typeInput}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={className}
+    />
   ),
 );
+// ({
+//   placeholder,
+//   typeInput = 'text',
+//   className,
+//   bind,
+// }: InputProps): ReturnComponentType => (
+//   <input type={typeInput} {...bind} placeholder={placeholder} className={className} />
+// ),

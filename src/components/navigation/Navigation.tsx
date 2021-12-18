@@ -2,10 +2,9 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { appNavigation } from '../../constants';
-
 import style from './Navigation.module.css';
 
+import { appNavigation } from 'constants/Navigation';
 import { ReturnComponentType } from 'types';
 
 export const Navigation = (): ReturnComponentType => (
