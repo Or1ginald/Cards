@@ -17,7 +17,6 @@ import {
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
 
-// testE
 export const App = (): ReturnComponentType => (
   <div className={s.app}>
     <div className={s.layout}>

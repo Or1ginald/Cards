@@ -43,7 +43,6 @@ export const Login = (): ReturnComponentType => {
           <h2> Login </h2>
           {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
           <CustomInput
-            // bind={handleEmail}
             onChange={handleEmail}
             value={email}
             placeholder="Email"
@@ -51,7 +50,6 @@ export const Login = (): ReturnComponentType => {
             className={style.inputEmail}
           />
           <CustomInput
-            // bind={bindPassword}
             placeholder="password"
             typeInput="password"
             className={style.inputPassword}

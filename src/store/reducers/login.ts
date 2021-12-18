@@ -1,22 +1,22 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { authAPI, LoginParamsType } from '../../api/loginApi';
-import { Nullable } from '../../types';
-import { RootStoreType } from '../store';
+import { authAPI, LoginParamsType } from 'api/loginApi';
+import { RootStoreType } from 'store';
+import { Nullable } from 'types';
 
 export type InitialStateDataType = {
   isAuth: boolean;
   error?: Nullable<string>;
 };
 
-const initialState: InitialStateDataType = {
+export const initialState: InitialStateDataType = {
   isAuth: false,
   error: null,
 };
 
 export const loginReducer = (
   state: InitialStateDataType = initialState,
-  action: ActionTypes,
+  action: ActionTypesLogin,
 ): InitialStateDataType => {
   switch (action.type) {
     case 'LOGIN/SET_AUTH_LOGIN_DATA':
@@ -42,7 +42,7 @@ export const setErrorMessageAC = (error: Nullable<string>) =>
 
 export const logInTC =
   (data: LoginParamsType) =>
-  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
     authAPI
       .login(data)
       .then(() => {
@@ -57,7 +57,7 @@ export const logInTC =
   };
 
 export const logOutTC =
-  () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+  () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
       dispatch(setErrorMessageAC(''));
@@ -65,6 +65,6 @@ export const logOutTC =
   };
 
 // type;
-type setLoginData = ReturnType<typeof setAuthLoginDataAC>;
+export type setLoginData = ReturnType<typeof setAuthLoginDataAC>;
 type setErrorMessageLogin = ReturnType<typeof setErrorMessageAC>;
-type ActionTypes = setLoginData | setErrorMessageLogin;
+export type ActionTypesLogin = setLoginData | setErrorMessageLogin;
