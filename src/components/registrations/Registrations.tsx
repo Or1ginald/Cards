@@ -51,10 +51,6 @@ export const Registrations = (): ReturnComponentType => {
   if (isLoadedData) {
     return <Navigate to={PATH.LOGIN} />;
   }
-  // hello..,
-  /// test 2
-  /// git test commit
-  /// git test commit 111
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
