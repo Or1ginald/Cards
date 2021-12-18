@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import style from '../../style/Common.module.css';
+import { CustomInput } from '../customInput';
 
 import st from './Registrations.module.css';
 
 import { authAPI } from 'api';
 import { PATH } from 'enum/pathes';
 import { useInput } from 'hooks';
+import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
+import { isEmailValid, isPasswordValid } from 'utils';
 
 export const Registrations = (): ReturnComponentType => {
   const { value: email, handleValue: handleEmail } = useInput('');
@@ -38,8 +40,9 @@ export const Registrations = (): ReturnComponentType => {
     password,
   };
 
-  const onSendButtonCLick = (): void => {
-    if (password === confirmPassword) {
+  const onSendButtonClick = (): void => {
+    if (password !== confirmPassword) return;
+    if (isPasswordValid(password) && isEmailValid(email)) {
       authAPI.register(data).then(() => {
         setLoadedData(true);
       });
@@ -53,35 +56,32 @@ export const Registrations = (): ReturnComponentType => {
       <div className={style.content}>
         <div className={style.contentWrap}>
           <h2>Registration</h2>
-          <input
-            className={style.inputPassword}
-            type="Email"
+          <CustomInput
             placeholder="Email"
-            value={email}
+            typeInput="email"
+            className={style.inputEmail}
             onChange={handleEmail}
-            required
+            value={email}
           />
-          <input
-            className={style.inputPassword}
-            type="Password"
+          <CustomInput
             placeholder="Password"
-            value={password}
-            onChange={handlePassword}
-            required
-          />
-          <input
+            typeInput="password"
             className={style.inputPassword}
-            type="Password"
+            onChange={handlePassword}
+            value={password}
+          />
+          <CustomInput
             placeholder="Confirm Password"
-            value={confirmPassword}
+            typeInput="password"
+            className={style.inputPassword}
             onChange={handleConfirmPassword}
-            required
+            value={password}
           />
           <p> Have fun! </p>
           <div className={st.btns}>
-            <button className={style.btn}>cancel</button>
-            <button className={style.btn} onClick={onSendButtonCLick}>
-              send
+            <button className={style.btn}>Cancel</button>
+            <button className={style.btn} onClick={onSendButtonClick}>
+              Send
             </button>
           </div>
         </div>
