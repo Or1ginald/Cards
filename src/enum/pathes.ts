@@ -6,3 +6,4 @@ export enum PATH {
   POPUP = '/popup',
   CREATE_NEW_PASSWORD = '/createNewPassword/*',
 }
+// bug
