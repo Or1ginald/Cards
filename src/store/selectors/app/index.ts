@@ -1,1 +1,1 @@
-export { getIsInitialized } from './appSelectors';
+export { getIsInitialized, getStatus } from './appSelectors';

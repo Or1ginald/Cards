@@ -11,13 +11,13 @@ import { ReturnComponentType } from './types';
 
 import {
   ConfirmPassword,
+  CreateNewPassword,
   Login,
   Navigation,
-  Registrations,
-  Profile,
-  CreateNewPassword,
   Popup,
   Preloader,
+  Profile,
+  Registrations,
 } from 'components';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
@@ -28,7 +28,6 @@ export const App = (): ReturnComponentType => {
   useEffect(() => {
     dispatch(initializeAppTC());
   }, []);
-
   if (!isInitialized) {
     return (
       <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>

@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks';
-import { getIsDataLoaded } from '../../store/selectors';
+import { getIsDataLoaded, getStatus } from '../../store/selectors';
+import { Preloader } from '../preloader';
 
 import { PATH } from 'enum/pathes';
 import { logOutTC } from 'store';
@@ -14,6 +15,7 @@ import { ReturnComponentType } from 'types';
 export const Profile = (): ReturnComponentType => {
   // const userName = useSelector<RootStoreType, any>(state => state.login.name);
   const isAuthUser = useAppSelector(getIsDataLoaded);
+  const isLoading = useAppSelector(getStatus);
   const dispatch = useDispatch();
   const onClickLogOut = (): void => {
     dispatch(logOutTC());
@@ -23,18 +25,22 @@ export const Profile = (): ReturnComponentType => {
   }
   return (
     <div className={style.mainContainer}>
-      <div className={style.content}>
-        <h2> Profile </h2>
-        {isAuthUser ? (
-          <div>
-            <button className={style.btn} onClick={onClickLogOut}>
-              Log out
-            </button>
-          </div>
-        ) : (
-          <NavLink to={PATH.LOGIN}>Login</NavLink>
-        )}
-      </div>
+      {isLoading === 'loading' ? (
+        <Preloader />
+      ) : (
+        <div className={style.content}>
+          <h2> Profile </h2>
+          {isAuthUser ? (
+            <div>
+              <button className={style.btn} onClick={onClickLogOut}>
+                Log out
+              </button>
+            </div>
+          ) : (
+            <NavLink to={PATH.LOGIN}>Login</NavLink>
+          )}
+        </div>
+      )}
     </div>
   );
 };
