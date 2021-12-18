@@ -51,8 +51,6 @@ export const Registrations = (): ReturnComponentType => {
   if (isLoadedData) {
     return <Navigate to={PATH.LOGIN} />;
   }
-  // hello..,
-  /// test 2
   return (
     <div className={style.mainContainer}>
       <div className={style.content}>
