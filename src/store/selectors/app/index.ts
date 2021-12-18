@@ -1,0 +1,1 @@
+export { getIsInitialized } from './appSelectors';
