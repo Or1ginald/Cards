@@ -6,8 +6,8 @@ import { instance } from './apiConfig';
 
 export type AddNewPassType = {
   email: Nullable<string>;
-  from: Nullable<string>;
-  message: Nullable<string>;
+  from?: Nullable<string>;
+  message?: Nullable<string>;
 };
 
 export type SetNewPassType = {

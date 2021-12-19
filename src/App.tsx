@@ -15,7 +15,6 @@ import { Test } from 'components/Test';
 export const App = (): ReturnComponentType => (
   <div className={s.app}>
     <Navigation />
-    {/*  <div className={s.wrap}> */}
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/registration" element={<Registrations />} />
@@ -27,5 +26,4 @@ export const App = (): ReturnComponentType => (
       <Route path="/" element={<Test />} />
     </Routes>
   </div>
-  /*  </div> */
 );

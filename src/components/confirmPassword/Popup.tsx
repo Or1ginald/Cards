@@ -13,6 +13,8 @@ export const Popup = (): ReturnComponentType => (
         <img className={st.letterImg} src={letter} alt="letter" />
         <h2>Check Email</h2>
         <p>We have sent the Email with instructions to your email </p>
+        <br />
+        <br />
       </div>
     </div>
   </div>

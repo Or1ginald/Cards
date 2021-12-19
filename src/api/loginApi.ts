@@ -15,7 +15,7 @@ export const authAPI = {
     return instance.delete<ResponseType>('auth/me', {});
   },
   me() {
-    return instance.post<any>('auth/me');
+    return instance.post<any>('auth/me', {});
   },
   register(params: RegisterParamsType) {
     return instance.post<RegisterParamsType, any>('auth/register', params);

@@ -1,42 +1,51 @@
 import React, { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { SetNewPassType } from '../../api/forgotPasswordApi';
-import { useInput } from '../../hooks/useInput/useInput';
+import { RootStoreType } from '../../store';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
 import style from '../../style/Common.module.css';
 import { isPasswordValid } from '../../utils';
-import { CustomInput } from '../customInput';
 
-import { PopupError } from './PopupError';
+import { setErrorMessagePassAC } from './errorReducer';
 
-import { ReturnComponentType } from 'types';
+import { Nullable, ReturnComponentType } from 'types';
 
 export const CreateNewPassword = (): ReturnComponentType => {
   const [isLoadedData, setLoadedData] = useState(false);
-  const [isError, setError] = useState(false);
+  const [newPassword, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { value: newPassword, bind: bindPassword, reset: resetPassword } = useInput('');
+
+  const errorPassMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
+    state => state.errorMessage.errorValidation,
+  );
+  const errorNetworkMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
+    state => state.errorMessage.errorNetwork,
+  );
 
   const location = useLocation();
   const lastElement = 1;
-  const token =
-    location.pathname.split('/')[location.pathname.split('/').length - lastElement];
+  const partPath = location.pathname.split('/');
+  const token = partPath[partPath.length - lastElement];
 
   const data: SetNewPassType = {
     password: newPassword,
     resetPasswordToken: token,
   };
+  const onChangePasswordInputEnter = (e: any): void => {
+    setPassword(e.currentTarget.value);
+    dispatch(setErrorMessagePassAC(''));
+  };
 
   const onCreateButtonClick = (): void => {
     if (isPasswordValid(newPassword)) {
-      resetPassword('');
-      dispatch(forgotPassSetPassTC(data, setLoadedData, setError));
+      dispatch(forgotPassSetPassTC(data, setLoadedData));
+      setPassword('');
     } else {
-      console.log('error password');
+      dispatch(setErrorMessagePassAC('mistaken password ;-('));
     }
   };
 
@@ -46,30 +55,29 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   return (
     <div className={style.mainContainer}>
-      {isError ? (
-        <PopupError error={isError} setError={setError} />
-      ) : (
-        <div className={style.content}>
-          <div className={style.contentWrap}>
-            {' '}
-            <h2>Create new password</h2>
-            <div className={style.inputCentering}>
-              <CustomInput
-                placeholder="Password"
-                typeInput="password"
-                className={style.inputPassword}
-                bind={bindPassword}
-              />
-            </div>
-            <p> Create new password and we will send you further instructions to email</p>
-            <div>
-              <button className={style.btn} onClick={onCreateButtonClick}>
-                Create new password
-              </button>
-            </div>
+      <div className={style.content}>
+        <div className={style.contentWrap}>
+          <h2>Create new password</h2>
+          {errorPassMessage && <span style={{ color: 'red' }}> {errorPassMessage} </span>}
+          {errorNetworkMessage && (
+            <span style={{ color: 'red' }}> {errorPassMessage} </span>
+          )}
+          <div className={style.inputCentering}>
+            <input
+              placeholder="Password"
+              type="password"
+              className={style.inputPassword}
+              onChange={onChangePasswordInputEnter}
+            />
+          </div>
+          <p> Create new password and we will send you further instructions to email</p>
+          <div>
+            <button className={style.btn} onClick={onCreateButtonClick}>
+              Create new password
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
