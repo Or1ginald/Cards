@@ -3,13 +3,14 @@ import thunkMiddleware from 'redux-thunk';
 
 import { errorForgotPasswordReducer } from '../components/confirmPassword/errorReducer';
 
-import { cardReducer, loginReducer, profileReducer } from 'store';
+import { appReducer, cardReducer, loginReducer, profileReducer } from 'store';
 
 export const rootReducer = combineReducers({
   cards: cardReducer,
   login: loginReducer,
   profilePage: profileReducer,
   errorMessage: errorForgotPasswordReducer,
+  app: appReducer,
 });
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
