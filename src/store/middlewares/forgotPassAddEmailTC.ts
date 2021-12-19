@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
-import { setErrorMessagePassAC } from '../../components/confirmPassword/errorReducer';
+import { setErrorMessageNetworkAC } from '../reducers/errorReducer';
 
 export const forgotPassAddEmailTC =
   (dataPayload: AddNewPassType, setLoading: any, setShowMessage: any) =>
@@ -12,5 +12,10 @@ export const forgotPassAddEmailTC =
         setLoading(false);
         setShowMessage(true);
       })
-      .catch(() => dispatch(setErrorMessagePassAC('mistaken email')));
+      .catch(e => {
+        const errorNetwork = e.response
+          ? e.response.data.error
+          : `${e.message}, more details in the console`;
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+      });
   };

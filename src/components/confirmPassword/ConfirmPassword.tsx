@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
 import { AddNewPassType } from '../../api/forgotPasswordApi';
-import { RootStoreType } from '../../store';
+import { useAppSelector } from '../../hooks';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
+import {
+  setErrorMessageNetworkAC,
+  setErrorMessagePassAC,
+} from '../../store/reducers/errorReducer';
+import {
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+} from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 import { isEmailValid } from '../../utils/emailValidation';
 import { Preloader } from '../preloader/Preloader';
 
-import { setErrorMessagePassAC } from './errorReducer';
-
-import { Nullable, ReturnComponentType } from 'types';
+import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [loading, setLoading] = useState(false);
@@ -20,12 +26,9 @@ export const ConfirmPassword = (): ReturnComponentType => {
   const [email, setEmail] = useState('');
 
   const dispatch = useDispatch();
-  const errorPassMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
-    state => state.errorMessage.errorValidation,
-  );
-  const errorNetworkMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
-    state => state.errorMessage.errorNetwork,
-  );
+
+  const errorPassMessage = useAppSelector(getErrorValidMessage);
+  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
 
   const dataPayload: AddNewPassType = {
     email,
@@ -41,15 +44,15 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
   const onChangeEmailInputEnter = (e: any): void => {
     setEmail(e.currentTarget.value);
     dispatch(setErrorMessagePassAC(''));
+    dispatch(setErrorMessageNetworkAC(''));
   };
 
   const onSendButtonClick = (): void => {
     if (isEmailValid(email)) {
-      /*  setLoading(true); */
       dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
       setEmail('');
     } else {
-      dispatch(setErrorMessagePassAC('mistaken email ;-('));
+      dispatch(setErrorMessagePassAC('invalid email ;-('));
     }
   };
 
@@ -69,7 +72,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
               <span style={{ color: 'red' }}> {errorPassMessage} </span>
             )}
             {errorNetworkMessage && (
-              <span style={{ color: 'red' }}> {errorPassMessage} </span>
+              <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
             )}
             <div className={style.inputCentering}>
               <input

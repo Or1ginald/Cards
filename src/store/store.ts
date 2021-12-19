@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import { errorForgotPasswordReducer } from '../components/confirmPassword/errorReducer';
+import { errorForgotPasswordReducer } from './reducers/errorReducer';
 
 import { appReducer, cardReducer, loginReducer, profileReducer } from 'store';
 
