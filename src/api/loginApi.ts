@@ -15,7 +15,7 @@ export const authAPI = {
     return instance.delete<ResponseType>('auth/me', {});
   },
   me() {
-    return instance.post<any>('auth/me', {});
+    return instance.post<ResponseType>('auth/me');
   },
   register(params: RegisterParamsType) {
     return instance.post<RegisterParamsType, any>('auth/register', params);
@@ -39,10 +39,10 @@ export type ResponseType = {
   email: string;
   name: string;
   avatar?: string;
-  token: string;
   publicCardPacksCount: number;
   created: Date;
   updated: Date;
   verified: boolean;
   rememberMe: boolean;
+  error?: string;
 };

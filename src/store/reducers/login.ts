@@ -1,22 +1,24 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { authAPI, LoginParamsType } from '../../api/loginApi';
-import { Nullable } from '../../types';
-import { RootStoreType } from '../store';
+import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
+
+import { authAPI, LoginParamsType } from 'api/loginApi';
+import { RootStoreType } from 'store';
+import { Nullable } from 'types';
 
 export type InitialStateDataType = {
   isAuth: boolean;
   error?: Nullable<string>;
 };
 
-const initialState: InitialStateDataType = {
+export const initialState: InitialStateDataType = {
   isAuth: false,
   error: null,
 };
 
 export const loginReducer = (
   state: InitialStateDataType = initialState,
-  action: ActionTypes,
+  action: ActionTypesLogin,
 ): InitialStateDataType => {
   switch (action.type) {
     case 'LOGIN/SET_AUTH_LOGIN_DATA':
@@ -42,29 +44,40 @@ export const setErrorMessageAC = (error: Nullable<string>) =>
 
 export const logInTC =
   (data: LoginParamsType) =>
-  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
+    dispatch(setAppStatusAC('loading'));
     authAPI
       .login(data)
       .then(() => {
         dispatch(setAuthLoginDataAC(true));
+        dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
         const error = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
         dispatch(setErrorMessageAC(error));
+        dispatch(setAppStatusAC('failed'));
+      })
+      .finally(() => {
+        dispatch(setAppStatusAC('idle'));
       });
   };
 
 export const logOutTC =
-  () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
+  () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
+    dispatch(setAppStatusAC('loading'));
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
       dispatch(setErrorMessageAC(''));
+      dispatch(setAppStatusAC('idle'));
     });
   };
 
 // type;
-type setLoginData = ReturnType<typeof setAuthLoginDataAC>;
+export type setLoginData = ReturnType<typeof setAuthLoginDataAC>;
 type setErrorMessageLogin = ReturnType<typeof setErrorMessageAC>;
-type ActionTypes = setLoginData | setErrorMessageLogin;
+export type ActionTypesLogin =
+  | setLoginData
+  | setErrorMessageLogin
+  | SetAppStatusActionType;

@@ -4,10 +4,10 @@ import { ReturnComponentType } from '../../types';
 
 import style from './Preloader.module.css';
 
-import loader from 'assets/loader.gif';
+import preloader1 from 'assets/preloader1.gif';
 
 export const Preloader = (): ReturnComponentType => (
   <div>
-    <img className={style.loader} src={loader} alt="preloader" />
+    <img className={style.loader} src={preloader1} alt="preloader" />
   </div>
 );

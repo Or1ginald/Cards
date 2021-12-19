@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import errorSign from '../../assets/error.png';
+import { PATH } from '../../enum/pathes';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
@@ -22,7 +23,7 @@ export const PopupError = ({ error, setError }: PopupErrorType): ReturnComponent
           <img className={st.errorImg} src={errorSign} alt="error" />
           <h2>Try again</h2>
           <span>Something goes wrong</span>
-          <Link to="/confirmPassword" onClick={onLinkClick}>
+          <Link to={PATH.CONFIRM_PASSWORD} onClick={onLinkClick}>
             Create new password again
           </Link>
         </div>
