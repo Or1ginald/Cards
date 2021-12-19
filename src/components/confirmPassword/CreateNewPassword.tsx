@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { SetNewPassType } from '../../api/forgotPasswordApi';
-import { RootStoreType } from '../../store';
+import { useAppSelector } from '../../hooks';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
+import {
+  setErrorMessageNetworkAC,
+  setErrorMessagePassAC,
+} from '../../store/reducers/errorReducer';
+import {
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+} from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 import { isPasswordValid } from '../../utils';
 
-import { setErrorMessagePassAC } from './errorReducer';
-
-import { Nullable, ReturnComponentType } from 'types';
+import { ReturnComponentType } from 'types';
 
 export const CreateNewPassword = (): ReturnComponentType => {
   const [isLoadedData, setLoadedData] = useState(false);
@@ -19,12 +25,8 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   const dispatch = useDispatch();
 
-  const errorPassMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
-    state => state.errorMessage.errorValidation,
-  );
-  const errorNetworkMessage = useSelector<RootStoreType, Nullable<string> | undefined>(
-    state => state.errorMessage.errorNetwork,
-  );
+  const errorPassMessage = useAppSelector(getErrorValidMessage);
+  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
 
   const location = useLocation();
   const lastElement = 1;
@@ -38,6 +40,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
   const onChangePasswordInputEnter = (e: any): void => {
     setPassword(e.currentTarget.value);
     dispatch(setErrorMessagePassAC(''));
+    dispatch(setErrorMessageNetworkAC(''));
   };
 
   const onCreateButtonClick = (): void => {
@@ -45,7 +48,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
       dispatch(forgotPassSetPassTC(data, setLoadedData));
       setPassword('');
     } else {
-      dispatch(setErrorMessagePassAC('mistaken password ;-('));
+      dispatch(setErrorMessagePassAC('invalid password ;-('));
     }
   };
 
@@ -60,7 +63,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
           <h2>Create new password</h2>
           {errorPassMessage && <span style={{ color: 'red' }}> {errorPassMessage} </span>}
           {errorNetworkMessage && (
-            <span style={{ color: 'red' }}> {errorPassMessage} </span>
+            <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
           )}
           <div className={style.inputCentering}>
             <input

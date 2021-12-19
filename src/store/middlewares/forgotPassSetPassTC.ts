@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { addNewPassAPI, SetNewPassType } from '../../api/forgotPasswordApi';
-import { setErrorMessageNetworkAC } from '../../components/confirmPassword/errorReducer';
+import { setErrorMessageNetworkAC } from '../reducers/errorReducer';
 
 export const forgotPassSetPassTC =
   (data: SetNewPassType, setLoadedData: any) => (dispatch: Dispatch) => {
