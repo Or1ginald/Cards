@@ -11,10 +11,10 @@ export const Popup = (): ReturnComponentType => (
     <div className={style.mainContainer}>
       <div className={style.content}>
         <img className={st.letterImg} src={letter} alt="letter" />
-        <h2>Check Email</h2>
-        <p>We have sent the Email with instructions to your email </p>
-        <br />
-        <br />
+        <div className={style.contentWrap}>
+          <h2 className={st.heading}>Check Email</h2>
+          <p>We have sent the Email with instructions to your email </p>
+        </div>
       </div>
     </div>
   </div>

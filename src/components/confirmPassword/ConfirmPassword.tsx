@@ -10,18 +10,18 @@ import {
   setErrorMessageNetworkAC,
   setErrorMessagePassAC,
 } from '../../store/reducers/errorReducer';
+import { getStatus } from '../../store/selectors';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
 } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 import { isEmailValid } from '../../utils/emailValidation';
-import { Preloader } from '../preloader/Preloader';
+import { Preloader } from '../preloader';
 
 import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
-  const [loading, setLoading] = useState(false);
   const [isShown, setShowMessage] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -29,6 +29,7 @@ export const ConfirmPassword = (): ReturnComponentType => {
 
   const errorPassMessage = useAppSelector(getErrorValidMessage);
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
+  const isLoading = useAppSelector(getStatus);
 
   const dataPayload: AddNewPassType = {
     email,
@@ -49,7 +50,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
 
   const onSendButtonClick = (): void => {
     if (isEmailValid(email)) {
-      dispatch(forgotPassAddEmailTC(dataPayload, setLoading, setShowMessage));
+      dispatch(forgotPassAddEmailTC(dataPayload, setShowMessage));
       setEmail('');
     } else {
       dispatch(setErrorMessagePassAC('invalid email ;-('));
@@ -62,7 +63,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
 
   return (
     <div className={style.mainContainer}>
-      {loading ? (
+      {isLoading === 'loading' ? (
         <Preloader />
       ) : (
         <div className={style.content}>
@@ -78,7 +79,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
               <input
                 placeholder="Email"
                 type="email"
-                className={style.inputPassword}
+                className={style.inputEmail}
                 onChange={onChangeEmailInputEnter}
               />
             </div>

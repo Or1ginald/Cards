@@ -4,5 +4,6 @@ export enum PATH {
   PROFILE = '/profile',
   CONFIRM_PASSWORD = '/confirmPassword',
   POPUP = '/popup',
-  CREATE_NEW_PASSWORD = '/createNewPassword/*',
+  CREATE_NEW_PASSWORD = '/createNewPassword',
+  PAGE_404 = '/*',
 }

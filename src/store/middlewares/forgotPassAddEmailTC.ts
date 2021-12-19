@@ -1,16 +1,17 @@
 import { Dispatch } from 'redux';
 
 import { addNewPassAPI, AddNewPassType } from '../../api/forgotPasswordApi';
+import { setAppStatusAC } from '../reducers/appInitialized';
 import { setErrorMessageNetworkAC } from '../reducers/errorReducer';
 
 export const forgotPassAddEmailTC =
-  (dataPayload: AddNewPassType, setLoading: any, setShowMessage: any) =>
-  (dispatch: Dispatch) => {
+  (dataPayload: AddNewPassType, setShowMessage: any) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'));
     addNewPassAPI
       .addNewPass(dataPayload)
       .then(() => {
-        setLoading(false);
         setShowMessage(true);
+        dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
         const errorNetwork = e.response
