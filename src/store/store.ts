@@ -1,6 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
+import { decksReducer } from '../components/table/decksTC';
+
 import { errorForgotPasswordReducer } from './reducers/errorReducer';
 
 import { appReducer, cardReducer, loginReducer, profileReducer } from 'store';
@@ -11,6 +13,7 @@ export const rootReducer = combineReducers({
   profilePage: profileReducer,
   errorMessage: errorForgotPasswordReducer,
   app: appReducer,
+  decks: decksReducer,
 });
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 

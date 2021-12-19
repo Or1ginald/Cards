@@ -1,0 +1,24 @@
+
+.table {
+    display: flex;
+
+}
+.tableCommon{
+    display: flex;
+    background-color: white;
+
+}
+.tableColumn {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    margin: 10px;
+    /*border: 2px solid black;*/
+}
+.element {
+    padding: 20px;
+}
+.btn {
+    padding: 0 10px 0 10px;
+    margin-left: 10px;
+}
