@@ -41,23 +41,35 @@ export const Login = (): ReturnComponentType => {
         <div className={style.content}>
           <div className={style.contentWrap}>
             <h2> Login </h2>
-            <div>
-              {errorMessage ? <span style={{ color: 'red' }}> {errorMessage} </span> : ''}
-            </div>
             <CustomInput
               onChange={handleEmail}
               value={email}
               placeholder="Email"
-              typeInput="email"
-              className={style.inputEmail}
+              typeInput="text"
+              // name="user[email]"
             />
             <CustomInput
               placeholder="password"
               typeInput="password"
-              className={style.inputPassword}
               value={password}
               onChange={handlePassword}
             />
+            {errorMessage ? (
+              <div
+                style={{
+                  color: 'red',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}
+              >
+                {' '}
+                {errorMessage}{' '}
+              </div>
+            ) : (
+              ''
+            )}
             <div className={st.rememberMeInput}>
               remember me
               <input type="checkbox" checked={rememberMe} onChange={onChangeCheckBox} />

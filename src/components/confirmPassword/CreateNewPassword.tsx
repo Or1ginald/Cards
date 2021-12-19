@@ -62,7 +62,6 @@ export const CreateNewPassword = (): ReturnComponentType => {
               <CustomInput
                 placeholder="Password"
                 typeInput="password"
-                className={style.inputPassword}
                 value={newPassword}
                 onChange={handleNewPassword}
                 // bind={bindPassword}

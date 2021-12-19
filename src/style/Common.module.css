@@ -9,9 +9,10 @@
 
 .contentWrap {
     display: flex;
+    align-items: center;
     flex-direction: column;
     padding: 1em 2em;
-    gap: 0.5em;
+    gap: 1em;
 }
 input[type=checkbox]{
     margin-top: 3px;
@@ -39,8 +40,8 @@ input[type=checkbox]{
 }
 
 .inputEmail, .inputPassword {
-    width: 200px;
-    padding: 5px;
+    min-width: 15.5em;
+    padding: .5em;
     font-family: 'Mochiy Pop P One', sans-serif;
 }
 

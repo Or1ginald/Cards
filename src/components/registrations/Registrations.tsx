@@ -59,29 +59,32 @@ export const Registrations = (): ReturnComponentType => {
           <CustomInput
             placeholder="Email"
             typeInput="email"
-            className={style.inputEmail}
+            // className={style.inputEmail}
             onChange={handleEmail}
             value={email}
+            name="user[email]"
           />
           <CustomInput
             placeholder="Password"
             typeInput="password"
-            className={style.inputPassword}
+            // className={style.inputPassword}
             onChange={handlePassword}
             value={password}
+            name="user[password]"
           />
           <CustomInput
             placeholder="Confirm Password"
             typeInput="password"
-            className={style.inputPassword}
+            // className={style.inputPassword}
             onChange={handleConfirmPassword}
             value={password}
+            name="user[password]"
           />
           <p> Have fun! </p>
           <div className={st.btns}>
             <button className={style.btn}>Cancel</button>
             <button className={style.btn} onClick={onSendButtonClick}>
-              Send
+              Create
             </button>
           </div>
         </div>

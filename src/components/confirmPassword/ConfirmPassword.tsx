@@ -6,7 +6,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import style from '../../style/Common.module.css';
 import { CustomInput } from '../customInput';
-import { Preloader } from '../preloader/Preloader';
+import { Preloader } from '../preloader';
 
 import { AddNewPassType } from 'api';
 import { PATH } from 'enum/pathes';
@@ -61,13 +61,12 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
                 value={email}
                 placeholder="Email"
                 typeInput="email"
-                className={style.inputEmail}
               />
             </div>
             <p> Enter your email and we will send you further instructions</p>
             <div>
               <button className={style.btn} onClick={onSendButtonClick}>
-                send instructions
+                Send instructions
               </button>
             </div>
             <span>Did you remember your password?</span>
