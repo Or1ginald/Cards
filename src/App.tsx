@@ -39,7 +39,6 @@ export const App = (): ReturnComponentType => {
     <div className={s.app}>
       <div className={s.layout}>
         <Navigation />
-        {/*  <div className={s.wrap}> */}
         <div className={s.main}>
           <Routes>
             <Route path={PATH.LOGIN} element={<Login />} />
