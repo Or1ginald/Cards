@@ -78,7 +78,7 @@ password recovery link: <a href='https://Or1ginald.github.io/gameCards/#/createN
               <input
                 placeholder="Email"
                 type="email"
-                className={style.inputPassword}
+                className={style.inputEmail}
                 onChange={onChangeEmailInputEnter}
               />
             </div>
