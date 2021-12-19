@@ -6,16 +6,19 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { SetNewPassType } from '../../api/forgotPasswordApi';
 import { useAppSelector } from '../../hooks';
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
+import { setAppStatusAC } from '../../store/reducers/appInitialized';
 import {
   setErrorMessageNetworkAC,
   setErrorMessagePassAC,
 } from '../../store/reducers/errorReducer';
+import { getStatus } from '../../store/selectors';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
 } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 import { isPasswordValid } from '../../utils';
+import { Preloader } from '../preloader';
 
 import { ReturnComponentType } from 'types';
 
@@ -27,6 +30,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   const errorPassMessage = useAppSelector(getErrorValidMessage);
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
+  const isLoading = useAppSelector(getStatus);
 
   const location = useLocation();
   const lastElement = 1;
@@ -45,7 +49,9 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   const onCreateButtonClick = (): void => {
     if (isPasswordValid(newPassword)) {
+      dispatch(setAppStatusAC('loading'));
       dispatch(forgotPassSetPassTC(data, setLoadedData));
+      dispatch(setAppStatusAC('succeeded'));
       setPassword('');
     } else {
       dispatch(setErrorMessagePassAC('invalid password ;-('));
@@ -58,29 +64,35 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   return (
     <div className={style.mainContainer}>
-      <div className={style.content}>
-        <div className={style.contentWrap}>
-          <h2>Create new password</h2>
-          {errorPassMessage && <span style={{ color: 'red' }}> {errorPassMessage} </span>}
-          {errorNetworkMessage && (
-            <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-          )}
-          <div className={style.inputCentering}>
-            <input
-              placeholder="Password"
-              type="password"
-              className={style.inputPassword}
-              onChange={onChangePasswordInputEnter}
-            />
-          </div>
-          <p> Create new password and we will send you further instructions to email</p>
-          <div>
-            <button className={style.btn} onClick={onCreateButtonClick}>
-              Create new password
-            </button>
+      {isLoading === 'loading' ? (
+        <Preloader />
+      ) : (
+        <div className={style.content}>
+          <div className={style.contentWrap}>
+            <h2>Create new password</h2>
+            {errorPassMessage && (
+              <span style={{ color: 'red' }}> {errorPassMessage} </span>
+            )}
+            {errorNetworkMessage && (
+              <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
+            )}
+            <div className={style.inputCentering}>
+              <input
+                placeholder="Password"
+                type="password"
+                className={style.inputPassword}
+                onChange={onChangePasswordInputEnter}
+              />
+            </div>
+            <p> Create new password and we will send you further instructions to email</p>
+            <div>
+              <button className={style.btn} onClick={onCreateButtonClick}>
+                Create new password
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
