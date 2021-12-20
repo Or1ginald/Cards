@@ -39,7 +39,7 @@ padding: 15px;
 border-color: #ff9900; 
 width: 250px;
 height: 30px'> 
-password recovery link: <a href='https://or1ginald.github.io/gameCards/#/confirmPassword/$token$'> recovery link </a></div>`,
+password recovery link: <a href='https://or1ginald.github.io/gameCards/#/createNewPassword/$token$'> recovery link </a></div>`,
   };
 
   const onChangeEmailInputEnter = (e: any): void => {
