@@ -6,7 +6,8 @@ import { RootStoreType } from '../../store';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
-import { setDecksTC } from './decksTC';
+import { deckTemplate, setDecksTC } from './decksTC';
+import SuperRange from './Range';
 import styleTable from './Table.module.css';
 
 export const Table = (): ReturnComponentType => {
@@ -19,56 +20,48 @@ export const Table = (): ReturnComponentType => {
   const random = 100000;
 
   return (
-    <div>
-      <div>
-        <button className={style.btn}> show dev header</button>
-        {/*   <div className={style.decks}>
-           eslint-disable-next-line jsx-a11y/label-has-associated-control 
-          <label id="decks">search</label>
-          <input
-            className={style.inputEmail}
-            id="decks"
-            placeholder="decks"
-            list="decks"
-            type="search"
-          />
+    <div className={styleTable.wrapper}>
+      <div className={styleTable.leftBlock}>
+        <div className={styleTable.btns}>
+          <button className={style.btn}>My</button>
+          <button className={style.btn}>All</button>
         </div>
-        <datalist id="decks">
-          <select>
-            {decks.map((deck: any) => (
-              <option key={Math.random() * random}>{deck.user_name}</option>
-            ))}
-          </select>
-        </datalist> */}
+        <span>Number of cards</span>
+        <SuperRange />
       </div>
-      <div className={styleTable.tableCommon}>
-        <div className={styleTable.tableColumn}>
-          <div>Name</div>
-          {decks.map((deck: any) => (
-            <div className={styleTable.element} key={Math.random() * random}>
-              {deck.user_name}
-            </div>
-          ))}
-        </div>
 
-        <div className={styleTable.tableColumn}>
-          <div>CardsCount</div>
-          {decks.map((deck: any) => (
-            <div className={styleTable.element} key={Math.random() * random}>
-              {deck.cardsCount}
-            </div>
-          ))}
-        </div>
+      <div className={styleTable.rightBlock}>
+        <div className={styleTable.decks}>
+          <span> Packs list </span>
+          <div className={styleTable.searchInputSection}>
+            <input
+              className={styleTable.inputSearch}
+              id="decks"
+              placeholder="Search"
+              type="search"
+            />
+            <button className={style.btn}>Add new pack</button>
+          </div>
 
-        <div className={styleTable.tableColumn}>
-          <div>Updated</div>
-          {decks.map((deck: any) => (
-            <div className={styleTable.element} key={Math.random() * random}>
-              {deck.updated}
-              <button className={styleTable.btn}>add</button>{' '}
-              <button className={styleTable.btn}>delete</button>
+          <div className={styleTable.tableCommon}>
+            <div className={styleTable.tableCaption}>
+              <div className={styleTable.captionElement}>Name</div>
+              <div className={styleTable.captionElement}>CardsCount</div>
+              <div className={styleTable.captionElement}>Updated</div>
             </div>
-          ))}
+
+            <div className={styleTable.tableRow}>
+              {decks.map((deck: deckTemplate) => (
+                <div className={styleTable.element} key={Math.random() * random}>
+                  <div className={styleTable.elementPart}>{deck.name}</div>
+                  <div className={styleTable.elementPart}>{deck.cardsCount}</div>
+                  <div className={styleTable.elementPart}>{deck.updated}</div>
+                  <button className={styleTable.btn}>update</button>
+                  <button className={styleTable.btn}>delete</button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
