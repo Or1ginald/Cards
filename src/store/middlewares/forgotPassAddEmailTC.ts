@@ -14,6 +14,7 @@ export const forgotPassAddEmailTC =
         dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
+        dispatch(setAppStatusAC('succeeded'));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;

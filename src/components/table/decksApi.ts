@@ -1,14 +1,16 @@
 import { AxiosResponse } from 'axios';
 
+import { ResponseDeckType } from './decksTC';
+
 import { instance } from 'api/apiConfig';
 
 export type addNewDeckType = {
-  name: 'mine';
+  name: string;
 };
 
 export const decksAPI = {
   fetchDecks() {
-    return instance.get<any, AxiosResponse<any>>('cards/pack');
+    return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack');
   },
   addNewDeck(params: addNewDeckType) {
     return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', params);
