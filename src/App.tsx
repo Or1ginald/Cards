@@ -41,6 +41,8 @@ export const App = (): ReturnComponentType => {
     );
   }
 
+  // 1
+
   const showMenuHandler = (): void => {
     setShowMenu(!showMenu);
   };
