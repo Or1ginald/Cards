@@ -18,11 +18,12 @@ export const signUpReducer = (
       return { ...state, isFetching: action.isFetching };
     case 'RECOVERY/ERROR':
       return { ...state, error: action.payload.error };
-    case 'REGISTRATION/IS_SIGNUP_SUCCESSFUL':
+    case 'REGISTRATION/IS_SIGNUP_SUCCESSFUL': {
       return {
         ...state,
         isSignUp: action.isSignUpSuccessful,
       };
+    }
     default:
       return state;
   }
