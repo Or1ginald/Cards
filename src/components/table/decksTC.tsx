@@ -1,6 +1,10 @@
+import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
-import { decksAPI } from './decksApi';
+import { setAppStatusAC } from '../../store/reducers/appInitialized';
+import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
+
+import { addNewDeckType, decksAPI } from './decksApi';
 
 export type deckTemplate = {
   _id: string;
@@ -29,14 +33,15 @@ const initialState: deckTemplate[] = [];
 
 export const decksReducer = (
   state: deckTemplate[] = initialState,
-  action: setDecksACType | deleteDeckACType,
+  action: ActionsType,
 ): deckTemplate[] => {
   switch (action.type) {
     case 'FETCH_DECKS':
       return [...state, ...action.decks];
     case 'REMOVE_DECK':
-      // eslint-disable-next-line no-underscore-dangle
       return state.filter(deck => deck._id !== action.id);
+    case 'ADD_DECK':
+      return [{ ...action.deck }, ...state];
 
     default:
       return state;
@@ -54,33 +59,66 @@ export const deleteDeckAC = (id: string) =>
     type: 'REMOVE_DECK',
     id,
   } as const);
+export const addDeckAC = (deck: any) =>
+  ({
+    type: 'ADD_DECK',
+    deck,
+  } as const);
 
-type setDecksACType = ReturnType<typeof fetchDecksAC>;
-type deleteDeckACType = ReturnType<typeof deleteDeckAC>;
+type ActionsType =
+  | ReturnType<typeof fetchDecksAC>
+  | ReturnType<typeof deleteDeckAC>
+  | ReturnType<typeof addDeckAC>;
 
 // thunk
 
 export const setDecksTC = () => (dispatch: Dispatch) => {
+  dispatch(setAppStatusAC('loading'));
   decksAPI
     .fetchDecks()
     .then(res => {
-      console.log(res.data);
       dispatch(fetchDecksAC(res.data.cardPacks));
+      dispatch(setAppStatusAC('succeeded'));
     })
-    .catch((error: any) => {
-      console.log(error.data);
+    .catch((e: AxiosError) => {
+      dispatch(setAppStatusAC('succeeded'));
+      const errorNetwork = e.response
+        ? e.response.data.error
+        : `${e.message}, more details in the console`;
+      dispatch(setErrorMessageNetworkAC(errorNetwork));
     });
 };
-export const removeDeckTC = (id: string, index: any) => (dispatch: Dispatch) => {
+export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
+  dispatch(setAppStatusAC('loading'));
   decksAPI
     .removeDeck(id)
-    .then(res => {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      console.log('res.data.cardPacks[index]._id', res.data.cardPacks[0]._id);
-
-      dispatch(deleteDeckAC(res.data.cardPacks[index]._id));
+    .then(() => {
+      dispatch(deleteDeckAC(id));
+      dispatch(setAppStatusAC('succeeded'));
     })
-    .catch((error: any) => {
-      console.log(error.data);
+    .catch((e: AxiosError) => {
+      dispatch(setAppStatusAC('succeeded'));
+      const errorNetwork = e.response
+        ? e.response.data.error
+        : `${e.message}, more details in the console`;
+      dispatch(setErrorMessageNetworkAC(errorNetwork));
+    });
+};
+
+export const addDeckTC = (dataPayload: addNewDeckType) => (dispatch: Dispatch) => {
+  dispatch(setAppStatusAC('loading'));
+  decksAPI
+    .addNewDeck(dataPayload)
+    .then(res => {
+      const deck = res.data;
+      dispatch(addDeckAC(deck));
+      dispatch(setAppStatusAC('succeeded'));
+    })
+    .catch((e: AxiosError) => {
+      dispatch(setAppStatusAC('succeeded'));
+      const errorNetwork = e.response
+        ? e.response.data.error
+        : `${e.message}, more details in the console`;
+      dispatch(setErrorMessageNetworkAC(errorNetwork));
     });
 };

@@ -12,8 +12,8 @@ export const decksAPI = {
   fetchDecks() {
     return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack');
   },
-  addNewDeck(params: addNewDeckType) {
-    return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', params);
+  addNewDeck(cardsPack: addNewDeckType) {
+    return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', { cardsPack });
   },
 
   removeDeck(id: string) {
