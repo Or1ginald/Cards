@@ -6,7 +6,7 @@ import { RootStoreType } from '../../store';
 import style from '../../style/Common.module.css';
 import { ReturnComponentType } from '../../types';
 
-import { deckTemplate, setDecksTC } from './decksTC';
+import { deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
 import SuperRange from './Range';
 import styleTable from './Table.module.css';
 
@@ -18,6 +18,9 @@ export const Table = (): ReturnComponentType => {
 
   const decks = useSelector<RootStoreType, any>(state => state.decks);
   const random = 100000;
+  const onRemoveDeckClick = (id: string, index: any): any => {
+    dispatch(removeDeckTC(id, index));
+  };
 
   return (
     <div className={styleTable.wrapper}>
@@ -51,13 +54,19 @@ export const Table = (): ReturnComponentType => {
             </div>
 
             <div className={styleTable.tableRow}>
-              {decks.map((deck: deckTemplate) => (
+              {decks.map((deck: deckTemplate, index: any) => (
                 <div className={styleTable.element} key={Math.random() * random}>
                   <div className={styleTable.elementPart}>{deck.name}</div>
                   <div className={styleTable.elementPart}>{deck.cardsCount}</div>
                   <div className={styleTable.elementPart}>{deck.updated}</div>
                   <button className={styleTable.btn}>update</button>
-                  <button className={styleTable.btn}>delete</button>
+                  <button
+                    className={styleTable.btn}
+                    // eslint-disable-next-line no-underscore-dangle
+                    onClick={() => onRemoveDeckClick(deck._id, index)}
+                  >
+                    delete
+                  </button>
                 </div>
               ))}
             </div>

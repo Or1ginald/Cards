@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { SetNewPassType } from '../../api/forgotPasswordApi';
 import { useAppSelector } from '../../hooks';
@@ -32,10 +32,15 @@ export const CreateNewPassword = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
 
-  const location = useLocation();
-  const lastElement = 1;
+  /* const location = useLocation(); */
+
+  const params = useParams<'token'>();
+  const { token } = params as { token: string };
+
+  /* const lastElement = 1;
   const partPath = location.pathname.split('/');
-  const token = partPath[partPath.length - lastElement];
+  const token = partPath[partPath.length - lastElement]; */
+  console.log('token', token);
 
   const data: SetNewPassType = {
     password: newPassword,

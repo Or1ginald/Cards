@@ -61,7 +61,7 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTRATION} element={<SignUpContainer />} />
             <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path="/*" element={<PageError404 />} />
+            <Route path={PATH.PAGE_404} element={<PageError404 />} />
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
             <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />

@@ -17,7 +17,7 @@ export const decksAPI = {
   },
 
   removeDeck(id: string) {
-    return instance.delete<string, any>(`cards/pack/${id}`);
+    return instance.delete<string, any>(`cards/pack/?id=${id}`);
   },
 
   updateDeck(id: string) {
