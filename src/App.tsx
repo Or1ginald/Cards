@@ -19,7 +19,8 @@ import {
   Popup,
   Preloader,
   Profile,
-  Registrations,
+  SignUpContainer,
+  // Registrations,
 } from 'components';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
@@ -40,6 +41,8 @@ export const App = (): ReturnComponentType => {
     );
   }
 
+  // 1
+
   const showMenuHandler = (): void => {
     setShowMenu(!showMenu);
   };
@@ -56,7 +59,7 @@ export const App = (): ReturnComponentType => {
         <div className={s.main}>
           <Routes>
             <Route path={PATH.LOGIN} element={<Login />} />
-            <Route path={PATH.REGISTRATION} element={<Registrations />} />
+            <Route path={PATH.REGISTRATION} element={<SignUpContainer />} />
             <Route path={PATH.PROFILE} element={<Profile />} />
             <Route path="/*" element={<PageError404 />} />
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
