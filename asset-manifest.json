@@ -1,27 +1,28 @@
 {
   "files": {
-    "main.css": "/gameCards/static/css/main.a656e119.chunk.css",
-    "main.js": "/gameCards/static/js/main.ea5337af.chunk.js",
-    "main.js.map": "/gameCards/static/js/main.ea5337af.chunk.js.map",
-    "runtime-main.js": "/gameCards/static/js/runtime-main.e7525c4c.js",
-    "runtime-main.js.map": "/gameCards/static/js/runtime-main.e7525c4c.js.map",
-    "static/js/2.3e87c5de.chunk.js": "/gameCards/static/js/2.3e87c5de.chunk.js",
-    "static/js/2.3e87c5de.chunk.js.map": "/gameCards/static/js/2.3e87c5de.chunk.js.map",
-    "static/js/3.7fae6b0a.chunk.js": "/gameCards/static/js/3.7fae6b0a.chunk.js",
-    "static/js/3.7fae6b0a.chunk.js.map": "/gameCards/static/js/3.7fae6b0a.chunk.js.map",
+    "main.css": "/gameCards/static/css/main.2596ecd2.chunk.css",
+    "main.js": "/gameCards/static/js/main.92c75df9.chunk.js",
+    "main.js.map": "/gameCards/static/js/main.92c75df9.chunk.js.map",
+    "runtime-main.js": "/gameCards/static/js/runtime-main.1a4bb56d.js",
+    "runtime-main.js.map": "/gameCards/static/js/runtime-main.1a4bb56d.js.map",
+    "static/js/2.6d199fc8.chunk.js": "/gameCards/static/js/2.6d199fc8.chunk.js",
+    "static/js/2.6d199fc8.chunk.js.map": "/gameCards/static/js/2.6d199fc8.chunk.js.map",
+    "static/js/3.84adeff1.chunk.js": "/gameCards/static/js/3.84adeff1.chunk.js",
+    "static/js/3.84adeff1.chunk.js.map": "/gameCards/static/js/3.84adeff1.chunk.js.map",
     "index.html": "/gameCards/index.html",
-    "static/css/main.a656e119.chunk.css.map": "/gameCards/static/css/main.a656e119.chunk.css.map",
-    "static/js/2.3e87c5de.chunk.js.LICENSE.txt": "/gameCards/static/js/2.3e87c5de.chunk.js.LICENSE.txt",
+    "static/css/main.2596ecd2.chunk.css.map": "/gameCards/static/css/main.2596ecd2.chunk.css.map",
+    "static/js/2.6d199fc8.chunk.js.LICENSE.txt": "/gameCards/static/js/2.6d199fc8.chunk.js.LICENSE.txt",
     "static/media/error.6b88fd10.png": "/gameCards/static/media/error.6b88fd10.png",
     "static/media/error404.688fee4d.gif": "/gameCards/static/media/error404.688fee4d.gif",
     "static/media/letter.3761fe05.png": "/gameCards/static/media/letter.3761fe05.png",
+    "static/media/Table.module.css": "/gameCards/static/media/magnifier.0a122074.png",
     "static/media/preloader1.9c1d25d2.gif": "/gameCards/static/media/preloader1.9c1d25d2.gif",
     "static/media/App.module.css": "/gameCards/static/media/science.0d520537.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e7525c4c.js",
-    "static/js/2.3e87c5de.chunk.js",
-    "static/css/main.a656e119.chunk.css",
-    "static/js/main.ea5337af.chunk.js"
+    "static/js/runtime-main.1a4bb56d.js",
+    "static/js/2.6d199fc8.chunk.js",
+    "static/css/main.2596ecd2.chunk.css",
+    "static/js/main.92c75df9.chunk.js"
   ]
 }
