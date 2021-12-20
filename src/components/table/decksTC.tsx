@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { decksAPI } from './decksApi';
 
 export type deckTemplate = {
-  _id?: string;
+  _id: string;
   userId?: string;
   name?: string;
   path?: string;
@@ -71,12 +71,14 @@ export const setDecksTC = () => (dispatch: Dispatch) => {
       console.log(error.data);
     });
 };
-export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
+export const removeDeckTC = (id: string, index: any) => (dispatch: Dispatch) => {
   decksAPI
     .removeDeck(id)
     .then(res => {
-      console.log(res.data);
-      dispatch(deleteDeckAC(res.data));
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      console.log('res.data.cardPacks[index]._id', res.data.cardPacks[0]._id);
+
+      dispatch(deleteDeckAC(res.data.cardPacks[index]._id));
     })
     .catch((error: any) => {
       console.log(error.data);

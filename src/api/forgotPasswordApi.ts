@@ -12,7 +12,7 @@ export type AddNewPassType = {
 
 export type SetNewPassType = {
   password: Nullable<string>;
-  resetPasswordToken: Nullable<string>;
+  resetPasswordToken?: Nullable<string>;
 };
 
 export type AddNewPassResponseType = {
