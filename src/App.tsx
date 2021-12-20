@@ -20,7 +20,6 @@ import {
   Preloader,
   Profile,
   SignUpContainer,
-  // Registrations,
 } from 'components';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';

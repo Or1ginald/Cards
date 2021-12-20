@@ -110,7 +110,8 @@ export const addDeckTC = (dataPayload: addNewDeckType) => (dispatch: Dispatch) =
   decksAPI
     .addNewDeck(dataPayload)
     .then(res => {
-      const deck = res.data;
+      const deck = res.data.newCardsPack;
+      console.log('deck', deck);
       dispatch(addDeckAC(deck));
       dispatch(setAppStatusAC('succeeded'));
     })
