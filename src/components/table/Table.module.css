@@ -1,5 +1,6 @@
 .wrapper {
     display: flex;
+    justify-content: center;
 }
 
 .leftBlock {
@@ -64,5 +65,11 @@
     padding-left: 3em;
     background: url(../../assets/magnifier.png) no-repeat 3px 1px;
     background-size: auto 90%;
+}
+.textArea {
+    border: 2px solid black;
+    text-align: center;
+    margin-right: 0.5em;
+
 }
 

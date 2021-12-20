@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useAppSelector } from '../../hooks';
 import { RootStoreType } from '../../store';
+import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
 import { getStatus } from '../../store/selectors';
 import { getErrorNetworkMessage } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
@@ -28,6 +29,7 @@ export const Table = (): ReturnComponentType => {
   const random = 100000;
   const onRemoveDeckClick = (id: string): void => {
     dispatch(removeDeckTC(id));
+    dispatch(setErrorMessageNetworkAC(''));
   };
 
   const onTitleEnterChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
@@ -35,16 +37,17 @@ export const Table = (): ReturnComponentType => {
   };
   const addButtonClick = (): void => {
     dispatch(addDeckTC({ name: title }));
+    /*  dispatch(setDecksTC()); */
     setTitle('');
   };
 
-  const onClickFilterMyPacksClick = (): void => {};
+  const onFilterMyPacksClick = (): void => {};
 
   return (
     <div className={styleTable.wrapper}>
       <div className={styleTable.leftBlock}>
         <div className={styleTable.btns}>
-          <button className={style.btn} onClick={onClickFilterMyPacksClick}>
+          <button className={style.btn} onClick={onFilterMyPacksClick}>
             My
           </button>
           <button className={style.btn}>All</button>
@@ -66,6 +69,7 @@ export const Table = (): ReturnComponentType => {
                 type="search"
               />
               <textarea
+                className={styleTable.textArea}
                 placeholder="name pack"
                 value={title}
                 onChange={onTitleEnterChange}
