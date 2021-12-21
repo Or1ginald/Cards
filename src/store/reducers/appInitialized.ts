@@ -1,14 +1,14 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { RootStoreType } from '../store';
-
 import { setAuthLoginDataAC, setLoginData } from './login';
 
 import { authAPI } from 'api/loginApi';
-import { Nullable } from 'types';
+import { requestStatus } from 'enum';
+import { RootStoreType } from 'store';
+import { Nullable, RequestStatusType } from 'types';
 
 export const initialState: InitialStateType = {
-  status: 'idle',
+  status: requestStatus.idle,
   error: null,
   isInitialized: false,
 };
@@ -51,7 +51,6 @@ export const initializeAppTC =
 
 // types
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 export type InitialStateType = {
   // происходит ли сейчас взаимодействие с сервером
   status: RequestStatusType;

@@ -1,5 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk';
 
+import { requestStatus } from '../../enum';
+
 import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
@@ -45,32 +47,32 @@ export const setErrorMessageAC = (error: Nullable<string>) =>
 export const logInTC =
   (data: LoginParamsType) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC(requestStatus.loading));
     authAPI
       .login(data)
       .then(() => {
         dispatch(setAuthLoginDataAC(true));
-        dispatch(setAppStatusAC('succeeded'));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
         const error = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
         dispatch(setErrorMessageAC(error));
-        dispatch(setAppStatusAC('failed'));
+        dispatch(setAppStatusAC(requestStatus.failed));
       })
       .finally(() => {
-        dispatch(setAppStatusAC('idle'));
+        dispatch(setAppStatusAC(requestStatus.idle));
       });
   };
 
 export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC(requestStatus.loading));
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
       dispatch(setErrorMessageAC(''));
-      dispatch(setAppStatusAC('idle'));
+      dispatch(setAppStatusAC(requestStatus.idle));
     });
   };
 
