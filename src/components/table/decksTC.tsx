@@ -23,11 +23,11 @@ export type deckTemplate = {
 
 export type ResponseDeckType = {
   cardPacks: deckTemplate[];
-  cardPacksTotalCount: number;
+  cardPacksTotalCount: number; // totalCount
   maxCardsCount: number;
   minCardsCount: number;
-  page: number;
-  pageCount: number;
+  page: number; // currentPage
+  pageCount: number; // perPage
 };
 const initialState: deckTemplate[] = [];
 

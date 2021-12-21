@@ -1,0 +1,16 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.page, .currentPage {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.currentPage {
+    border: 2px solid gray;
+    font-weight: bold;
+}

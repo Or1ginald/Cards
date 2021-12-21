@@ -14,7 +14,8 @@
 
 .btns {
     display: flex;
-    min-width: 100px;
+    gap: 1em;
+    /*min-width: 100px;*/
     justify-content: space-evenly;
     padding: 1em;
 }
@@ -23,6 +24,7 @@
 .rightBlock {
     display: flex;
     min-width: 600px;
+    width: 100%;
 }
 .decks {
     background-color: white;
@@ -73,3 +75,8 @@
 
 }
 
+@media (max-width: 1250px){
+    .wrapper {
+        flex-direction: column;
+    }
+}

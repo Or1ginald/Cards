@@ -7,3 +7,5 @@ export { SignUp } from './registrations';
 export { Navigation } from './navigation';
 export * from './confirmPassword';
 export { Preloader } from './preloader';
+export { TableSidebar } from './tableSidebar';
+export { CustomButton } from './customButton';

@@ -1,8 +1,25 @@
-import { ReturnComponentType } from 'types';
+import React from 'react';
 
-type PaginationPropsType = {};
+import s from './Pagination.module.css';
 
-export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
-  const {} = props;
-  return <div>1</div>;
+type PaginationPropsType = {
+  pages: number[];
+  currentPage: number;
 };
+
+export const Pagination = React.memo((props: PaginationPropsType) => {
+  const { pages, currentPage } = props;
+  return (
+    <div className={s.pagination}>
+      {pages.map((page, index) => {
+        const pageClassName = page === currentPage ? s.activePage : s.page;
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          <span key={index} className={pageClassName}>
+            {page}
+          </span>
+        );
+      })}
+    </div>
+  );
+});
