@@ -8,6 +8,10 @@ export type addNewDeckType = {
   name: string;
 };
 
+export type updateDeckType = {
+  _id: string;
+};
+
 export const decksAPI = {
   fetchDecks() {
     return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack');
@@ -20,7 +24,7 @@ export const decksAPI = {
     return instance.delete<string, any>(`cards/pack/?id=${id}`);
   },
 
-  updateDeck(id: string) {
-    return instance.put<string, any>('cards/pack', { id });
+  updateDeck(cardsPack: updateDeckType) {
+    return instance.put<string, any>('cards/pack', { cardsPack });
   },
 };

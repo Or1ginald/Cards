@@ -1,12 +1,18 @@
 .wrapper {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 2em;
     display: flex;
-    justify-content: center;
+  justify-content: center;
+    margin: 0 auto;
 }
 
 .leftBlock {
     display: flex;
+    width: 100%;
+    max-width: 200px;
     flex-direction: column;
-    min-width: 200px;
+    /*min-width: 200px;*/
     background-color: white;
     text-align: center;
     justify-content: center;
@@ -36,7 +42,8 @@
     display: flex;
 }
 .elementPart {
-    width: 250px;
+    min-width: 600px;
+    width: 100%;
 }
 .tableCaption{
     display: flex;
@@ -72,7 +79,15 @@
     border: 2px solid black;
     text-align: center;
     margin-right: 0.5em;
+    font-family: 'Mochiy Pop P One', sans-serif;
 
+}
+.elementPartOne {
+    max-width: 400px;
+    width: 100%;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: pre-wrap;
 }
 
 @media (max-width: 1250px){
@@ -80,3 +95,17 @@
         flex-direction: column;
     }
 }
+.elementPartTwo {
+    max-width: 180px;
+    width: 100%;
+    font-size: 12px;
+    padding: 0 2em;
+
+}
+.elementPartThree {
+    max-width: 150px;
+    width: 100%;
+    font-size: 12px;
+
+}
+
