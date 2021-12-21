@@ -6,15 +6,8 @@ import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
 import { getErrorNetworkMessage } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 
-import {
-  addDeckTC,
-  deckTemplate,
-  removeDeckTC,
-  setDecksTC,
-  upDateDeckAC,
-} from './decksTC';
+import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
 import { EditableSpan } from './EditableSpan';
-import SuperRange from './Range';
 import styleTable from './Table.module.css';
 
 import { TableSidebar, Preloader } from 'components';
@@ -29,13 +22,11 @@ export const Table = (): ReturnComponentType => {
 
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
-  const decks = useSelector<RootStoreType, any>(state => state.decks);
+  const decks = useAppSelector(state => state.decks);
 
   useEffect(() => {
     dispatch(setDecksTC());
   }, [dispatch]);
-
-  const decks = useAppSelector(state => state.decks);
 
   const random = 100000;
 
@@ -106,12 +97,7 @@ export const Table = (): ReturnComponentType => {
                     </div>
                     <div className={styleTable.elementPartTwo}>{deck.cardsCount}</div>
                     <div className={styleTable.elementPartThree}>{deck.updated}</div>
-                    <button
-                      className={styleTable.btn}
-                      onClick={() => onUpdateTitleClick(deck._id)}
-                    >
-                      update
-                    </button>
+                    <button className={styleTable.btn}>update</button>
                     <button
                       className={styleTable.btn}
                       onClick={() => onRemoveDeckClick(deck._id)}
