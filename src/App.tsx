@@ -18,9 +18,9 @@ import {
   Navigation,
   Popup,
   Preloader,
-  Profile,
   SignUpContainer,
 } from 'components';
+import { ProfileContainer } from 'components/profile/ProfileContainer';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
 import st from 'style/Common.module.css';
@@ -53,13 +53,13 @@ export const App = (): ReturnComponentType => {
             Show menu
           </button>
         </div>
-        {showMenu === true ? <Navigation /> : <div className={style.nav} />}
+        {showMenu ? <Navigation /> : <div className={style.nav} />}
 
         <div className={s.main}>
           <Routes>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTRATION} element={<SignUpContainer />} />
-            <Route path={PATH.PROFILE} element={<Profile />} />
+            <Route path={PATH.PROFILE} element={<ProfileContainer />} />
             <Route path={PATH.PAGE_404} element={<PageError404 />} />
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
