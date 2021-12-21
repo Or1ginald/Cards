@@ -1,5 +1,6 @@
-import { Nullable } from '../../../types';
 import { RootStateType } from '../../types';
+
+import { Nullable } from 'types';
 
 export const getErrorNetworkMessage = (
   state: RootStateType,

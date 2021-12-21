@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { CustomInput } from '../customInput';
-
 import st from './Registrations.module.css';
 
+import { CustomButton, CustomInput } from 'components';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types/ReturnComponentType';
 
@@ -67,14 +66,12 @@ export const SignUp = (props: PropsType): ReturnComponentType => {
           />
           <p> Have fun! </p>
           <div className={st.btns}>
-            <button className={style.btn}>Cancel</button>
-            <button
-              className={style.btn}
+            <button className={style.btn}>Cancel</button> {/* И шо, и где онклик???? */}
+            <CustomButton
+              title="Create"
               onClick={onSendButtonClick}
               disabled={isFetching}
-            >
-              Create
-            </button>
+            />
           </div>
         </div>
       </div>

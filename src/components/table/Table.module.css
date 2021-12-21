@@ -20,7 +20,8 @@
 
 .btns {
     display: flex;
-    min-width: 100px;
+    gap: 1em;
+    /*min-width: 100px;*/
     justify-content: space-evenly;
     padding: 1em;
 }
@@ -89,6 +90,11 @@
     white-space: pre-wrap;
 }
 
+@media (max-width: 1250px){
+    .wrapper {
+        flex-direction: column;
+    }
+}
 .elementPartTwo {
     max-width: 180px;
     width: 100%;
@@ -102,3 +108,4 @@
     font-size: 12px;
 
 }
+

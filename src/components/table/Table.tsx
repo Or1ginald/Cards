@@ -1,15 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { useAppSelector } from '../../hooks';
-import { RootStoreType } from '../../store';
 import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
-import { getStatus } from '../../store/selectors';
 import { getErrorNetworkMessage } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
-import { Preloader } from '../preloader';
 
 import {
   addDeckTC,
@@ -21,6 +16,11 @@ import {
 import { EditableSpan } from './EditableSpan';
 import SuperRange from './Range';
 import styleTable from './Table.module.css';
+
+import { TableSidebar, Preloader } from 'components';
+import { useAppSelector } from 'hooks';
+import { getStatus } from 'store/selectors';
+import { ReturnComponentType } from 'types';
 
 export const Table = (): ReturnComponentType => {
   const [title, setTitle] = useState('');
@@ -34,6 +34,8 @@ export const Table = (): ReturnComponentType => {
   useEffect(() => {
     dispatch(setDecksTC());
   }, [dispatch]);
+
+  const decks = useAppSelector(state => state.decks);
 
   const random = 100000;
 
@@ -50,20 +52,12 @@ export const Table = (): ReturnComponentType => {
     setTitle('');
   };
 
-  const onUpdateTitleClick = (id: string): void => {
-    dispatch(upDateDeckAC('fox', id));
-  };
+  // const onFilterMyPacksClick = (): void => {};
 
   return (
     <div className={styleTable.wrapper}>
-      <div className={styleTable.leftBlock}>
-        <div className={styleTable.btns}>
-          <button className={style.btn}>My</button>
-          <button className={style.btn}>All</button>
-        </div>
-        <span>Number of cards</span>
-        <SuperRange />
-      </div>
+      <TableSidebar />
+
       {isLoading === 'loading' ? (
         <Preloader />
       ) : (
