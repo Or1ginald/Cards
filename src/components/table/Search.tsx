@@ -1,15 +1,25 @@
 import React, { ChangeEvent, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootStoreType, setErrorMessagePassAC } from '../../store';
 import { ReturnComponentType } from '../../types';
 import { CustomButton } from '../customButton';
 
-import { addDeckTC } from './decksTC';
+import { addDeckTC, deckTemplate, fetchDecksAC } from './decksTC';
 import style from './TableGrid.module.css';
 
 export const Search = (): ReturnComponentType => {
   const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
+
+  const decks = useSelector<RootStoreType, deckTemplate[]>(
+    state => state.decks.cardPacks,
+  );
+
+  const random = 100000;
+  const enter = 13;
+  const timeOut = 2000;
 
   const dispatch = useDispatch();
 
@@ -20,6 +30,38 @@ export const Search = (): ReturnComponentType => {
     dispatch(addDeckTC({ name: title }));
     setTitle('');
   };
+  const onKeyPressAddHandler = (e: any): void => {
+    if (e.charCode === enter) {
+      dispatch(addDeckTC({ name: title }));
+      setTitle('');
+    }
+  };
+
+  const chosenPacks = decks.filter(deck => deck.name === name);
+  const onChangeSearch = (e: any): void => {
+    setName(e.currentTarget.value);
+  };
+
+  const onKeyPressHandler = (e: any): void => {
+    if (e.charCode === enter) {
+      dispatch(
+        fetchDecksAC({
+          cardPacksTotalCount: 0,
+          maxCardsCount: 0,
+          minCardsCount: 0,
+          page: 0,
+          pageCount: 0,
+          cardPacks: chosenPacks,
+        }),
+      );
+      setName('');
+    } else {
+      dispatch(setErrorMessagePassAC('Press only ENTER'));
+      setTimeout(() => {
+        dispatch(setErrorMessagePassAC(''));
+      }, timeOut);
+    }
+  };
 
   return (
     <div className={style.rightBlock}>
@@ -29,13 +71,25 @@ export const Search = (): ReturnComponentType => {
           id="decks"
           placeholder="Search"
           type="search"
+          list="packs"
+          onKeyPress={onKeyPressHandler}
+          onChange={onChangeSearch}
         />
         <input
           className={style.textArea}
           placeholder="name pack"
           value={title}
           onChange={onTitleEnterChange}
+          onKeyPress={onKeyPressAddHandler}
         />
+        <datalist id="packs">
+          <select>
+            {decks.map((deck: deckTemplate) => (
+              <option key={Math.random() * random}>{deck.name}</option>
+            ))}
+          </select>
+        </datalist>
+
         <CustomButton title=" Add new pack" onClick={addButtonClick} />
       </div>
     </div>

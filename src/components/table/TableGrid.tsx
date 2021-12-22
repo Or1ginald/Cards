@@ -28,10 +28,10 @@ export const TableGrid = (): ReturnComponentType => {
 
   return (
     <div>
+      {errorNetworkMessage && (
+        <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
+      )}
       <table className={style.table}>
-        {errorNetworkMessage && (
-          <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-        )}
         <thead>
           <tr>
             <th>Name</th>
