@@ -32,15 +32,8 @@ export const CreateNewPassword = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
 
-  /* const location = useLocation(); */
-
   const params = useParams<'token'>();
   const { token } = params as { token: string };
-
-  /* const lastElement = 1;
-  const partPath = location.pathname.split('/');
-  const token = partPath[partPath.length - lastElement]; */
-  console.log('token', token);
 
   const data: SetNewPassType = {
     password: newPassword,
