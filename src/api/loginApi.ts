@@ -53,6 +53,7 @@ export type ResponseType = {
   publicCardPacksCount: number;
   created: Date;
   updated: Date;
+  isAdmin: boolean;
   verified: boolean;
   rememberMe: boolean;
   error?: string;

@@ -80,14 +80,6 @@ export const Profile = (): ReturnComponentType => {
           ) : (
             <NavLink to={PATH.LOGIN}>Login</NavLink>
           )}
-          {/* {!editMode && ( */}
-          {/*  <div> */}
-          {/*    <span>Name</span> */}
-          {/*    <div onDoubleClick={activateEditMode}>{name}</div> */}
-          {/*    <span>Email</span> */}
-          {/*    <div onDoubleClick={activateEditMode}>{email}</div> */}
-          {/*  </div> */}
-          {/* )} */}
           <br />
           {editMode ? (
             <input

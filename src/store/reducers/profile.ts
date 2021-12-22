@@ -1,6 +1,6 @@
 import { Nullable } from '../../types';
 
-export type ProfileResponseDataType = {
+export type ProfileResponseDataType = null | {
   _id: Nullable<string>;
   email: string;
   name: string;
@@ -18,8 +18,8 @@ const initialState = {
   profile: {
     _id: null as string | null,
     avatar: null as string | null,
-    name: 'FAKE_NAME',
-    email: 'FAKE_EMAIL',
+    name: '',
+    email: '',
     publicCardPacksCount: null as number | null,
     created: null as Date | null,
     updated: null as Date | null,
@@ -47,6 +47,23 @@ export const profileReducer = (
         ...state,
         profile: { ...state.profile, ...action.profile },
       };
+    case 'LOGOUT_USER_PROFILE':
+      return {
+        ...state,
+        profile: {
+          _id: null as string | null,
+          avatar: null as string | null,
+          name: '',
+          email: '',
+          publicCardPacksCount: null as number | null,
+          created: null as Date | null,
+          updated: null as Date | null,
+          isAdmin: null as boolean | null,
+          verified: null as boolean | null,
+          rememberMe: null as boolean | null,
+          error: null as string | null,
+        },
+      };
     // case 'SET_ERROR_MESSAGE':
     //   return {
     //     ...state,
@@ -57,10 +74,10 @@ export const profileReducer = (
   }
 };
 
-export const setUserData = (_id: Nullable<string>, name: Nullable<string>) =>
+export const setUserData = (_id: string, name: string, avatar: string) =>
   ({
     type: 'SET_USER_DATA',
-    payload: { _id, name },
+    payload: { _id, name, avatar },
   } as const);
 export const setUserProfile = (profile: ProfileResponseDataType) =>
   ({
@@ -69,6 +86,11 @@ export const setUserProfile = (profile: ProfileResponseDataType) =>
   } as const);
 export const setErrorMessage = (error: Nullable<string>) =>
   ({ type: 'SET_ERROR_MESSAGE', error } as const);
+export const logOutUserProfile = (profile: ProfileResponseDataType) =>
+  ({
+    type: 'LOGOUT_USER_PROFILE',
+    profile,
+  } as const);
 
 // export const getAuthLoginData = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
 //   return authAPI.me()
@@ -115,7 +137,12 @@ export const setErrorMessage = (error: Nullable<string>) =>
 // }
 
 // type;
-type setUserProfileType = ReturnType<typeof setUserProfile>;
+export type setUserProfileType = ReturnType<typeof setUserProfile>;
 type setAuthUserDataType = ReturnType<typeof setUserData>;
 type setErrorMessageLoginType = ReturnType<typeof setErrorMessage>;
-type ActionTypes = setAuthUserDataType | setErrorMessageLoginType | setUserProfileType;
+export type logOutUserProfileType = ReturnType<typeof logOutUserProfile>;
+type ActionTypes =
+  | setAuthUserDataType
+  | setErrorMessageLoginType
+  | setUserProfileType
+  | logOutUserProfileType;
