@@ -20,6 +20,7 @@ export const Search = (): ReturnComponentType => {
   const random = 100000;
   const enter = 13;
   const timeOut = 2000;
+  const chosenPacks = decks.filter(deck => deck.name === name);
 
   const dispatch = useDispatch();
 
@@ -36,8 +37,18 @@ export const Search = (): ReturnComponentType => {
       setTitle('');
     }
   };
-
-  const chosenPacks = decks.filter(deck => deck.name === name);
+  const onDoubleClickAddHandler = (): void => {
+    dispatch(
+      fetchDecksAC({
+        cardPacksTotalCount: 0,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        page: 0,
+        pageCount: 0,
+        cardPacks: chosenPacks,
+      }),
+    );
+  };
   const onChangeSearch = (e: any): void => {
     setName(e.currentTarget.value);
   };
@@ -82,12 +93,13 @@ export const Search = (): ReturnComponentType => {
           onChange={onTitleEnterChange}
           onKeyPress={onKeyPressAddHandler}
         />
-        <datalist id="packs">
-          <select>
-            {decks.map((deck: deckTemplate) => (
-              <option key={Math.random() * random}>{deck.name}</option>
-            ))}
-          </select>
+        <datalist id="packs" onDoubleClick={onDoubleClickAddHandler}>
+          {/*  <select> */}
+          {decks.map((deck: deckTemplate) => (
+            // eslint-disable-next-line jsx-a11y/control-has-associated-label
+            <option key={Math.random() * random} value={deck.name} />
+          ))}
+          {/*  </select> */}
         </datalist>
 
         <CustomButton title=" Add new pack" onClick={addButtonClick} />
