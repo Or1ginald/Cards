@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
-
 import style from '../../style/Common.module.css';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
-
 import { SetNewPassType } from 'api';
+import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
 import {
   setAppStatusAC,
@@ -19,10 +18,6 @@ import {
   getStatus,
   forgotPassSetPassTC,
 } from 'store';
-
-import { PATH, requestStatus } from 'enum';
-import { useAppSelector, useInput } from 'hooks';
-
 import { ReturnComponentType } from 'types';
 import { isPasswordValid } from 'utils';
 
