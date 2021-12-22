@@ -5,12 +5,20 @@
     width: 100%;
     height: 100%;
     background-image: url("assets/science.jpg");
-    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     align-content: center;
     justify-content: center;
 
+}
+
+.preloaderWrap {
+    height: 100vh;
+    width: 100%;
+    background-color: #2C2D2E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .layout {
@@ -22,8 +30,10 @@
 }
 
 .main {
-    width: 100%;
-    height: 100%;
+   flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h2, span {
