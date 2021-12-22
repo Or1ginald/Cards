@@ -4,37 +4,72 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { RootStoreType } from '../../store';
-import { setErrorAC, signUpTC } from '../../store/reducers/signUp';
+import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
+import { signUpTC } from '../../store/reducers/signUp';
+import {
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+} from '../../store/selectors/confirmPassword';
 
 import { SignUp } from './signUp';
 
 import { PATH } from 'enum/pathes';
-import { useInput } from 'hooks';
+import { useAppSelector, useInput } from 'hooks';
 import { ReturnComponentType } from 'types';
 import { isEmailValid, isPasswordValid } from 'utils';
 
 export const SignUpContainer = (): ReturnComponentType => {
-  const { value: email, handleValue: handleEmail } = useInput('');
-  const { value: password, handleValue: handlePassword } = useInput('');
-  const { value: confirmPassword, handleValue: handleConfirmPassword } = useInput('');
-  const error = useSelector<RootStoreType, null | string>(state => state.signUp.error);
+  const { value: email, handleValue: handleEmail, resetValue: resetEmail } = useInput('');
+  const {
+    value: password,
+    handleValue: handlePassword,
+    resetValue: resetPassword,
+  } = useInput('');
+  const {
+    value: confirmPassword,
+    handleValue: handleConfirmPassword,
+    resetValue: resetConfirmPassword,
+  } = useInput('');
+
   const isFetching = useSelector<RootStoreType, boolean>(
     state => state.signUp.isFetching,
   );
   const isSignUp = useSelector<RootStoreType, boolean>(state => state.signUp.isSignUp);
+  const errorPassMessage = useAppSelector(getErrorValidMessage);
+  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
+
   const dispatch = useDispatch();
 
   const data: any = {
     email,
     password,
   };
+  const timeOut = 1000;
+
+  const onCancelButtonClick = (): void => {
+    resetEmail('');
+    resetPassword('');
+    resetConfirmPassword('');
+  };
 
   const onSendButtonClick = (): void => {
-    if (password !== confirmPassword) {
-      dispatch(setErrorAC(error));
+    if (
+      password !== confirmPassword ||
+      password === null ||
+      confirmPassword === null ||
+      !isPasswordValid(password) ||
+      !isEmailValid(email)
+    ) {
+      dispatch(setErrorMessagePassAC('invalid data ;-('));
+      setTimeout(() => {
+        dispatch(setErrorMessagePassAC(''));
+      }, timeOut);
     }
     if (isPasswordValid(password) && isEmailValid(email)) {
       dispatch(signUpTC(data));
+      resetPassword('');
+      resetEmail('');
+      resetConfirmPassword('');
     }
   };
   if (isSignUp) {
@@ -43,14 +78,16 @@ export const SignUpContainer = (): ReturnComponentType => {
   return (
     <SignUp
       email={email}
-      handleEmail={handleEmail}
       password={password}
+      confirmPassword={confirmPassword}
+      handleEmail={handleEmail}
       handlePassword={handlePassword}
       handleConfirmPassword={handleConfirmPassword}
-      // isLoadedData={isLoadedData}
       isFetching={isFetching}
       onSendButtonClick={onSendButtonClick}
-      error={error}
+      onCancelButtonClick={onCancelButtonClick}
+      errorValid={errorPassMessage}
+      errorNetwork={errorNetworkMessage}
     />
   );
 };

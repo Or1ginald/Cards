@@ -1,6 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk';
 
 import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
+import { setErrorMessageNetworkAC } from './errorReducer';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
 import { RootStoreType } from 'store';
@@ -44,7 +45,13 @@ export const setErrorMessageAC = (error: Nullable<string>) =>
 
 export const logInTC =
   (data: LoginParamsType) =>
-  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
+  (
+    dispatch: ThunkDispatch<
+      RootStoreType,
+      undefined,
+      ActionTypesLogin | ReturnType<typeof setErrorMessageNetworkAC>
+    >,
+  ) => {
     dispatch(setAppStatusAC('loading'));
     authAPI
       .login(data)
@@ -53,11 +60,15 @@ export const logInTC =
         dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
-        const error = e.response
+        dispatch(setAppStatusAC('succeeded'));
+        const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
-        dispatch(setErrorMessageAC(error));
-        dispatch(setAppStatusAC('failed'));
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+        const timeOut = 2000;
+        setTimeout(() => {
+          dispatch(setErrorMessageNetworkAC(''));
+        }, timeOut);
       })
       .finally(() => {
         dispatch(setAppStatusAC('idle'));
