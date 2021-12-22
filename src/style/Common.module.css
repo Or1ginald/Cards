@@ -59,3 +59,7 @@ a {
     display: flex;
     justify-content: center;
 }
+.avatar {
+    width: 64px;
+    height: 64px;
+}

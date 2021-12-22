@@ -1,6 +1,6 @@
 export { CustomInput } from './customInput';
 export { Login } from './loginPage';
-export { Profile } from './profile';
+export { ProfileContainer } from './profile';
 // export { Registrations } from './registrations';
 export { SignUpContainer } from './registrations';
 export { SignUp } from './registrations';
