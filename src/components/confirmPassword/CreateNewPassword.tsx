@@ -3,25 +3,19 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
-
 import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
-import {
-  setErrorMessageNetworkAC,
-  setErrorMessagePassAC,
-} from '../../store/reducers/errorReducer';
+import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
 } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
-
 import { CustomInput } from '../customInput';
-
 import { Preloader } from '../preloader';
 
 import { SetNewPassType } from 'api/forgotPasswordApi';
 import { PATH, requestStatus } from 'enum';
-import { useAppSelector } from 'hooks';
+import { useAppSelector, useInput } from 'hooks';
 import { setAppStatusAC } from 'store/reducers';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
@@ -56,7 +50,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
       dispatch(forgotPassSetPassTC(data, setLoadedData));
 
       dispatch(setAppStatusAC(requestStatus.succeeded));
-      setPassword('');
+      resetNewPassword();
     } else {
       dispatch(setErrorMessagePassAC('invalid password ;-('));
       setTimeout(() => {
@@ -71,7 +65,7 @@ export const CreateNewPassword = (): ReturnComponentType => {
 
   return (
     <div className={style.mainContainer}>
-      {isLoading === 'loading' ? (
+      {isLoading === requestStatus.loading ? (
         <Preloader />
       ) : (
         <div className={style.content}>
