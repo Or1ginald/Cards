@@ -3,10 +3,15 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import style from '../../style/Common.module.css';
-import { createPagesArray } from '../../utils';
 import { Pagination } from '../pagination';
 
-import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
+import {
+  addDeckTC,
+  deckTemplate,
+  removeDeckTC,
+  setCurrentPageAC,
+  setDecksTC,
+} from './decksTC';
 import { EditableSpan } from './EditableSpan';
 import styleTable from './Table.module.css';
 
@@ -27,20 +32,8 @@ export const Table = (): ReturnComponentType => {
   const totalCount = useAppSelector(state => state.decks.cardPacksTotalCount);
   const currentPage = useAppSelector(state => state.decks.page);
   const perPage = useAppSelector(state => state.decks.pageCount);
-  const pagesCount = Math.ceil(totalCount / perPage);
+  // const pagesCount = Math.ceil(totalCount / perPage);
 
-  /* const pages = useMemo(
-    () => createPagesArray(pagesCount, currentPage),
-    [pagesCount, currentPage],
-  ); */
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  // const pages: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  let pagess: Array<number> = [];
-  useEffect(() => {
-    pagess = createPagesArray(pagesCount, currentPage);
-  }, [dispatch, currentPage, pagesCount]);
-
-  createPagesArray(pagesCount, currentPage);
   useEffect(() => {
     dispatch(setDecksTC());
   }, [dispatch, currentPage]);
@@ -145,7 +138,13 @@ export const Table = (): ReturnComponentType => {
           </div>
         )}
       </div>
-      <Pagination pages={pagess} currentPage={currentPage} />
+      <Pagination
+        // className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={totalCount}
+        pageSize={perPage}
+        onPageChange={(page: number) => dispatch(setCurrentPageAC(page))}
+      />
     </div>
   );
 };

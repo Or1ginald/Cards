@@ -4,22 +4,17 @@
 /* eslint-disable react/jsx-key */
 import React from 'react';
 
+import './pagination.scss';
+
 import { DOTS, usePagination } from 'hooks';
 import { ReturnComponentType } from 'types';
 
-// import { useDispatch } from 'react-redux';
-//
-// import { setCurrentPageAC } from '../table/decksTC';
-//
-// import s from './Pagination.module.css';
-//
 type PaginationPropsType = {
   currentPage: number;
-  onPageChange: any;
+  onPageChange: (page: number) => void;
   totalCount: number;
-  siblingCount: number;
+  siblingCount?: number;
   pageSize: number;
-  className: string;
 };
 
 // export const Pagination = React.memo((props: PaginationPropsType) => {
@@ -49,14 +44,7 @@ type PaginationPropsType = {
 // });
 
 export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
-  const {
-    onPageChange,
-    totalCount,
-    siblingCount = 1,
-    currentPage,
-    pageSize,
-    className,
-  } = props;
+  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize } = props;
 
   const paginationRange = usePagination({
     currentPage,
@@ -76,41 +64,31 @@ export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
   const onPrevious = (): void => {
     onPageChange(currentPage - 1);
   };
-
   const lastPage = paginationRange[paginationRange.length - 1];
+  const ulClassName = currentPage === 1 ? 'pagination-item disabled' : 'pagination-item';
+  const liSelected =
+    currentPage === lastPage ? 'pagination-item disabled' : 'pagination-item';
+
   return (
-    <ul className={classnames('pagination-container', { [className]: className })}>
+    <ul className="pagination-container">
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <li
-        className={classnames('pagination-item', {
-          disabled: currentPage === 1,
-        })}
-        onClick={onPrevious}
-      >
+      <li className={ulClassName} onClick={onPrevious}>
         <div className="arrow left" />
       </li>
-      {paginationRange.map(pageNumber => {
+      {paginationRange.map((pageNumber: any) => {
         if (pageNumber === DOTS) {
           return <li className="pagination-item dots">&#8230;</li>;
         }
+        const liDisabled =
+          pageNumber === currentPage ? 'pagination-item selected' : 'pagination-item';
 
         return (
-          <li
-            className={classnames('pagination-item', {
-              selected: pageNumber === currentPage,
-            })}
-            onClick={() => onPageChange(pageNumber)}
-          >
+          <li className={liDisabled} onClick={() => onPageChange(pageNumber)}>
             {pageNumber}
           </li>
         );
       })}
-      <li
-        className={classnames('pagination-item', {
-          disabled: currentPage === lastPage,
-        })}
-        onClick={onNext}
-      >
+      <li className={liSelected} onClick={onNext}>
         <div className="arrow right" />
       </li>
     </ul>
