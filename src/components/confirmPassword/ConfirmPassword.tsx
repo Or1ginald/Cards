@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
 import style from '../../style/Common.module.css';
+import { CustomButton } from '../customButton';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
 import { AddNewPassType } from 'api';
 import { useAppSelector, useInput } from 'hooks';
 import {
+  setErrorMessagePassAC,
   getErrorNetworkMessage,
   getErrorValidMessage,
   getStatus,
@@ -81,9 +82,10 @@ password recovery link: <a href='https://or1ginald.github.io/gameCards/#/createN
             </div>
             <p> Enter your email and we will send you further instructions</p>
             <div>
-              <button className={style.btn} onClick={onSendButtonClick}>
+              <CustomButton title="Send instructions" onClick={onSendButtonClick} />
+              {/* <button className={style.btn} onClick={onSendButtonClick}>
                 send instructions
-              </button>
+              </button> */}
             </div>
             <span>Did you remember your password?</span>
             <Link to="/login"> Try logging in </Link>

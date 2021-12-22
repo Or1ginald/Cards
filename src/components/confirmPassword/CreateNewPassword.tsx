@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
 import style from '../../style/Common.module.css';
+import { CustomButton } from '../customButton';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
@@ -87,9 +88,10 @@ export const CreateNewPassword = (): ReturnComponentType => {
             </div>
             <p> Create new password and we will send you further instructions to email</p>
             <div>
-              <button className={style.btn} onClick={onCreateButtonClick}>
+              <CustomButton title="Create new password" onClick={onCreateButtonClick} />
+              {/* <button className={style.btn} onClick={onCreateButtonClick}>
                 Create new password
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
