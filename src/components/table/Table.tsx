@@ -22,7 +22,7 @@ export const Table = (): ReturnComponentType => {
 
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
-  const decks = useAppSelector(state => state.decks);
+  const cardPacks = useAppSelector(state => state.decks.cardPacks);
 
   useEffect(() => {
     dispatch(setDecksTC());
@@ -90,17 +90,17 @@ export const Table = (): ReturnComponentType => {
                 {errorNetworkMessage && (
                   <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
                 )}
-                {decks.map((deck: deckTemplate) => (
+                {cardPacks.map((cardPack: deckTemplate) => (
                   <div className={styleTable.element} key={Math.random() * random}>
                     <div className={styleTable.elementPartOne}>
-                      <EditableSpan value={deck.name} id={deck._id} />
+                      <EditableSpan value={cardPack.name} id={cardPack._id} />
                     </div>
-                    <div className={styleTable.elementPartTwo}>{deck.cardsCount}</div>
-                    <div className={styleTable.elementPartThree}>{deck.updated}</div>
+                    <div className={styleTable.elementPartTwo}>{cardPack.cardsCount}</div>
+                    <div className={styleTable.elementPartThree}>{cardPack.updated}</div>
                     <button className={styleTable.btn}>update</button>
                     <button
                       className={styleTable.btn}
-                      onClick={() => onRemoveDeckClick(deck._id)}
+                      onClick={() => onRemoveDeckClick(cardPack._id)}
                     >
                       delete
                     </button>
