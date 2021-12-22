@@ -10,7 +10,7 @@ import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
 import { EditableSpan } from './EditableSpan';
 import styleTable from './Table.module.css';
 
-import { TableSidebar, Preloader } from 'components';
+import { Preloader, TableSidebar } from 'components';
 import { useAppSelector } from 'hooks';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
@@ -54,7 +54,7 @@ export const Table = (): ReturnComponentType => {
       ) : (
         <div className={styleTable.rightBlock}>
           <div className={styleTable.decks}>
-            <span> Packs list </span>
+            <h3 style={{ fontSize: '1.1em' }}> Packs list </h3>
             <div className={styleTable.searchInputSection}>
               <input
                 className={styleTable.inputSearch}

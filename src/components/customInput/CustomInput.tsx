@@ -11,7 +11,6 @@ type InputProps = {
   onChange: () => void;
   value: string;
   name?: string;
-  // bind: any;
 };
 
 export const CustomInput = memo(
@@ -25,6 +24,7 @@ export const CustomInput = memo(
   }: InputProps): ReturnComponentType => (
     <div className={s.inputWrap}>
       <input
+        size={40}
         type={typeInput}
         name={name}
         value={value}
@@ -38,11 +38,3 @@ export const CustomInput = memo(
     </div>
   ),
 );
-// ({
-//   placeholder,
-//   typeInput = 'text',
-//   className,
-//   bind,
-// }: InputProps): ReturnComponentType => (
-//   <input type={typeInput} {...bind} placeholder={placeholder} className={className} />
-// ),
