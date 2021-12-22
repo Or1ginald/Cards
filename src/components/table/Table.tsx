@@ -2,8 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
-import { getErrorNetworkMessage } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 
 import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
@@ -12,6 +10,7 @@ import styleTable from './Table.module.css';
 
 import { Preloader, TableSidebar } from 'components';
 import { useAppSelector } from 'hooks';
+import { getErrorNetworkMessage, setErrorMessageNetworkAC } from 'store';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
 
@@ -91,6 +90,9 @@ export const Table = (): ReturnComponentType => {
                 <div className={styleTable.elementPartThree} style={{ fontSize: '16px' }}>
                   Updated
                 </div>
+                <div className={styleTable.elementPartFour} style={{ fontSize: '16px' }}>
+                  Created by
+                </div>
               </div>
 
               <div className={styleTable.tableRow}>
@@ -104,6 +106,7 @@ export const Table = (): ReturnComponentType => {
                     </div>
                     <div className={styleTable.elementPartTwo}>{cardPack.cardsCount}</div>
                     <div className={styleTable.elementPartThree}>{cardPack.updated}</div>
+                    <div className={styleTable.elementPartFour}>{cardPack.user_name}</div>
                     <button className={styleTable.btn}>update</button>
                     <button
                       className={styleTable.btn}

@@ -1,11 +1,10 @@
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
-import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
-
 import { addNewDeckType, decksAPI } from './decksApi';
 
 import { requestStatus } from 'enum';
+import { setErrorMessageNetworkAC } from 'store';
 import { setAppStatusAC } from 'store/reducers';
 
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -23,6 +22,7 @@ export type deckTemplate = {
   created?: string;
   updated?: string;
   __v?: number;
+  user_name?: string;
 };
 
 export type ResponseDeckType = {
@@ -120,6 +120,7 @@ export const setDecksTC = () => (dispatch: Dispatch) => {
   decksAPI
     .fetchDecks()
     .then(res => {
+      console.log('RES.DATA', res.data);
       dispatch(fetchDecksAC(res.data));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     })
