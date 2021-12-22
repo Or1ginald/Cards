@@ -24,6 +24,7 @@ export const CustomInput = memo(
   }: InputProps): ReturnComponentType => (
     <div className={s.inputWrap}>
       <input
+        size={40}
         type={typeInput}
         name={name}
         value={value}
