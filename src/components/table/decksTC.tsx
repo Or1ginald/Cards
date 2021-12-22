@@ -5,12 +5,10 @@ import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
 
 import { addNewDeckType, decksAPI } from './decksApi';
 
-
 import { requestStatus } from 'enum';
 import { setAppStatusAC } from 'store/reducers';
 
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-
 
 export type deckTemplate = {
   _id: string;
@@ -122,7 +120,7 @@ export const setDecksTC = () => (dispatch: Dispatch) => {
   decksAPI
     .fetchDecks()
     .then(res => {
-      dispatch(fetchDecksAC(res.data.cardPacks));
+      dispatch(fetchDecksAC(res.data));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     })
     .catch((e: AxiosError) => {

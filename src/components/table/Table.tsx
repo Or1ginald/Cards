@@ -23,10 +23,17 @@ export const Table = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
   const cardPacks = useAppSelector(state => state.decks.cardPacks);
+  // const desksLength = useAppSelector(state => state.decks.cardPacks.length);
+  // const four = 4;
+  // const isGreaterThanMax = desksLength < four; // 4 - длинна деки
 
   useEffect(() => {
     dispatch(setDecksTC());
-  }, [dispatch]);
+  }, []);
+  // useEffect(() => {
+  //   console.log('2 useEff');
+  //   dispatch(setDecksTC());
+  // }, [isGreaterThanMax]);
 
   const random = 100000;
 
