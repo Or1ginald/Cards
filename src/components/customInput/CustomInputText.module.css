@@ -1,32 +1,11 @@
-.superInput {
-    width: 150px;
-    margin-left: 5px;
-    display: inline-block;
-    font-size: 15px;
-    line-height: 20px;
-}
-.input:focus {
-    outline: none;
-    /*border: #8b2700 solid 2px;*/
-}
 
-.errorInput {
-    border: 3px solid #1c0d03;
-    background: red;
-    color: #00008b
-}
-
-.error {
-    color: red;
-}
-
-.inputWrap{
-    width: 100%;
+.inputWrap {
     border: 1px solid rgba(90, 90, 90, 0.23);;
     border-radius: 4px;
+    width: 100%;
 }
 
-.inputWrap:focus-within{
+.inputWrap:focus-within {
     border-color: #000000;
 }
 

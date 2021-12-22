@@ -4,12 +4,9 @@ import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
 import { AddNewPassType } from '../../api/forgotPasswordApi';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useInput } from '../../hooks';
 import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
-import {
-  setErrorMessageNetworkAC,
-  setErrorMessagePassAC,
-} from '../../store/reducers/errorReducer';
+import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
 import { getStatus } from '../../store/selectors';
 import {
   getErrorNetworkMessage,
@@ -17,13 +14,14 @@ import {
 } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 import { isEmailValid } from '../../utils/emailValidation';
+import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
 import { ReturnComponentType } from 'types';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [isShown, setShowMessage] = useState(false);
-  const [email, setEmail] = useState('');
+  const { value: email, handleValue: handleEmail, resetValue: resetEmail } = useInput('');
 
   const dispatch = useDispatch();
 
@@ -42,18 +40,16 @@ height: 30px'>
 password recovery link: <a href='https://or1ginald.github.io/gameCards/#/createNewPassword/$token$'> recovery link </a></div>`,
   };
 
-  const onChangeEmailInputEnter = (e: any): void => {
-    setEmail(e.currentTarget.value);
-    dispatch(setErrorMessagePassAC(''));
-    dispatch(setErrorMessageNetworkAC(''));
-  };
-
+  const timeOut = 2000;
   const onSendButtonClick = (): void => {
     if (isEmailValid(email)) {
       dispatch(forgotPassAddEmailTC(dataPayload, setShowMessage));
-      setEmail('');
+      resetEmail('');
     } else {
       dispatch(setErrorMessagePassAC('invalid email ;-('));
+      setTimeout(() => {
+        dispatch(setErrorMessagePassAC(''));
+      }, timeOut);
     }
   };
 
@@ -76,11 +72,11 @@ password recovery link: <a href='https://or1ginald.github.io/gameCards/#/createN
               <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
             )}
             <div className={style.inputCentering}>
-              <input
+              <CustomInput
                 placeholder="Email"
-                type="email"
-                className={style.inputEmail}
-                onChange={onChangeEmailInputEnter}
+                typeInput="email"
+                onChange={handleEmail}
+                value={email}
               />
             </div>
             <p> Enter your email and we will send you further instructions</p>

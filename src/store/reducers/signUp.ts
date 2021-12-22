@@ -2,9 +2,11 @@ import { Dispatch } from 'redux';
 
 import { authAPI, RegisterParamsType } from '../../api';
 
+import { setAppStatusAC } from './appInitialized';
+import { setErrorMessageNetworkAC } from './errorReducer';
+
 const initialState = {
   isFetching: false,
-  error: null as null | string,
   isSignUp: false,
 };
 type InitialStateType = typeof initialState;
@@ -16,8 +18,6 @@ export const signUpReducer = (
   switch (action.type) {
     case 'REGISTRATION/IS_FETCHING':
       return { ...state, isFetching: action.isFetching };
-    case 'RECOVERY/ERROR':
-      return { ...state, error: action.payload.error };
     case 'REGISTRATION/IS_SIGNUP_SUCCESSFUL': {
       return {
         ...state,
@@ -43,21 +43,37 @@ export const setErrorAC = (error: null | string) =>
   ({ type: 'RECOVERY/ERROR', payload: { error } } as const);
 
 export const signUpTC =
-  (params: RegisterParamsType) => (dispatch: Dispatch<SignUpActionTypes>) => {
+  (params: RegisterParamsType) =>
+  (
+    dispatch: Dispatch<
+      | SignUpActionTypes
+      | ReturnType<typeof setErrorMessageNetworkAC>
+      | ReturnType<typeof setAppStatusAC>
+    >,
+  ) => {
     dispatch(toggleIsFetchingAC(true));
+    dispatch(setAppStatusAC('loading'));
     authAPI
       .register(params)
       .then(() => {
         dispatch(toggleIsSignUpAC(true));
+        dispatch(setAppStatusAC('succeeded'));
       })
-      .catch(error => {
-        dispatch(setErrorAC(error.response.data.error));
+      .catch(e => {
+        dispatch(setAppStatusAC('succeeded'));
+        const errorNetwork = e.response
+          ? e.response.data.error
+          : `${e.message}, more details in the console`;
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+        const timeOut = 2000;
+        setTimeout(() => {
+          dispatch(setErrorMessageNetworkAC(''));
+        }, timeOut);
       })
       .finally(() => {
         dispatch(toggleIsFetchingAC(false));
       });
   };
-
 export type SetErrorType = ReturnType<typeof setErrorAC>;
 
 type SignUpActionTypes =

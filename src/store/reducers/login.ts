@@ -1,8 +1,7 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { requestStatus } from '../../enum';
-
 import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
+import { setErrorMessageNetworkAC } from './errorReducer';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
 import { RootStoreType } from 'store';
@@ -46,33 +45,43 @@ export const setErrorMessageAC = (error: Nullable<string>) =>
 
 export const logInTC =
   (data: LoginParamsType) =>
-  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
-    dispatch(setAppStatusAC(requestStatus.loading));
+  (
+    dispatch: ThunkDispatch<
+      RootStoreType,
+      undefined,
+      ActionTypesLogin | ReturnType<typeof setErrorMessageNetworkAC>
+    >,
+  ) => {
+    dispatch(setAppStatusAC('loading'));
     authAPI
       .login(data)
       .then(() => {
         dispatch(setAuthLoginDataAC(true));
-        dispatch(setAppStatusAC(requestStatus.succeeded));
+        dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
-        const error = e.response
+        dispatch(setAppStatusAC('succeeded'));
+        const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
-        dispatch(setErrorMessageAC(error));
-        dispatch(setAppStatusAC(requestStatus.failed));
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+        const timeOut = 2000;
+        setTimeout(() => {
+          dispatch(setErrorMessageNetworkAC(''));
+        }, timeOut);
       })
       .finally(() => {
-        dispatch(setAppStatusAC(requestStatus.idle));
+        dispatch(setAppStatusAC('idle'));
       });
   };
 
 export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
-    dispatch(setAppStatusAC(requestStatus.loading));
+    dispatch(setAppStatusAC('loading'));
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
       dispatch(setErrorMessageAC(''));
-      dispatch(setAppStatusAC(requestStatus.idle));
+      dispatch(setAppStatusAC('idle'));
     });
   };
 
