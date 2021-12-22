@@ -3,21 +3,21 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { AddNewPassType } from '../../api/forgotPasswordApi';
-import { useAppSelector, useInput } from '../../hooks';
-import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
 import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
-import { getStatus } from '../../store/selectors';
-import {
-  getErrorNetworkMessage,
-  getErrorValidMessage,
-} from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
-import { isEmailValid } from '../../utils/emailValidation';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
+import { AddNewPassType } from 'api';
+import { useAppSelector, useInput } from 'hooks';
+import {
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+  getStatus,
+  forgotPassAddEmailTC,
+} from 'store';
 import { ReturnComponentType } from 'types';
+import { isEmailValid } from 'utils';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [isShown, setShowMessage] = useState(false);

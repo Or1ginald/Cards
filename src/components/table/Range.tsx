@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 
 import style from './Range.module.css';
 
-const SuperRange = (): any => {
+export const SuperRange = (): any => {
   const initialValue = 0;
   const [number, setNumber] = useState<number>(initialValue);
   const onChangeRange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -20,5 +20,3 @@ const SuperRange = (): any => {
     </div>
   );
 };
-
-export default SuperRange;
