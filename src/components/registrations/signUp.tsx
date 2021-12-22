@@ -8,30 +8,30 @@ import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PropsType = {
   email: string;
-  handleEmail: () => void;
-  // onChangeEmail: (value: string) => void;
-  // emailError: null | string
   password: string;
+  handleEmail: () => void;
+  confirmPassword: string;
   handlePassword: () => void;
   handleConfirmPassword: () => void;
-  // onChangePassword: (value: string) => void;
-  // isLoadedData: boolean;
-  // passwordError: null | string
   isFetching: boolean;
   onSendButtonClick: () => void;
-  error: null | string;
+  onCancelButtonClick: () => void;
+  errorValid: any;
+  errorNetwork: any;
 };
 
 export const SignUp = (props: PropsType): ReturnComponentType => {
   const {
     email,
     handleEmail,
-    error,
+    errorValid,
+    errorNetwork,
     password,
+    confirmPassword,
     handlePassword,
     handleConfirmPassword,
     onSendButtonClick,
-    // isLoadedData,
+    onCancelButtonClick,
     isFetching,
   } = props;
   return (
@@ -39,11 +39,11 @@ export const SignUp = (props: PropsType): ReturnComponentType => {
       <div className={style.content}>
         <div className={style.contentWrap}>
           <h2>Registration</h2>
-          <span>{error}</span>
+          <span style={{ color: 'red' }}> {errorValid} </span>
+          <span style={{ color: 'red' }}> {errorNetwork} </span>
           <CustomInput
             placeholder="Email"
             typeInput="email"
-            // className={style.inputEmail}
             onChange={handleEmail}
             value={email}
             name="user[email]"
@@ -51,7 +51,6 @@ export const SignUp = (props: PropsType): ReturnComponentType => {
           <CustomInput
             placeholder="Password"
             typeInput="password"
-            // className={style.inputPassword}
             onChange={handlePassword}
             value={password}
             name="user[password]"
@@ -59,14 +58,13 @@ export const SignUp = (props: PropsType): ReturnComponentType => {
           <CustomInput
             placeholder="Confirm Password"
             typeInput="password"
-            // className={style.inputPassword}
             onChange={handleConfirmPassword}
-            value={password}
+            value={confirmPassword}
             name="user[password]"
           />
           <p> Have fun! </p>
           <div className={st.btns}>
-            <button className={style.btn}>Cancel</button> {/* И шо, и где онклик???? */}
+            <CustomButton title="Cancel" onClick={onCancelButtonClick} />
             <CustomButton
               title="Create"
               onClick={onSendButtonClick}

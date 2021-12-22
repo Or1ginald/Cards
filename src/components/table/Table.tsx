@@ -10,7 +10,7 @@ import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
 import { EditableSpan } from './EditableSpan';
 import styleTable from './Table.module.css';
 
-import { TableSidebar, Preloader } from 'components';
+import { Preloader, TableSidebar } from 'components';
 import { useAppSelector } from 'hooks';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
@@ -22,7 +22,7 @@ export const Table = (): ReturnComponentType => {
 
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
-  const decks = useAppSelector(state => state.decks);
+  const cardPacks = useAppSelector(state => state.decks.cardPacks);
 
   useEffect(() => {
     dispatch(setDecksTC());
@@ -54,7 +54,7 @@ export const Table = (): ReturnComponentType => {
       ) : (
         <div className={styleTable.rightBlock}>
           <div className={styleTable.decks}>
-            <span> Packs list </span>
+            <h3 style={{ fontSize: '1.1em' }}> Packs list </h3>
             <div className={styleTable.searchInputSection}>
               <input
                 className={styleTable.inputSearch}
@@ -90,17 +90,17 @@ export const Table = (): ReturnComponentType => {
                 {errorNetworkMessage && (
                   <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
                 )}
-                {decks.map((deck: deckTemplate) => (
+                {cardPacks.map((cardPack: deckTemplate) => (
                   <div className={styleTable.element} key={Math.random() * random}>
                     <div className={styleTable.elementPartOne}>
-                      <EditableSpan value={deck.name} id={deck._id} />
+                      <EditableSpan value={cardPack.name} id={cardPack._id} />
                     </div>
-                    <div className={styleTable.elementPartTwo}>{deck.cardsCount}</div>
-                    <div className={styleTable.elementPartThree}>{deck.updated}</div>
+                    <div className={styleTable.elementPartTwo}>{cardPack.cardsCount}</div>
+                    <div className={styleTable.elementPartThree}>{cardPack.updated}</div>
                     <button className={styleTable.btn}>update</button>
                     <button
                       className={styleTable.btn}
-                      onClick={() => onRemoveDeckClick(deck._id)}
+                      onClick={() => onRemoveDeckClick(cardPack._id)}
                     >
                       delete
                     </button>
