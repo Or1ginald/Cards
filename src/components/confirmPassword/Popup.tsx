@@ -2,9 +2,10 @@ import React from 'react';
 
 import letter from '../../assets/letter.png';
 import style from '../../style/Common.module.css';
-import { ReturnComponentType } from '../../types';
 
 import st from './ConfirmPassword.module.css';
+
+import { ReturnComponentType } from 'types';
 
 export const Popup = (): ReturnComponentType => (
   <div>
