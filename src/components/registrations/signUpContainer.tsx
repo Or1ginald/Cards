@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import { RootStoreType } from '../../store';
-import { setAppStatusAC } from '../../store/reducers/appInitialized';
 import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
 import { signUpTC } from '../../store/reducers/signUp';
 import {
@@ -67,9 +66,10 @@ export const SignUpContainer = (): ReturnComponentType => {
       }, timeOut);
     }
     if (isPasswordValid(password) && isEmailValid(email)) {
-      dispatch(setAppStatusAC('loading'));
       dispatch(signUpTC(data));
-      dispatch(setAppStatusAC('succeeded'));
+      resetPassword('');
+      resetEmail('');
+      resetConfirmPassword('');
     }
   };
   if (isSignUp) {

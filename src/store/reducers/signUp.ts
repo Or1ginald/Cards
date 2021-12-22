@@ -52,10 +52,12 @@ export const signUpTC =
     >,
   ) => {
     dispatch(toggleIsFetchingAC(true));
+    dispatch(setAppStatusAC('loading'));
     authAPI
       .register(params)
       .then(() => {
         dispatch(toggleIsSignUpAC(true));
+        dispatch(setAppStatusAC('succeeded'));
       })
       .catch(e => {
         dispatch(setAppStatusAC('succeeded'));
