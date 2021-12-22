@@ -1,19 +1,23 @@
 import { Nullable } from '../../types';
 
 export type InitialStateDataType = {
-  _id: Nullable<string>;
-  avatar?: Nullable<string>;
-  name: Nullable<string>;
-  email: Nullable<string>;
-  rememberMe: boolean;
+  profile: {
+    _id: Nullable<string>;
+    avatar?: Nullable<string>;
+    name: string;
+    email: Nullable<string>;
+    rememberMe: boolean;
+  };
 };
 
-const initialState: InitialStateDataType = {
-  _id: null,
-  avatar: null,
-  name: null,
-  email: null,
-  rememberMe: false,
+const initialState = {
+  profile: {
+    _id: null as string | null,
+    avatar: null as string | null,
+    name: '',
+    email: null as string | null,
+    rememberMe: false,
+  },
 };
 
 export const profileReducer = (
@@ -25,6 +29,11 @@ export const profileReducer = (
       return {
         ...state,
         ...action.payload,
+      };
+    case 'SET_USER_PROFILE':
+      return {
+        ...state,
+        profile: { ...state.profile, ...action.profile },
       };
     // case 'SET_ERROR_MESSAGE':
     //   return {
@@ -41,7 +50,11 @@ export const setUserData = (_id: Nullable<string>, name: Nullable<string>) =>
     type: 'SET_USER_DATA',
     payload: { _id, name },
   } as const);
-
+export const setProfile = (profile: InitialStateDataType) =>
+  ({
+    type: 'SET_USER_PROFILE',
+    profile,
+  } as const);
 export const setErrorMessage = (error: Nullable<string>) =>
   ({ type: 'SET_ERROR_MESSAGE', error } as const);
 
@@ -83,6 +96,7 @@ export const setErrorMessage = (error: Nullable<string>) =>
 // }
 
 // type;
-type setAuthUserData = ReturnType<typeof setUserData>;
-type setErrorMessageLogin = ReturnType<typeof setErrorMessage>;
-type ActionTypes = setAuthUserData | setErrorMessageLogin;
+type setProfileType = ReturnType<typeof setProfile>;
+type setAuthUserDataType = ReturnType<typeof setUserData>;
+type setErrorMessageLoginType = ReturnType<typeof setErrorMessage>;
+type ActionTypes = setAuthUserDataType | setErrorMessageLoginType | setProfileType;
