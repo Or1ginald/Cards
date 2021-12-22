@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 
 import { setAppStatusAC } from '../../store/reducers/appInitialized';
 import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
+import { AppThunk } from '../../types/AppThunkType';
 
 import { addNewDeckType, decksAPI } from './decksApi';
 
@@ -36,8 +37,8 @@ const initialState: ResponseDeckType = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0,
-  pageCount: 0,
+  page: 1,
+  pageCount: 10,
 };
 
 export const decksReducer = (
@@ -68,8 +69,8 @@ export const decksReducer = (
           deck._id === action.id ? { ...deck, name: action.title } : deck,
         ),
       };
-    /* case 'SET_CURRENT_PAGE':
-      return { ...state, page }; */
+    case 'SET_CURRENT_PAGE':
+      return { ...state, page: action.pageNumber };
     default:
       return state;
   }
@@ -113,10 +114,11 @@ type ActionsType =
 
 // thunk
 
-export const setDecksTC = () => (dispatch: Dispatch) => {
+export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
+  const { page, pageCount } = getState().decks;
   dispatch(setAppStatusAC('loading'));
   decksAPI
-    .fetchDecks()
+    .fetchDecks(page, pageCount)
     .then(res => {
       dispatch(fetchDecksAC(res.data));
       dispatch(setAppStatusAC('succeeded'));

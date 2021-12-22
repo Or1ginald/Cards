@@ -25,7 +25,11 @@
     justify-content: space-evenly;
     padding: 1em;
 }
-
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
 
 .rightBlock {
     display: flex;
