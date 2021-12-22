@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
+import { AppThunk } from '../../types/AppThunkType';
+
 import { addNewDeckType, decksAPI } from './decksApi';
 
 import { requestStatus } from 'enum';
@@ -38,8 +40,8 @@ const initialState: ResponseDeckType = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  page: 0,
-  pageCount: 0,
+  page: 1,
+  pageCount: 10,
 };
 
 export const decksReducer = (
@@ -70,8 +72,8 @@ export const decksReducer = (
           deck._id === action.id ? { ...deck, name: action.title } : deck,
         ),
       };
-    /* case 'SET_CURRENT_PAGE':
-      return { ...state, page }; */
+    case 'SET_CURRENT_PAGE':
+      return { ...state, page: action.pageNumber };
     default:
       return state;
   }
@@ -115,12 +117,12 @@ type ActionsType =
 
 // thunk
 
-export const setDecksTC = () => (dispatch: Dispatch) => {
+export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
+  const { page, pageCount } = getState().decks;
   dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI
-    .fetchDecks()
+    .fetchDecks(page, pageCount)
     .then(res => {
-      console.log('RES.DATA', res.data);
       dispatch(fetchDecksAC(res.data));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     })

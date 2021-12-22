@@ -13,8 +13,10 @@ export type updateDeckType = {
 };
 
 export const decksAPI = {
-  fetchDecks() {
-    return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack');
+  fetchDecks(page: number, pageCount: number) {
+    return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack', {
+      params: { page, pageCount },
+    });
   },
   addNewDeck(cardsPack: addNewDeckType) {
     return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', { cardsPack });

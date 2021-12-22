@@ -5,12 +5,13 @@
     gap: 0.5em;
 }
 
-.page, .currentPage {
+.page, .activePage {
     border: 1px solid lightgray;
     border-radius: 4px;
     cursor: pointer;
+    padding: 0.5em;
 }
-.currentPage {
+.activePage {
     border: 2px solid gray;
     font-weight: bold;
 }
