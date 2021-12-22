@@ -1,8 +1,6 @@
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
-import { setAppStatusAC } from '../../store/reducers/appInitialized';
-import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
 import { AppThunk } from '../../types/AppThunkType';
 
 import { addNewDeckType, decksAPI } from './decksApi';
