@@ -3,24 +3,24 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { setAppStatusAC } from '../../store/reducers/appInitialized';
 import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
 } from '../../store/selectors/confirmPassword';
-import { isEmailValid, isPasswordValid } from '../../utils';
 import { CustomInput } from '../customInput';
-import { Preloader } from '../preloader';
 
 import st from './Login.module.css';
 
-import { PATH } from 'enum';
+import { Preloader } from 'components';
+import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
 import { logInTC } from 'store';
+import { setAppStatusAC } from 'store/reducers';
 import { getIsDataLoaded, getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
+import { isEmailValid, isPasswordValid } from 'utils';
 
 export const Login = (): ReturnComponentType => {
   const [rememberMe, handleRememberMe] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const Login = (): ReturnComponentType => {
       dispatch(logInTC({ email, password, rememberMe }));
       resetEmail('');
       resetPassword('');
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     }
   };
   if (isDataLoaded) {

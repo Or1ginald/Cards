@@ -33,7 +33,7 @@ export const App = (): ReturnComponentType => {
   }, []);
   if (!isInitialized) {
     return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+      <div className={s.preloaderWrap}>
         <Preloader />
       </div>
     );
@@ -63,6 +63,7 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
             <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
+            {/*  <Route path={PATH.CARDS} element={<Cards />} /> */}
             <Route path="/" element={<Test />} />
           </Routes>
         </div>

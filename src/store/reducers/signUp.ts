@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux';
 
-import { authAPI, RegisterParamsType } from '../../api';
-
 import { setAppStatusAC } from './appInitialized';
 import { setErrorMessageNetworkAC } from './errorReducer';
+
+import { authAPI, RegisterParamsType } from 'api';
+import { requestStatus } from 'enum';
 
 const initialState = {
   isFetching: false,
@@ -52,15 +53,15 @@ export const signUpTC =
     >,
   ) => {
     dispatch(toggleIsFetchingAC(true));
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC(requestStatus.loading));
     authAPI
       .register(params)
       .then(() => {
         dispatch(toggleIsSignUpAC(true));
-        dispatch(setAppStatusAC('succeeded'));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
-        dispatch(setAppStatusAC('succeeded'));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
