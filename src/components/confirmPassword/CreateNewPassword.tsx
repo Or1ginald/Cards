@@ -3,21 +3,26 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
-import { forgotPassSetPassTC } from '../../store/middlewares/forgotPassSetPassTC';
-import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
-import {
-  getErrorNetworkMessage,
-  getErrorValidMessage,
-} from '../../store/selectors/confirmPassword';
+
 import style from '../../style/Common.module.css';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
-import { SetNewPassType } from 'api/forgotPasswordApi';
+
+import { SetNewPassType } from 'api';
+import { useAppSelector, useInput } from 'hooks';
+import {
+  setAppStatusAC,
+  setErrorMessagePassAC,
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+  getStatus,
+  forgotPassSetPassTC,
+} from 'store';
+
 import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
-import { setAppStatusAC } from 'store/reducers';
-import { getStatus } from 'store/selectors';
+
 import { ReturnComponentType } from 'types';
 import { isPasswordValid } from 'utils';
 
