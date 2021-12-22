@@ -3,21 +3,22 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { AddNewPassType } from '../../api/forgotPasswordApi';
-import { useAppSelector, useInput } from '../../hooks';
-import { forgotPassAddEmailTC } from '../../store/middlewares/forgotPassAddEmailTC';
-import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
-import { getStatus } from '../../store/selectors';
-import {
-  getErrorNetworkMessage,
-  getErrorValidMessage,
-} from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
-import { isEmailValid } from '../../utils/emailValidation';
+import { CustomButton } from '../customButton';
 import { CustomInput } from '../customInput';
 import { Preloader } from '../preloader';
 
+import { AddNewPassType } from 'api';
+import { useAppSelector, useInput } from 'hooks';
+import {
+  setErrorMessagePassAC,
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+  getStatus,
+  forgotPassAddEmailTC,
+} from 'store';
 import { ReturnComponentType } from 'types';
+import { isEmailValid } from 'utils';
 
 export const ConfirmPassword = (): ReturnComponentType => {
   const [isShown, setShowMessage] = useState(false);
@@ -81,9 +82,10 @@ password recovery link: <a href='https://or1ginald.github.io/gameCards/#/createN
             </div>
             <p> Enter your email and we will send you further instructions</p>
             <div>
-              <button className={style.btn} onClick={onSendButtonClick}>
+              <CustomButton title="Send instructions" onClick={onSendButtonClick} />
+              {/* <button className={style.btn} onClick={onSendButtonClick}>
                 send instructions
-              </button>
+              </button> */}
             </div>
             <span>Did you remember your password?</span>
             <Link to="/login"> Try logging in </Link>

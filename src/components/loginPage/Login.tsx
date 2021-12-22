@@ -3,24 +3,24 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 
-import { setAppStatusAC } from '../../store/reducers/appInitialized';
-import { setErrorMessagePassAC } from '../../store/reducers/errorReducer';
-import {
-  getErrorNetworkMessage,
-  getErrorValidMessage,
-} from '../../store/selectors/confirmPassword';
-import { isEmailValid, isPasswordValid } from '../../utils';
 import { CustomInput } from '../customInput';
-import { Preloader } from '../preloader';
 
 import st from './Login.module.css';
 
-import { PATH } from 'enum';
+import { CustomButton, Preloader } from 'components';
+import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
-import { logInTC } from 'store';
+import {
+  getErrorNetworkMessage,
+  getErrorValidMessage,
+  setErrorMessagePassAC,
+  logInTC,
+} from 'store';
+import { setAppStatusAC } from 'store/reducers';
 import { getIsDataLoaded, getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
+import { isEmailValid, isPasswordValid } from 'utils';
 
 export const Login = (): ReturnComponentType => {
   const [rememberMe, handleRememberMe] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const Login = (): ReturnComponentType => {
       dispatch(logInTC({ email, password, rememberMe }));
       resetEmail('');
       resetPassword('');
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     }
   };
   if (isDataLoaded) {
@@ -96,9 +96,12 @@ export const Login = (): ReturnComponentType => {
             <div>
               <Link to={PATH.CONFIRM_PASSWORD}> Forgot password </Link>
             </div>
-            <button onClick={onClickHandlerLogin} className={style.btn}>
+            <div style={{ minWidth: '50px' }}>
+              <CustomButton title="Sign In" onClick={onClickHandlerLogin} />
+            </div>
+            {/* <button onClick={onClickHandlerLogin} className={style.btn}>
               Sign In
-            </button>
+            </button> */}
             <p> Do not have an account? </p>
             <Link to={PATH.REGISTRATION}> Sign Up </Link>
           </div>

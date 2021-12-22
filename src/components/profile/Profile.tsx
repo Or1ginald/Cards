@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import noneAvatarImage from '../../assets/103781_profile_edit_user_icon.png';
+import noneAvatarImage from '../../assets/avatar.png';
 
 import { PATH } from 'enum/pathes';
 import style from 'style/Common.module.css';

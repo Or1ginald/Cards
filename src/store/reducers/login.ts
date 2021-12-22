@@ -4,6 +4,7 @@ import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
 import { setErrorMessageNetworkAC } from './errorReducer';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
+import { requestStatus } from 'enum';
 import { RootStoreType } from 'store';
 import { Nullable } from 'types';
 
@@ -52,18 +53,19 @@ export const logInTC =
       ActionTypesLogin | ReturnType<typeof setErrorMessageNetworkAC>
     >,
   ) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC(requestStatus.loading));
     authAPI
       .login(data)
       .then(() => {
         dispatch(setAuthLoginDataAC(true));
-        dispatch(setAppStatusAC('succeeded'));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
-        dispatch(setAppStatusAC('succeeded'));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
+
         dispatch(setErrorMessageNetworkAC(errorNetwork));
         const timeOut = 2000;
         setTimeout(() => {
@@ -71,17 +73,17 @@ export const logInTC =
         }, timeOut);
       })
       .finally(() => {
-        dispatch(setAppStatusAC('idle'));
+        dispatch(setAppStatusAC(requestStatus.idle));
       });
   };
 
 export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC(requestStatus.loading));
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
       dispatch(setErrorMessageAC(''));
-      dispatch(setAppStatusAC('idle'));
+      dispatch(setAppStatusAC(requestStatus.idle));
     });
   };
 

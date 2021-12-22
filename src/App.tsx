@@ -4,25 +4,24 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import s from './App.module.css';
-import { PageError404 } from './components/404/Page_error_404';
 import style from './components/navigation/Navigation.module.css';
-import { useAppSelector } from './hooks';
-import { initializeAppTC } from './store';
-import { getIsInitialized } from './store/selectors';
 import { ReturnComponentType } from './types';
 
 import {
+  Popup,
+  PageError404,
   ConfirmPassword,
   CreateNewPassword,
   Login,
   Navigation,
-  Popup,
   Preloader,
   SignUpContainer,
 } from 'components';
 import { ProfileContainer } from 'components/profile/ProfileContainer';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
+import { useAppSelector } from 'hooks';
+import { getIsInitialized, initializeAppTC } from 'store';
 import st from 'style/Common.module.css';
 
 export const App = (): ReturnComponentType => {
@@ -34,7 +33,7 @@ export const App = (): ReturnComponentType => {
   }, []);
   if (!isInitialized) {
     return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+      <div className={s.preloaderWrap}>
         <Preloader />
       </div>
     );
@@ -64,6 +63,7 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
             <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
+            {/*  <Route path={PATH.CARDS} element={<Cards />} /> */}
             <Route path="/" element={<Test />} />
           </Routes>
         </div>

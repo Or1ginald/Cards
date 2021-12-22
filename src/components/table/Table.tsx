@@ -2,8 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { setErrorMessageNetworkAC } from '../../store/reducers/errorReducer';
-import { getErrorNetworkMessage } from '../../store/selectors/confirmPassword';
 import style from '../../style/Common.module.css';
 // import { createPagesArray } from '../../utils';
 import { Pagination } from '../pagination';
@@ -14,6 +12,7 @@ import styleTable from './Table.module.css';
 
 import { Preloader, TableSidebar } from 'components';
 import { useAppSelector } from 'hooks';
+import { getErrorNetworkMessage, setErrorMessageNetworkAC } from 'store';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
 
@@ -86,53 +85,48 @@ export const Table = (): ReturnComponentType => {
                 </button>
               </div>
 
-              <div className={styleTable.tableCommon}>
-                <div className={styleTable.element}>
-                  <div className={styleTable.elementPartOne} style={{ fontSize: '16px' }}>
-                    Name
-                  </div>
-                  <div className={styleTable.elementPartTwo} style={{ fontSize: '16px' }}>
-                    CardsCount
-                  </div>
-                  <div
-                    className={styleTable.elementPartThree}
-                    style={{ fontSize: '16px' }}
-                  >
-                    Updated
-                  </div>
+            <div className={styleTable.tableCommon}>
+              <div className={styleTable.element}>
+                <div className={styleTable.elementPartOne} style={{ fontSize: '16px' }}>
+                  Name
                 </div>
+                <div className={styleTable.elementPartTwo} style={{ fontSize: '16px' }}>
+                  CardsCount
+                </div>
+                <div className={styleTable.elementPartThree} style={{ fontSize: '16px' }}>
+                  Updated
+                </div>
+                <div className={styleTable.elementPartFour} style={{ fontSize: '16px' }}>
+                  Created by
+                </div>
+              </div>
 
-                <div className={styleTable.tableRow}>
-                  {errorNetworkMessage && (
-                    <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-                  )}
-                  {cardPacks.map((cardPack: deckTemplate) => (
-                    <div className={styleTable.element} key={Math.random() * random}>
-                      <div className={styleTable.elementPartOne}>
-                        <EditableSpan value={cardPack.name} id={cardPack._id} />
-                      </div>
-                      <div className={styleTable.elementPartTwo}>
-                        {cardPack.cardsCount}
-                      </div>
-                      <div className={styleTable.elementPartThree}>
-                        {cardPack.updated}
-                      </div>
-                      <button className={styleTable.btn}>update</button>
-                      <button
-                        className={styleTable.btn}
-                        onClick={() => onRemoveDeckClick(cardPack._id)}
-                      >
-                        delete
-                      </button>
+              <div className={styleTable.tableRow}>
+                {errorNetworkMessage && (
+                  <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
+                )}
+                {cardPacks.map((cardPack: deckTemplate) => (
+                  <div className={styleTable.element} key={Math.random() * random}>
+                    <div className={styleTable.elementPartOne}>
+                      <EditableSpan value={cardPack.name} id={cardPack._id} />
                     </div>
-                  ))}
-                </div>
+                    <div className={styleTable.elementPartTwo}>{cardPack.cardsCount}</div>
+                    <div className={styleTable.elementPartThree}>{cardPack.updated}</div>
+                    <div className={styleTable.elementPartFour}>{cardPack.user_name}</div>
+                    <button className={styleTable.btn}>update</button>
+                    <button
+                      className={styleTable.btn}
+                      onClick={() => onRemoveDeckClick(cardPack._id)}
+                    >
+                      delete
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        )}
-      </div>
-      <Pagination pages={pages} currentPage={currentPage} />
+        </div>
+      )}
     </div>
   );
 };

@@ -7,6 +7,10 @@ import { AppThunk } from '../../types/AppThunkType';
 
 import { addNewDeckType, decksAPI } from './decksApi';
 
+import { requestStatus } from 'enum';
+import { setErrorMessageNetworkAC } from 'store';
+import { setAppStatusAC } from 'store/reducers';
+
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 
 export type deckTemplate = {
@@ -22,6 +26,7 @@ export type deckTemplate = {
   created?: string;
   updated?: string;
   __v?: number;
+  user_name?: string;
 };
 
 export type ResponseDeckType = {
@@ -116,15 +121,15 @@ type ActionsType =
 
 export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
   const { page, pageCount } = getState().decks;
-  dispatch(setAppStatusAC('loading'));
+  dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI
     .fetchDecks(page, pageCount)
     .then(res => {
       dispatch(fetchDecksAC(res.data));
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     })
     .catch((e: AxiosError) => {
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
       const errorNetwork = e.response
         ? e.response.data.error
         : `${e.message}, more details in the console`;
@@ -132,15 +137,15 @@ export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
     });
 };
 export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC('loading'));
+  dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI
     .removeDeck(id)
     .then(() => {
       dispatch(deleteDeckAC(id));
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     })
     .catch((e: AxiosError) => {
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
       const errorNetwork = e.response
         ? e.response.data.error
         : `${e.message}, more details in the console`;
@@ -149,16 +154,16 @@ export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
 };
 
 export const addDeckTC = (dataPayload: addNewDeckType) => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC('loading'));
+  dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI
     .addNewDeck(dataPayload)
     .then(res => {
       const deck = res.data.newCardsPack;
       dispatch(addDeckAC(deck));
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     })
     .catch((e: AxiosError) => {
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
       const errorNetwork = e.response
         ? e.response.data.error
         : `${e.message}, more details in the console`;
@@ -167,15 +172,15 @@ export const addDeckTC = (dataPayload: addNewDeckType) => (dispatch: Dispatch) =
 };
 
 export const upDateDeckTC = (title: any, _id: string) => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC('loading'));
+  dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI
     .updateDeck({ _id })
     .then(() => {
       dispatch(upDateDeckAC(title, _id));
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
     })
     .catch((e: AxiosError) => {
-      dispatch(setAppStatusAC('succeeded'));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
       const errorNetwork = e.response
         ? e.response.data.error
         : `${e.message}, more details in the console`;

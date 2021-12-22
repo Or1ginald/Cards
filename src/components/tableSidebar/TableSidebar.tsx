@@ -1,10 +1,9 @@
 import React from 'react';
 
-import SuperRange from '../table/Range';
-
 import s from './tableSidebar.module.css';
 
 import { CustomButton } from 'components';
+import { SuperRange } from 'components/table';
 
 export const TableSidebar = React.memo(() => {
   const onFilterMyPacksClick = (): void => {}; // Напоминалка использовать useCallback

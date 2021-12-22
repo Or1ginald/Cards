@@ -10,7 +10,7 @@ import st from './Page_error_404.module.css';
 export const PageError404 = (): ReturnComponentType => (
   <div>
     <div className={st.mainContainer}>
-      <div>
+      <div className={st.imagine}>
         <img src={error404} alt="error404" className={st.page_404} />
       </div>
       <div className={st.linkContainer}>
