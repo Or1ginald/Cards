@@ -3,7 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import style from '../../style/Common.module.css';
-// import { createPagesArray } from '../../utils';
+import { createPagesArray } from '../../utils';
 import { Pagination } from '../pagination';
 
 import { addDeckTC, deckTemplate, removeDeckTC, setDecksTC } from './decksTC';
@@ -24,18 +24,23 @@ export const Table = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
   const cardPacks = useAppSelector(state => state.decks.cardPacks);
-  // const totalCount = useAppSelector(state => state.decks.cardPacksTotalCount);
+  const totalCount = useAppSelector(state => state.decks.cardPacksTotalCount);
   const currentPage = useAppSelector(state => state.decks.page);
-  // const perPage = useAppSelector(state => state.decks.pageCount);
-  // const pagesCount = Math.ceil(totalCount / perPage);
+  const perPage = useAppSelector(state => state.decks.pageCount);
+  const pagesCount = Math.ceil(totalCount / perPage);
 
   /* const pages = useMemo(
     () => createPagesArray(pagesCount, currentPage),
     [pagesCount, currentPage],
   ); */
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const pages: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  // createPagesArray(pages, pagesCount, currentPage);
+  // const pages: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  let pagess: Array<number> = [];
+  useEffect(() => {
+    pagess = createPagesArray(pagesCount, currentPage);
+  }, [dispatch, currentPage, pagesCount]);
+
+  createPagesArray(pagesCount, currentPage);
   useEffect(() => {
     dispatch(setDecksTC());
   }, [dispatch, currentPage]);
@@ -140,7 +145,7 @@ export const Table = (): ReturnComponentType => {
           </div>
         )}
       </div>
-      <Pagination pages={pages} currentPage={currentPage} />
+      <Pagination pages={pagess} currentPage={currentPage} />
     </div>
   );
 };
