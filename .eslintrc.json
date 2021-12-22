@@ -29,6 +29,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/button-has-type": "off",
     "no-underscore-dangle": "off",
+    "camelcase": "off",
     "no-alert": "error",
     "no-debugger": "error",
     "no-plusplus": "error",
