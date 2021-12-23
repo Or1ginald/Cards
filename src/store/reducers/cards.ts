@@ -1,22 +1,25 @@
-const initState = {};
+import { cardType } from '../../api/cardsApi';
 
 type initStateType = {
-  /* userId?: Nullable<string>;
-  _id: string;
-  name?: string;
-  path?: string;
-  cardsCount?: number;
-  grade?: number;
-  shots?: number;
-  rating?: number;
-  type?: string;
-  created?: string;
-  updated?: string;
-  __v?: number; */
+  cards: cardType[];
+  cardsTotalCount: number;
+  maxGrade: number;
+  minGrade: number;
+  page: number;
+  pageCount: number;
+  packUserId: string;
 };
-
+const initialState: initStateType = {
+  cards: [],
+  cardsTotalCount: 5,
+  maxGrade: 5,
+  minGrade: 3,
+  page: 1,
+  pageCount: 4,
+  packUserId: '',
+};
 export const cardReducer = (
-  state: initStateType = initState,
+  state: initStateType = initialState,
   action: any,
 ): initStateType => {
   switch (action.type) {
@@ -27,3 +30,6 @@ export const cardReducer = (
       return state;
   }
 };
+
+export const getCardsAC = (cardPackId: string) =>
+  ({ type: 'LOGIN/SET_AUTH_LOGIN_DATA', cardPackId } as const);

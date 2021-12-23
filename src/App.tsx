@@ -9,19 +9,21 @@ import { ReturnComponentType } from './types';
 
 import {
   Popup,
-  PageError404,
   ConfirmPassword,
   CreateNewPassword,
   Login,
   Navigation,
   Preloader,
   SignUpContainer,
+  PageError404,
+  Cards,
 } from 'components';
 import { ProfileContainer } from 'components/profile/ProfileContainer';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
 import { useAppSelector } from 'hooks';
-import { getIsInitialized, initializeAppTC } from 'store';
+import { initializeAppTC } from 'store';
+import { getIsInitialized } from 'store/selectors';
 import st from 'style/Common.module.css';
 
 export const App = (): ReturnComponentType => {
@@ -63,7 +65,7 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
             <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
-            {/*  <Route path={PATH.CARDS} element={<Cards />} /> */}
+            <Route path={PATH.CARDS} element={<Cards />} />
             <Route path="/" element={<Test />} />
           </Routes>
         </div>
