@@ -80,7 +80,7 @@ export const decksReducer = (
 };
 
 // actions
-export const fetchDecksAC = (payload: ResponseDeckType) =>
+export const fetchDecksAC = (payload: any) =>
   ({
     type: 'FETCH_DECKS',
     payload,
