@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import noneAvatarImage from '../../assets/avatar.png';
-import noneAvatarImage from '../../assets/103781_profile_edit_user_icon.png';
-import { RootStoreType } from '../../store';
 import { InitialStateProfileType } from '../../store/reducers/profile';
 
 import { Preloader } from 'components/preloader/Preloader';
 import { PATH } from 'enum/pathes';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { RootStoreType } from 'store';
 import { logOutTC } from 'store/reducers/login';
 import { getStatus } from 'store/selectors/app/appSelectors';
 import { getIsDataLoaded } from 'store/selectors/login/loginSelectors';
