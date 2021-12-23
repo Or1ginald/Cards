@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { cardType } from '../../api/cardsApi';
 import { useAppSelector } from '../../hooks';
-import { getErrorNetworkMessage } from '../../store';
+import { getErrorNetworkMessage, setErrorMessageNetworkAC } from '../../store';
 // import { cardType } from '../../store/reducers/cards';
-import { getCardsTC } from '../../store/reducers/cards';
+import { getCardsTC, removeCardTC } from '../../store/reducers/cards';
 import { ReturnComponentType } from '../../types';
 import { CustomButton } from '../customButton';
 import style from '../table/TableGrid.module.css';
@@ -16,19 +16,19 @@ export const Cards = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cards = useAppSelector(state => state.cards.cards);
   // const cardPacks = useAppSelector(state => state.decks.cardPacks);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const random = 100000;
-  // const { cardsPack_id } = useParams();
-
   const params = useParams<'cardsPack_id'>();
   const { cardsPack_id } = params as { cardsPack_id: string };
-  // const onRemoveDeckClick = (id: string): void => {
-  //   dispatch(removeDeckTC(id));
-  //   dispatch(setErrorMessageNetworkAC(''));
-  // };
-  // const onUpdateClick = (): void => {};
+  const onClickRemoveCard = (_id: string): void => {
+    dispatch(removeCardTC(_id));
+    dispatch(setErrorMessageNetworkAC(''));
+  };
+  const onClickAddCard = (): void => {
+    navigate('addCard');
+  };
 
   useEffect(() => {
     if (!cardsPack_id) {
@@ -50,6 +50,9 @@ export const Cards = (): ReturnComponentType => {
             <th>Created</th>
             <th>Actions</th>
           </tr>
+          <button className={style.btn} onClick={onClickAddCard}>
+            Add new card
+          </button>
         </thead>
         <tbody>
           {cards.map((card: cardType) => (
@@ -60,8 +63,11 @@ export const Cards = (): ReturnComponentType => {
               <td>{card.updated}</td>
               <td>
                 <div className={style.btns}>
+                  <CustomButton
+                    title="delete"
+                    onClick={() => onClickRemoveCard(card._id)}
+                  />
                   <CustomButton title="update" onClick={() => {}} />
-                  <CustomButton title="delete" onClick={() => {}} />
                   {/* <button>update</button>
                   <button onClick={() => onRemoveDeckClick(cardPack._id)}>delete</button> */}
                 </div>

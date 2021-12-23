@@ -3,17 +3,17 @@ import { AxiosResponse } from 'axios';
 import { instance } from './apiConfig';
 
 export const cardsAPI = {
-  getCards(cardsPackId: string) {
+  getCards(cardsPackId: string, answer: string, question: string) {
     return instance.get<AxiosResponse<ResponseType>>('cards/card', {
-      params: { cardsPackId },
+      params: { cardsPackId, answer, question },
     });
   },
   deleteCard(_id: string) {
     return instance.delete<AxiosResponse<ResponseType>>(`cards/card?=${_id}`, {});
   },
-  addNewCard({ cardsPack_id, answer, question, grade, shots }: AddCardType) {
-    return instance.post<cardType, AxiosResponse<ResponseType>>('cards/card', {
-      card: { cardsPack_id, answer, question, grade, shots },
+  addNewCard(params: AddCardType) {
+    return instance.post<cardType, AxiosResponse<any>>('cards/card', {
+      params: { params },
     });
   },
   updateCard({ cardsPack_id, _id, answer, question }: cardType) {
@@ -55,8 +55,4 @@ export type ResponseType = {
   page: number;
   pageCount: number;
   packUserId: string;
-};
-
-export type ParamsType = {
-  cardsPack_id: string;
 };

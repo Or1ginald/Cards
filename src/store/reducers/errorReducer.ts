@@ -38,6 +38,6 @@ export const setErrorMessageNetworkAC = (errorNetwork: Nullable<string>) =>
   ({ type: 'FORGOT_PASSWORD/SET_NETWORK_ERROR_MESSAGE', errorNetwork } as const);
 
 type SetErrorMessagePassType = ReturnType<typeof setErrorMessagePassAC>;
-type SetErrorMessageNetworkType = ReturnType<typeof setErrorMessageNetworkAC>;
+export type SetErrorMessageNetworkType = ReturnType<typeof setErrorMessageNetworkAC>;
 
 type ActionTypes = SetErrorMessagePassType | SetErrorMessageNetworkType;
