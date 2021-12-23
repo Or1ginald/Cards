@@ -32,7 +32,7 @@ export const App = (): ReturnComponentType => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initializeAppTC());
-  }, []);
+  }, [dispatch]);
   if (!isInitialized) {
     return (
       <div className={s.preloaderWrap}>
@@ -65,7 +65,9 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
             <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
-            <Route path={PATH.CARDS} element={<Cards />} />
+            <Route path={PATH.CARDS} element={<Cards />}>
+              <Route path=":cardsPack_id" element={<Cards />} />
+            </Route>
             <Route path="/" element={<Test />} />
           </Routes>
         </div>

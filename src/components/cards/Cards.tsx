@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import { cardType } from '../../api/cardsApi';
 import { useAppSelector } from '../../hooks';
 import { getErrorNetworkMessage } from '../../store';
 // import { cardType } from '../../store/reducers/cards';
+import { getCardsTC } from '../../store/reducers/cards';
 import { ReturnComponentType } from '../../types';
 import { CustomButton } from '../customButton';
 import style from '../table/TableGrid.module.css';
@@ -12,15 +17,25 @@ export const Cards = (): ReturnComponentType => {
   const cards = useAppSelector(state => state.cards.cards);
   // const cardPacks = useAppSelector(state => state.decks.cardPacks);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const random = 100000;
+  // const { cardsPack_id } = useParams();
 
+  const params = useParams<'cardsPack_id'>();
+  const { cardsPack_id } = params as { cardsPack_id: string };
   // const onRemoveDeckClick = (id: string): void => {
   //   dispatch(removeDeckTC(id));
   //   dispatch(setErrorMessageNetworkAC(''));
   // };
   // const onUpdateClick = (): void => {};
+
+  useEffect(() => {
+    if (!cardsPack_id) {
+      return;
+    }
+    dispatch(getCardsTC(cardsPack_id));
+  }, []);
   return (
     <div>
       <table className={style.table}>
@@ -37,7 +52,7 @@ export const Cards = (): ReturnComponentType => {
           </tr>
         </thead>
         <tbody>
-          {cards.map((card: any) => (
+          {cards.map((card: cardType) => (
             <tr key={Math.random() * random}>
               <td>{/* <EditableSpan value={cardPack.name} id={cardPack._id} /> */}</td>
               <td>{card.question}</td>
