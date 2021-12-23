@@ -21,8 +21,6 @@ export const TableGrid = (): ReturnComponentType => {
 
   const dispatch = useDispatch();
 
-  /*  const random = 100000; */
-
   const onRemoveDeckClick = (id: string): void => {
     dispatch(removeDeckTC(id));
     dispatch(setErrorMessageNetworkAC(''));
@@ -34,19 +32,23 @@ export const TableGrid = (): ReturnComponentType => {
   const sortDown = (): void =>
     setDates(sortReducer(cardPacks, { type: 'sort', payload: 'down' }));
 
-  const finalDates = dates.map((d: deckTemplate) => (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '200px',
-        flexDirection: 'column',
-      }}
-      key={d._id}
-    >
-      {d.updated}
-    </div>
+  const finalDates = dates.map((cardPack: deckTemplate) => (
+    <tr key={cardPack._id}>
+      <td>
+        <EditableSpan value={cardPack.name} id={cardPack._id} />
+      </td>
+      <td>{cardPack.cardsCount}</td>
+      <td>{cardPack.updated}</td>
+      <td>{cardPack.user_name}</td>
+      <td>
+        <div className={style.btns}>
+          <CustomButton title="update" onClick={onUpdateClick} />
+          <CustomButton title="delete" onClick={() => onRemoveDeckClick(cardPack._id)} />
+        </div>
+      </td>
+    </tr>
   ));
+
   return (
     <div>
       {errorNetworkMessage && (
@@ -69,13 +71,13 @@ export const TableGrid = (): ReturnComponentType => {
           </tr>
         </thead>
         <tbody>
-          {cardPacks.map((cardPack: deckTemplate) => (
+          {finalDates}
+          {/*  {cardPacks.map((cardPack: deckTemplate) => (
             <tr key={cardPack._id}>
               <td>
                 <EditableSpan value={cardPack.name} id={cardPack._id} />
               </td>
               <td>{cardPack.cardsCount}</td>
-              {/* {finalDates} */}
               <td>{cardPack.updated}</td>
               <td>{cardPack.user_name}</td>
               <td>
@@ -88,8 +90,7 @@ export const TableGrid = (): ReturnComponentType => {
                 </div>
               </td>
             </tr>
-          ))}
-          {finalDates}
+          ))} */}
         </tbody>
       </table>
     </div>
