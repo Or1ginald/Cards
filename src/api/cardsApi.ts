@@ -1,25 +1,36 @@
+import { AxiosResponse } from 'axios';
+
 import { instance } from './apiConfig';
 
 export const cardsAPI = {
-  /* getCards(cardPackId: string) {
-    return instance.get<GetCardsResponseType>('cards/card', { cardPackId });
-  }, */
-  deleteCard(cardPackId: string) {
-    return instance.delete<GetCardsResponseType>(`cards/card?=${cardPackId}`, {});
+  getCards(cardsPackId: string, answer: string, question: string) {
+    return instance.get<AxiosResponse<ResponseType>>('cards/card', {
+      params: { cardsPackId, answer, question },
+    });
   },
-  addNewCard(cardPackId: string) {
-    return instance.post<GetCardsResponseType>('cards/card', cardPackId);
+  deleteCard(_id: string) {
+    return instance.delete<AxiosResponse<ResponseType>>(`cards/card?=${_id}`, {});
   },
-  updateCard(cardPackId: string) {
-    return instance.post<RegisterParamsType, any>('cards/card', cardPackId);
+  addNewCard(params: AddCardType) {
+    return instance.post<cardType, AxiosResponse<any>>('cards/card', {
+      params: { params },
+    });
+  },
+  updateCard({ cardsPack_id, _id, answer, question }: cardType) {
+    return instance.put<cardType, AxiosResponse<ResponseType>>('cards/card', {
+      card: { cardsPack_id, _id, answer, question },
+    });
   },
 };
 
 // types
 
-export type RegisterParamsType = {
-  email: string;
-  password: string;
+export type AddCardType = {
+  cardsPack_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
 };
 
 export type cardType = {
@@ -36,7 +47,7 @@ export type cardType = {
   updated?: string;
   __v?: number;
 };
-type GetCardsResponseType = {
+export type ResponseType = {
   cards: cardType[];
   cardsTotalCount: number;
   maxGrade: number;
