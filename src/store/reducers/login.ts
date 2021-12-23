@@ -2,6 +2,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
 import { setErrorMessageNetworkAC } from './errorReducer';
+import { logOutUserProfileType, setUserProfile, setUserProfileType } from './profile';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
 import { requestStatus } from 'enum';
@@ -56,8 +57,9 @@ export const logInTC =
     dispatch(setAppStatusAC(requestStatus.loading));
     authAPI
       .login(data)
-      .then(() => {
+      .then(res => {
         dispatch(setAuthLoginDataAC(true));
+        dispatch(setUserProfile(res.data));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
@@ -82,6 +84,7 @@ export const logOutTC =
     dispatch(setAppStatusAC(requestStatus.loading));
     authAPI.logOut().then(() => {
       dispatch(setAuthLoginDataAC(false));
+      dispatch(setUserProfile(null));
       dispatch(setErrorMessageAC(''));
       dispatch(setAppStatusAC(requestStatus.idle));
     });
@@ -93,4 +96,6 @@ type setErrorMessageLogin = ReturnType<typeof setErrorMessageAC>;
 export type ActionTypesLogin =
   | setLoginData
   | setErrorMessageLogin
-  | SetAppStatusActionType;
+  | SetAppStatusActionType
+  | logOutUserProfileType
+  | setUserProfileType;

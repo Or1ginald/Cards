@@ -1,13 +1,17 @@
 import { Nullable } from '../../types';
 
-export type InitialStateDataType = {
-  profile: {
-    _id: Nullable<string>;
-    avatar?: Nullable<string>;
-    name: string;
-    email: Nullable<string>;
-    rememberMe: boolean;
-  };
+export type ProfileResponseDataType = null | {
+  _id: Nullable<string>;
+  email: string;
+  name: string;
+  avatar?: Nullable<string>;
+  publicCardPacksCount: Nullable<number>;
+  created: Date | null;
+  updated: Date | null;
+  isAdmin: Nullable<boolean>;
+  verified: Nullable<boolean>;
+  rememberMe: Nullable<boolean>;
+  error?: Nullable<string>;
 };
 
 const initialState = {
@@ -15,15 +19,23 @@ const initialState = {
     _id: null as string | null,
     avatar: null as string | null,
     name: '',
-    email: null as string | null,
-    rememberMe: false,
+    email: '',
+    publicCardPacksCount: null as number | null,
+    created: null as Date | null,
+    updated: null as Date | null,
+    isAdmin: null as boolean | null,
+    verified: null as boolean | null,
+    rememberMe: null as boolean | null,
+    error: null as string | null,
   },
 };
 
+export type InitialStateProfileType = typeof initialState;
+
 export const profileReducer = (
-  state: InitialStateDataType = initialState,
+  state: InitialStateProfileType = initialState,
   action: ActionTypes,
-): InitialStateDataType => {
+): InitialStateProfileType => {
   switch (action.type) {
     case 'SET_USER_DATA':
       return {
@@ -35,6 +47,23 @@ export const profileReducer = (
         ...state,
         profile: { ...state.profile, ...action.profile },
       };
+    case 'LOGOUT_USER_PROFILE':
+      return {
+        ...state,
+        profile: {
+          _id: null as string | null,
+          avatar: null as string | null,
+          name: '',
+          email: '',
+          publicCardPacksCount: null as number | null,
+          created: null as Date | null,
+          updated: null as Date | null,
+          isAdmin: null as boolean | null,
+          verified: null as boolean | null,
+          rememberMe: null as boolean | null,
+          error: null as string | null,
+        },
+      };
     // case 'SET_ERROR_MESSAGE':
     //   return {
     //     ...state,
@@ -45,18 +74,23 @@ export const profileReducer = (
   }
 };
 
-export const setUserData = (_id: Nullable<string>, name: Nullable<string>) =>
+export const setUserData = (_id: string, name: string, avatar: string) =>
   ({
     type: 'SET_USER_DATA',
-    payload: { _id, name },
+    payload: { _id, name, avatar },
   } as const);
-export const setProfile = (profile: InitialStateDataType) =>
+export const setUserProfile = (profile: ProfileResponseDataType) =>
   ({
     type: 'SET_USER_PROFILE',
     profile,
   } as const);
 export const setErrorMessage = (error: Nullable<string>) =>
   ({ type: 'SET_ERROR_MESSAGE', error } as const);
+export const logOutUserProfile = (profile: ProfileResponseDataType) =>
+  ({
+    type: 'LOGOUT_USER_PROFILE',
+    profile,
+  } as const);
 
 // export const getAuthLoginData = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
 //   return authAPI.me()
@@ -95,8 +129,20 @@ export const setErrorMessage = (error: Nullable<string>) =>
 //     });
 // }
 
+// export const uploadUserPhotoThunk = (image: File) => async (dispatch: Dispatch) => {
+//   const response = await ProfileAPI.uploadUserPhoto(image)
+//   if (response.data.resultCode === 0) {
+//     dispatch(UploadUserPhoto(response.data.data.photos))
+//   }
+// }
+
 // type;
-type setProfileType = ReturnType<typeof setProfile>;
+export type setUserProfileType = ReturnType<typeof setUserProfile>;
 type setAuthUserDataType = ReturnType<typeof setUserData>;
 type setErrorMessageLoginType = ReturnType<typeof setErrorMessage>;
-type ActionTypes = setAuthUserDataType | setErrorMessageLoginType | setProfileType;
+export type logOutUserProfileType = ReturnType<typeof logOutUserProfile>;
+type ActionTypes =
+  | setAuthUserDataType
+  | setErrorMessageLoginType
+  | setUserProfileType
+  | logOutUserProfileType;

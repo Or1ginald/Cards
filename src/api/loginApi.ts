@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
 
+import { Nullable } from '../types';
+
 import { instance } from './apiConfig';
 
 export const authAPI = {
@@ -22,8 +24,17 @@ export const authAPI = {
   },
 };
 
-// types
+export const profileAPI = {
+  updateProfile(paramsUpdate: UpdateProfileType) {
+    return instance.put('/auth/me', paramsUpdate);
+  },
+};
 
+// types
+export type UpdateProfileType = {
+  name: string;
+  avatar: Nullable<string>;
+};
 export type LoginParamsType = {
   email: string;
   password: string;
@@ -42,6 +53,7 @@ export type ResponseType = {
   publicCardPacksCount: number;
   created: Date;
   updated: Date;
+  isAdmin: boolean;
   verified: boolean;
   rememberMe: boolean;
   error?: string;

@@ -14,11 +14,11 @@ import {
   Login,
   Navigation,
   Preloader,
+  Profile,
   SignUpContainer,
   PageError404,
   Cards,
 } from 'components';
-import { ProfileContainer } from 'components/profile/ProfileContainer';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
 import { useAppSelector } from 'hooks';
@@ -60,7 +60,7 @@ export const App = (): ReturnComponentType => {
           <Routes>
             <Route path={PATH.LOGIN} element={<Login />} />
             <Route path={PATH.REGISTRATION} element={<SignUpContainer />} />
-            <Route path={PATH.PROFILE} element={<ProfileContainer />} />
+            <Route path={PATH.PROFILE} element={<Profile />} />
             <Route path={PATH.PAGE_404} element={<PageError404 />} />
             <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
             <Route path={PATH.POPUP} element={<Popup />} />
