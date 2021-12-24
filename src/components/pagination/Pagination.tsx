@@ -77,13 +77,24 @@ export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
       </li>
       {paginationRange.map((pageNumber: any) => {
         if (pageNumber === DOTS) {
-          return <li className="pagination-item dots">&#8230;</li>;
+          return (
+            <li
+              className="pagination-item dots"
+              key={pageNumber + Math.random().toString()}
+            >
+              &#8230;
+            </li>
+          );
         }
         const liDisabled =
           pageNumber === currentPage ? 'pagination-item selected' : 'pagination-item';
 
         return (
-          <li className={liDisabled} onClick={() => onPageChange(pageNumber)}>
+          <li
+            className={liDisabled}
+            onClick={() => onPageChange(pageNumber)}
+            key={pageNumber}
+          >
             {pageNumber}
           </li>
         );
