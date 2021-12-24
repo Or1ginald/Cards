@@ -1,44 +1,33 @@
 import React from 'react';
 
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { CustomInput } from '../customInput';
+import s from './cards.module.css';
 
-import { CustomButton, Preloader } from 'components';
-import { requestStatus } from 'enum';
+import { Preloader } from 'components';
+import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
+import { addCardTC } from 'store/reducers/cards';
 import { getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
 
 export const Card = (): ReturnComponentType => {
-  const {
-    value: question,
-    handleValue: handleQuestion,
-    // resetValue: resetQuestion,
-  } = useInput('');
-  const {
-    value: answer,
-    handleValue: handleAnswer,
-    // resetValue: resetAnswer,
-  } = useInput('');
-
-  // const dispatch = useDispatch();
+  const { value: question, handleValue: handleQuestion } = useInput('');
+  const { value: answer, handleValue: handleAnswer } = useInput('');
+  const grade = useAppSelector(state => state.cards.grade);
+  const shots = useAppSelector(state => state.cards.shots);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const isDataLoaded = useAppSelector(getIsDataLoaded);
-  // /* const errorMessage = useAppSelector(getErrorMessage); */
   const isLoading = useAppSelector(getStatus);
-  // const errorPassMessage = useAppSelector(getErrorValidMessage);
-  // const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
-
   const onClickHandlerCancel = (): void => {
-    navigate('packCards');
+    navigate(PATH.CARDS);
   };
 
-  // const onClickAddCard = (data: AddCardType): void => {
-  //   dispatch(addCardTC(data));
-  // };
+  const onClickAddCard = (): void => {
+    dispatch(addCardTC({ question, answer, grade, shots }));
+  };
   return (
     <div className={style.mainContainer}>
       {isLoading === requestStatus.loading ? (
@@ -47,27 +36,27 @@ export const Card = (): ReturnComponentType => {
         <div className={style.content}>
           <div className={style.contentWrap}>
             <h2> Card </h2>
-            {/*  {errorPassMessage && (
-              <span style={{ color: 'red' }}> {errorPassMessage} </span>
-            )}
-            {errorNetworkMessage && (
-              <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-            )} */}
-            <CustomInput
-              onChange={handleQuestion}
-              value={question}
-              placeholder="Question"
-              typeInput="textarea"
-            />
-            <CustomInput
-              placeholder="Answer"
-              typeInput="textarea"
-              value={answer}
-              onChange={handleAnswer}
-            />
-            <div style={{ minWidth: '50px' }}>
-              <CustomButton title="Cancel" onClick={onClickHandlerCancel} />
-              <CustomButton title="Add card" onClick={() => {}} />
+            <div className={s.container}>
+              <textarea
+                className={s.textarea}
+                placeholder="Question"
+                value={question}
+                onChange={handleQuestion}
+              />
+              <textarea
+                className={s.textarea}
+                placeholder="Answer"
+                value={answer}
+                onChange={handleAnswer}
+              />
+            </div>
+            <div className={s.buttons}>
+              <button className={s.btn} onClick={onClickHandlerCancel}>
+                Cancel
+              </button>
+              <button className={s.btn} onClick={onClickAddCard}>
+                Add card
+              </button>
             </div>
           </div>
         </div>

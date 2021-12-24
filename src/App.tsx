@@ -19,6 +19,7 @@ import {
   PageError404,
   Cards,
 } from 'components';
+import { Card } from 'components/cards/Card';
 import { Test } from 'components/Test';
 import { PATH } from 'enum';
 import { useAppSelector } from 'hooks';
@@ -68,6 +69,7 @@ export const App = (): ReturnComponentType => {
             <Route path={PATH.CARDS} element={<Cards />}>
               <Route path=":cardsPack_id" element={<Cards />} />
             </Route>
+            <Route path={PATH.CARD} element={<Card />} />
             <Route path="/" element={<Test />} />
           </Routes>
         </div>

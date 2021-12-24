@@ -7,4 +7,5 @@ export enum PATH {
   CREATE_NEW_PASSWORD = '/createNewPassword/:token',
   PAGE_404 = '/*',
   CARDS = '/cards',
+  CARD = '/card',
 }

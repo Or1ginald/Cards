@@ -16,7 +16,7 @@ type InputProps = {
 export const CustomInput = memo(
   ({
     placeholder,
-    typeInput = 'text',
+    typeInput,
     className,
     value,
     onChange,
