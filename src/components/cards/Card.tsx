@@ -32,7 +32,7 @@ export const Card = (): ReturnComponentType => {
       {isLoading === requestStatus.loading ? (
         <Preloader />
       ) : (
-        <div className={style.content}>
+        <div className={s.contentCard}>
           <div className={style.contentWrap}>
             <h2> Card </h2>
             <div className={s.container}>
