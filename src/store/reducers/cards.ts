@@ -13,6 +13,8 @@ type initStateType = {
   answer: string;
   question: string;
   cardsTotalCount: number;
+  grade: number;
+  shots: number;
   maxGrade: number;
   minGrade: number;
   page: number;
@@ -24,6 +26,8 @@ const initialState: initStateType = {
   answer: '',
   question: '',
   cardsTotalCount: 5,
+  grade: 5,
+  shots: 1,
   maxGrade: 5,
   minGrade: 3,
   page: 1,
@@ -41,6 +45,19 @@ export const cardReducer = (
       return { ...state, cards: state.cards.filter(c => c._id !== action._id) };
     case 'CARDS/ADD_CARD':
       return { ...state, cards: [action.card, ...state.cards] };
+    case 'CARDS/UPDATE_CARD':
+      return {
+        ...state,
+        cards: state.cards.map(c =>
+          c._id === action.dataUpdate._id
+            ? {
+                ...c,
+                question: action.dataUpdate.question,
+                answer: action.dataUpdate.answer,
+              }
+            : c,
+        ),
+      };
     default:
       return state;
   }
@@ -53,6 +70,16 @@ export const removeCardAC = (_id: string) =>
   ({ type: 'CARDS/REMOVE_CARD', _id } as const);
 
 export const addCardAC = (card: cardType) => ({ type: 'CARDS/ADD_CARD', card } as const);
+
+export const updateCardAC = (_id: string, answer: string, question: string) =>
+  ({
+    type: 'CARDS/UPDATE_CARD',
+    dataUpdate: {
+      _id,
+      answer,
+      question,
+    },
+  } as const);
 
 export const getCardsTC =
   (cardsPackId: string) =>
@@ -112,34 +139,28 @@ export const addCardTC =
       dispatch(setAppStatusAC(requestStatus.succeeded));
     });
   };
-/*
-export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType | SetAppErrorActionType | SetAppStatusActionType>) => {
-  dispatch(setAppStatusAC('loading'))
-  todolistsAPI.createTask(todolistId, title)
-    .then(res => {
-      if (res.data.resultCode === 0) {
-        const task = res.data.data.item
-        const action = addTaskAC(task)
-        dispatch(action)
-        dispatch(setAppStatusAC('succeeded'))
-      } else {
-        handleServerAppError(res.data, dispatch);
-      }
-    })
-    .catch((error) => {
-      handleServerNetworkError(error, dispatch)
-    })
-}
-*/
+
+export const updateCardTC =
+  (dataUpdate: cardType) =>
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
+    dispatch(setAppStatusAC(requestStatus.loading));
+    cardsAPI.updateCard(dataUpdate).then(res => {
+      const { _id, question, answer } = res.data.cards;
+      dispatch(updateCardAC(_id, question, answer));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
+    });
+  };
 
 // types
 export type getCardsType = ReturnType<typeof setCardsAC>;
 export type removeCardType = ReturnType<typeof removeCardAC>;
 export type addCardType = ReturnType<typeof addCardAC>;
+export type updateCardType = ReturnType<typeof updateCardAC>;
 
 export type ActionTypesCards =
   | getCardsType
   | SetAppStatusActionType
   | removeCardType
   | SetErrorMessageNetworkType
-  | addCardType;
+  | addCardType
+  | updateCardType;

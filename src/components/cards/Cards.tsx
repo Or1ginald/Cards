@@ -12,6 +12,8 @@ import { ReturnComponentType } from '../../types';
 import { CustomButton } from '../customButton';
 import style from '../table/TableGrid.module.css';
 
+import { PATH } from 'enum/pathes';
+
 export const Cards = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cards = useAppSelector(state => state.cards.cards);
@@ -27,7 +29,7 @@ export const Cards = (): ReturnComponentType => {
     dispatch(setErrorMessageNetworkAC(''));
   };
   const onClickAddCard = (): void => {
-    navigate('addCard');
+    navigate(PATH.CARD);
   };
 
   useEffect(() => {
@@ -38,10 +40,10 @@ export const Cards = (): ReturnComponentType => {
   }, []);
   return (
     <div>
+      <button className={style.btn} onClick={onClickAddCard}>
+        Add new card
+      </button>
       <table className={style.table}>
-        {errorNetworkMessage && (
-          <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-        )}
         <thead>
           <tr>
             <th>Question</th>
@@ -50,10 +52,8 @@ export const Cards = (): ReturnComponentType => {
             <th>Created</th>
             <th>Actions</th>
           </tr>
-          <button className={style.btn} onClick={onClickAddCard}>
-            Add new card
-          </button>
         </thead>
+        {/* */}
         <tbody>
           {cards.map((card: cardType) => (
             <tr key={Math.random() * random}>
@@ -76,6 +76,9 @@ export const Cards = (): ReturnComponentType => {
           ))}
         </tbody>
       </table>
+      {errorNetworkMessage && (
+        <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
+      )}
     </div>
   );
 };

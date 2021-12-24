@@ -16,9 +16,9 @@ export const cardsAPI = {
       params: { params },
     });
   },
-  updateCard({ cardsPack_id, _id, answer, question }: cardType) {
-    return instance.put<cardType, AxiosResponse<ResponseType>>('cards/card', {
-      card: { cardsPack_id, _id, answer, question },
+  updateCard({ _id, answer, question }: cardType) {
+    return instance.put<cardType, any>('cards/card', {
+      card: { _id, answer, question },
     });
   },
 };
@@ -26,7 +26,7 @@ export const cardsAPI = {
 // types
 
 export type AddCardType = {
-  cardsPack_id: string;
+  // cardsPack_id: string;
   answer: string;
   question: string;
   grade: number;

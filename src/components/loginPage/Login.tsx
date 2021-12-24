@@ -81,7 +81,6 @@ export const Login = (): ReturnComponentType => {
               value={email}
               placeholder="Email"
               typeInput="text"
-              // name="user[email]"
             />
             <CustomInput
               placeholder="password"

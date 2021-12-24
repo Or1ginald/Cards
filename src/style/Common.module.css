@@ -8,6 +8,7 @@
 }
 
 .contentWrap {
+    max-width: 340px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -19,7 +20,7 @@ input[type=checkbox]{
 }
 
 .content {
-    /*max-width: 320px;*/
+    max-width: 340px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
