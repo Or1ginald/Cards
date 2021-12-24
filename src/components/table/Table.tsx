@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import style from '../../style/Common.module.css';
 import { Pagination } from '../pagination';
@@ -53,6 +54,9 @@ export const Table = (): ReturnComponentType => {
     setTitle('');
   };
 
+  /* const onClickCards = (cardsPack_id: string): void => {
+    dispatch(getCardsTC(cardsPack_id));
+  }; */
   // const onFilterMyPacksClick = (): void => {};
 
   return (
@@ -130,6 +134,7 @@ export const Table = (): ReturnComponentType => {
                       >
                         delete
                       </button>
+                      <Link to={`/cards/${cardPack._id}`}>cards</Link>
                     </div>
                   ))}
                 </div>

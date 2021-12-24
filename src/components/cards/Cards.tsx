@@ -17,6 +17,7 @@ import { PATH } from 'enum/pathes';
 export const Cards = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cards = useAppSelector(state => state.cards.cards);
+  console.log('cards', cards);
   // const cardPacks = useAppSelector(state => state.decks.cardPacks);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,11 +34,11 @@ export const Cards = (): ReturnComponentType => {
   };
 
   useEffect(() => {
-    if (!cardsPack_id) {
+    /*  if (!cardsPack_id) {
       return;
-    }
+    } */
     dispatch(getCardsTC(cardsPack_id));
-  }, []);
+  }, [cardsPack_id]);
   return (
     <div>
       <button className={style.btn} onClick={onClickAddCard}>

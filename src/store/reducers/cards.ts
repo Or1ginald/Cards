@@ -40,7 +40,7 @@ export const cardReducer = (
 ): initStateType => {
   switch (action.type) {
     case 'CARDS/SET_DATA_CARDS':
-      return { ...state, ...action.cards };
+      return { ...state, cards: action.cards };
     case 'CARDS/REMOVE_CARD':
       return { ...state, cards: state.cards.filter(c => c._id !== action._id) };
     case 'CARDS/ADD_CARD':
@@ -63,8 +63,8 @@ export const cardReducer = (
   }
 };
 
-export const setCardsAC = (cardsPackId: string, cards: cardType[]) =>
-  ({ type: 'CARDS/SET_DATA_CARDS', cardsPackId, cards } as const);
+export const setCardsAC = (cards: cardType[]) =>
+  ({ type: 'CARDS/SET_DATA_CARDS', cards } as const);
 
 export const removeCardAC = (_id: string) =>
   ({ type: 'CARDS/REMOVE_CARD', _id } as const);
@@ -83,16 +83,14 @@ export const updateCardAC = (_id: string, answer: string, question: string) =>
 
 export const getCardsTC =
   (cardsPackId: string) =>
-  (
-    dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>,
-    getState: () => RootStoreType,
-  ) => {
-    const { answer, question } = getState().cards;
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
+    // const { answer, question } = getState().cards;
     dispatch(setAppStatusAC(requestStatus.loading));
     cardsAPI
-      .getCards(cardsPackId, answer, question)
+      .getCards(cardsPackId)
       .then(res => {
-        dispatch(setCardsAC(cardsPackId, res.data.data.cards));
+        console.log('data', res.data.cards);
+        dispatch(setCardsAC(res.data.cards));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
