@@ -89,7 +89,6 @@ export const getCardsTC =
     cardsAPI
       .getCards(cardsPackId)
       .then(res => {
-        console.log('data', res.data.cards);
         dispatch(setCardsAC(res.data.cards));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
