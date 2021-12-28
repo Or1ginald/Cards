@@ -50,22 +50,15 @@ export const decksReducer = (
 ): ResponseDeckType => {
   switch (action.type) {
     case 'FETCH_DECKS':
-      // return [...state, ...action.decks];
       return { ...state, ...action.payload };
     case 'REMOVE_DECK':
-      // return state.filter(deck => deck._id !== action.id);
       return {
         ...state,
         cardPacks: state.cardPacks.filter(deck => deck._id !== action.id),
       };
     case 'ADD_DECK':
-      // return [{ ...action.deck }, ...state];
       return { ...state, cardPacks: [action.deck, ...state.cardPacks] };
     case 'UPDATE_DECK':
-      // return state.map(deck =>
-      //   deck._id === action.id ? { ...deck, name: action.title } : deck,
-      // );
-      // debugger;
       return {
         ...state,
         cardPacks: state.cardPacks.map(deck =>
@@ -134,6 +127,45 @@ export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
       dispatch(setErrorMessageNetworkAC(errorNetwork));
     });
 };
+
+export const setSortDecksTC =
+  (sortIndex: number, pageCount: number, currentPage: number) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC(requestStatus.loading));
+    decksAPI
+      .fetchAllSortDecks(sortIndex, pageCount, currentPage)
+      .then(res => {
+        dispatch(fetchDecksAC(res.data));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+      })
+      .catch((e: AxiosError) => {
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+        const errorNetwork = e.response
+          ? e.response.data.error
+          : `${e.message}, more details in the console`;
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+      });
+  };
+
+export const setSearchDecksTC =
+  (searchWord: string): AppThunk =>
+  (dispatch: Dispatch, getState) => {
+    const { page, pageCount } = getState().decks;
+    dispatch(setAppStatusAC(requestStatus.loading));
+    decksAPI
+      .fetchSearchDecks(searchWord, pageCount, page)
+      .then(res => {
+        dispatch(fetchDecksAC(res.data));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+      })
+      .catch((e: AxiosError) => {
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+        const errorNetwork = e.response
+          ? e.response.data.error
+          : `${e.message}, more details in the console`;
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+      });
+  };
+
 export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI

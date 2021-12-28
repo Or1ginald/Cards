@@ -4,7 +4,7 @@ import { AddCardType, cardsAPI, cardType } from '../../api/cardsApi';
 import { requestStatus } from '../../enum';
 import { RootStoreType } from '../store';
 
-import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
+import { setAppStatusAC } from './appInitialized';
 import { setErrorMessageNetworkAC, SetErrorMessageNetworkType } from './errorReducer';
 
 type initStateType = {
@@ -153,8 +153,8 @@ export type updateCardType = ReturnType<typeof updateCardAC>;
 
 export type ActionTypesCards =
   | getCardsType
-  | SetAppStatusActionType
   | removeCardType
   | SetErrorMessageNetworkType
   | addCardType
-  | updateCardType;
+  | updateCardType
+  | ReturnType<typeof setAppStatusAC>;

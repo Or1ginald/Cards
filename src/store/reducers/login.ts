@@ -1,22 +1,18 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
+import { setAppStatusAC } from './appInitialized';
 import { setErrorMessageNetworkAC } from './errorReducer';
-import { logOutUserProfileType, setUserProfile, setUserProfileType } from './profile';
 
 import { authAPI, LoginParamsType } from 'api/loginApi';
 import { requestStatus } from 'enum';
 import { RootStoreType } from 'store';
-import { Nullable } from 'types';
 
 export type InitialStateDataType = {
   isAuth: boolean;
-  error?: Nullable<string>;
 };
 
 export const initialState: InitialStateDataType = {
   isAuth: false,
-  error: null,
 };
 
 export const loginReducer = (
@@ -24,26 +20,19 @@ export const loginReducer = (
   action: ActionTypesLogin,
 ): InitialStateDataType => {
   switch (action.type) {
-    case 'LOGIN/SET_AUTH_LOGIN_DATA':
+    case 'LOGIN/SET_AUTH_LOGIN_TOGGLE':
       return {
         ...state,
         isAuth: action.isAuth,
       };
-    case 'LOGIN/SET_ERROR_MESSAGE':
-      return {
-        ...state,
-        error: action.error,
-      };
+
     default:
       return state;
   }
 };
 
-export const setAuthLoginDataAC = (isAuth: boolean) =>
-  ({ type: 'LOGIN/SET_AUTH_LOGIN_DATA', isAuth } as const);
-
-export const setErrorMessageAC = (error: Nullable<string>) =>
-  ({ type: 'LOGIN/SET_ERROR_MESSAGE', error } as const);
+export const toggleAuthAC = (isAuth: boolean) =>
+  ({ type: 'LOGIN/SET_AUTH_LOGIN_TOGGLE', isAuth } as const);
 
 export const logInTC =
   (data: LoginParamsType) =>
@@ -57,9 +46,8 @@ export const logInTC =
     dispatch(setAppStatusAC(requestStatus.loading));
     authAPI
       .login(data)
-      .then(res => {
-        dispatch(setAuthLoginDataAC(true));
-        dispatch(setUserProfile(res.data));
+      .then(() => {
+        dispatch(toggleAuthAC(true));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
@@ -81,19 +69,13 @@ export const logOutTC =
   () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesLogin>) => {
     dispatch(setAppStatusAC(requestStatus.loading));
     authAPI.logOut().then(() => {
-      dispatch(setAuthLoginDataAC(false));
-      dispatch(setUserProfile(null));
-      dispatch(setErrorMessageAC(''));
+      dispatch(toggleAuthAC(false));
       dispatch(setAppStatusAC(requestStatus.idle));
     });
   };
 
 // type;
-export type setLoginData = ReturnType<typeof setAuthLoginDataAC>;
-type setErrorMessageLogin = ReturnType<typeof setErrorMessageAC>;
+
 export type ActionTypesLogin =
-  | setLoginData
-  | setErrorMessageLogin
-  | SetAppStatusActionType
-  | logOutUserProfileType
-  | setUserProfileType;
+  | ReturnType<typeof toggleAuthAC>
+  | ReturnType<typeof setAppStatusAC>;
