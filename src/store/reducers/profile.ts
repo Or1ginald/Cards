@@ -1,7 +1,7 @@
 import { Nullable } from '../../types';
 
 export type ProfileResponseDataType = null | {
-  _id: Nullable<string>;
+  _id: string;
   email: string;
   name: string;
   avatar?: Nullable<string>;
@@ -16,7 +16,7 @@ export type ProfileResponseDataType = null | {
 
 const initialState = {
   profile: {
-    _id: null as string | null,
+    _id: '',
     avatar: null as string | null,
     name: '',
     email: '',
@@ -51,7 +51,7 @@ export const profileReducer = (
       return {
         ...state,
         profile: {
-          _id: null as string | null,
+          _id: '',
           avatar: null as string | null,
           name: '',
           email: '',

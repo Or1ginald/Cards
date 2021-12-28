@@ -1,6 +1,6 @@
 import { ThunkDispatch } from 'redux-thunk';
 
-import { AddCardType, cardsAPI, cardType } from '../../api/cardsApi';
+import { cardsAPI, cardType, ResponseType } from '../../api/cardsApi';
 import { requestStatus } from '../../enum';
 import { RootStoreType } from '../store';
 
@@ -39,7 +39,7 @@ export const cardReducer = (
 ): initStateType => {
   switch (action.type) {
     case 'CARDS/SET_DATA_CARDS':
-      return { ...state, cards: action.cards };
+      return { ...state, ...action.data };
     case 'CARDS/REMOVE_CARD':
       return { ...state, cards: state.cards.filter(c => c._id !== action._id) };
     case 'CARDS/ADD_CARD':
@@ -62,8 +62,8 @@ export const cardReducer = (
   }
 };
 
-export const setCardsAC = (cards: cardType[]) =>
-  ({ type: 'CARDS/SET_DATA_CARDS', cards } as const);
+export const setCardsAC = (data: ResponseType) =>
+  ({ type: 'CARDS/SET_DATA_CARDS', data } as const);
 
 export const removeCardAC = (_id: string) =>
   ({ type: 'CARDS/REMOVE_CARD', _id } as const);
@@ -83,12 +83,11 @@ export const updateCardAC = (_id: string, answer: string, question: string) =>
 export const getCardsTC =
   (cardsPackId: string) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
-    // const { answer, question } = getState().cards;
     dispatch(setAppStatusAC(requestStatus.loading));
     cardsAPI
       .getCards(cardsPackId)
       .then(res => {
-        dispatch(setCardsAC(res.data.cards));
+        dispatch(setCardsAC(res.data));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
@@ -105,6 +104,7 @@ export const getCardsTC =
         dispatch(setAppStatusAC(requestStatus.succeeded));
       });
   };
+
 export const removeCardTC =
   (_id: string) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
@@ -124,6 +124,15 @@ export const removeCardTC =
   };
 
 export const addCardTC =
+  (cardsPackId: string) =>
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
+    dispatch(setAppStatusAC(requestStatus.loading));
+    cardsAPI.getCards(cardsPackId).then(res => {
+      dispatch(setCardsAC(res.data));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
+    });
+  };
+/* export const addCardTC =
   (payload: AddCardType) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
     dispatch(setAppStatusAC(requestStatus.loading));
@@ -132,7 +141,7 @@ export const addCardTC =
       dispatch(addCardAC(newCard));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     });
-  };
+  }; */
 
 export const updateCardTC =
   (dataUpdate: cardType) =>
