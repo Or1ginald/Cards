@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 import noneAvatarImage from '../../assets/avatar.png';
 import { InitialStateProfileType } from '../../store/reducers/profile';
@@ -103,7 +103,6 @@ export const Profile = (): ReturnComponentType => {
             <span onDoubleClick={activateEditForm}>{email}</span>
           )}
           <br />
-          <Link to={PATH.TEST_PAGE}> Test page with packs </Link>
         </div>
       )}
     </div>

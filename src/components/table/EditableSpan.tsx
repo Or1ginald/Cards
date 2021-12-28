@@ -23,13 +23,13 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     dispatch(upDateDeckTC(title, props.id));
     setEditMode(false);
   };
-  const changeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
+  const changeTitle = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setTitle(e.currentTarget.value);
   };
 
   return editMode ? (
     // eslint-disable-next-line jsx-a11y/no-autofocus
-    <input value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+    <textarea value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
   ) : (
     <span onDoubleClick={activateEditMode}>{props.value}</span>
   );

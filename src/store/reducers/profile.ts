@@ -64,6 +64,11 @@ export const profileReducer = (
           error: null as string | null,
         },
       };
+    // case 'SET_ERROR_MESSAGE':
+    //   return {
+    //     ...state,
+    //     error: action.error,
+    //   };
     default:
       return state;
   }

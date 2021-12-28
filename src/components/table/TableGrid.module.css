@@ -7,7 +7,7 @@
     minmax(150px, 0.8fr)
     minmax(150px, 2.5fr)
     minmax(150px, 1.7fr)
-    minmax(200px, 2fr);
+    minmax(150px, 1.7fr);
     background-color: #94d978;
 }
 
@@ -19,7 +19,7 @@ tr {
 
 th,
 td {
-    padding: 5px;
+    padding: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -40,8 +40,8 @@ th:last-child {
 }
 
 td {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     color: #23341e;
 }
 
@@ -82,7 +82,7 @@ tr:nth-child(even) td {
     margin-right: 0.5em;
     font-family: 'Mochiy Pop P One', sans-serif;
 
-}/*
+}
 .wrapper {
     max-width: 1600px;
     width: 100%;
@@ -95,7 +95,7 @@ tr:nth-child(even) td {
     .wrapper {
         flex-direction: column;
     }
-}*/
+}
 .rightBlock {
     display: flex;
   /*  min-width: 600px;*/

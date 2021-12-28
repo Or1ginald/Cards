@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -7,45 +7,38 @@ import { PATH } from '../../enum';
 import style from '../../style/Common.module.css';
 import { Pagination } from '../pagination';
 
-import { setCurrentPageAC, setDecksTC } from './decksTC';
-import { Search } from './Search';
+import {
+  addDeckTC,
+  deckTemplate,
+  removeDeckTC,
+  setCurrentPageAC,
+  setDecksTC,
+} from './decksTC';
+import { EditableSpan } from './EditableSpan';
 import styleTable from './Table.module.css';
-import { TableGrid } from './TableGrid';
 
 import { Preloader, TableSidebar } from 'components';
 import { useAppSelector } from 'hooks';
+import { getErrorNetworkMessage, setErrorMessageNetworkAC } from 'store';
 import { getStatus } from 'store/selectors';
 import { ReturnComponentType } from 'types';
 
 export const Table = (): ReturnComponentType => {
+  const [title, setTitle] = useState('');
+
+  const dispatch = useDispatch();
+
+  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const isLoading = useAppSelector(getStatus);
+  const cardPacks = useAppSelector(state => state.decks.cardPacks);
   const totalCount = useAppSelector(state => state.decks.cardPacksTotalCount);
   const currentPage = useAppSelector(state => state.decks.page);
   const perPage = useAppSelector(state => state.decks.pageCount);
-
-  const dispatch = useDispatch();
+  // const pagesCount = Math.ceil(totalCount / perPage);
 
   useEffect(() => {
     dispatch(setDecksTC());
   }, [dispatch, currentPage]);
-
-
-  return (
-    <div className={styleTable.wrapper}>
-      <TableSidebar />
-      {isLoading === 'loading' ? (
-        <Preloader />
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Search />
-          <TableGrid />
-          <div style={{ backgroundColor: 'white' }}>
-            <Pagination
-              currentPage={currentPage}
-              totalCount={totalCount}
-              pageSize={perPage}
-              onPageChange={(page: number) => dispatch(setCurrentPageAC(page))}
-            />
 
   const random = 100000;
 
@@ -148,10 +141,16 @@ export const Table = (): ReturnComponentType => {
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      <Pagination
+        // className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={totalCount}
+        pageSize={perPage}
+        onPageChange={(page: number) => dispatch(setCurrentPageAC(page))}
+      />
     </div>
   );
 };

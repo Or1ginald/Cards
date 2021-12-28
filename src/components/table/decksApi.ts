@@ -18,23 +18,6 @@ export const decksAPI = {
       params: { page, pageCount },
     });
   },
-  fetchAllSortDecks(sortIndex: number, pageCount: number, currentPage: number) {
-    return instance.get<any, AxiosResponse<ResponseDeckType>>(
-      `cards/pack/?sortPacks=${sortIndex}updated`,
-      {
-        params: { pageCount, currentPage },
-      },
-    );
-  },
-  fetchSearchDecks(searchWord: string, pageCount: number, currentPage: number) {
-    return instance.get<any, AxiosResponse<ResponseDeckType>>(
-      `cards/pack/?packName=${searchWord}`,
-      {
-        params: { pageCount, currentPage },
-      },
-    );
-  },
-
   addNewDeck(cardsPack: addNewDeckType) {
     return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', { cardsPack });
   },
