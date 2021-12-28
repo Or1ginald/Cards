@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { AddCardType, cardsAPI, cardType } from '../../api/cardsApi';
@@ -25,13 +24,13 @@ const initialState: initStateType = {
   cards: [],
   answer: '',
   question: '',
-  cardsTotalCount: 5,
+  cardsTotalCount: 0,
   grade: 5,
   shots: 1,
   maxGrade: 5,
   minGrade: 3,
   page: 1,
-  pageCount: 4,
+  pageCount: 10,
   packUserId: '',
 };
 export const cardReducer = (
@@ -93,18 +92,17 @@ export const getCardsTC =
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
-        dispatch(setAppStatusAC(requestStatus.succeeded));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
         dispatch(setErrorMessageNetworkAC(errorNetwork));
-        const timeOut = 2000;
+        const timeOut = 3000;
         setTimeout(() => {
           dispatch(setErrorMessageNetworkAC(''));
         }, timeOut);
       })
       .finally(() => {
-        dispatch(setAppStatusAC(requestStatus.idle));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       });
   };
 export const removeCardTC =
@@ -117,8 +115,7 @@ export const removeCardTC =
         dispatch(removeCardAC(_id));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
-      .catch((e: AxiosError) => {
-        dispatch(setAppStatusAC(requestStatus.succeeded));
+      .catch(e => {
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;

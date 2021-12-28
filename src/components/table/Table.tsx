@@ -3,6 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { PATH } from '../../enum';
 import style from '../../style/Common.module.css';
 import { Pagination } from '../pagination';
 
@@ -134,7 +135,7 @@ export const Table = (): ReturnComponentType => {
                       >
                         delete
                       </button>
-                      <Link to={`/cards/${cardPack._id}`}>cards</Link>
+                      <Link to={`${PATH.CARDS}/${cardPack._id}`}>cards</Link>
                     </div>
                   ))}
                 </div>
