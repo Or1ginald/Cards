@@ -9,6 +9,12 @@ export const appNavigation: appNavigationType = [
   { id: 6, title: 'createNewPassword', link: PATH.CREATE_NEW_PASSWORD },
   { id: 7, title: 'cards', link: PATH.CARDS },
   { id: 8, title: 'page404', link: PATH.PAGE_404 },
+  { id: 9, title: 'home', link: PATH.TEST_PAGE },
 ];
 
 type appNavigationType = { id: number; title: string; link: string }[];
+
+export const appNavigationShort: appNavigationType = [
+  { id: 1, title: 'profile', link: PATH.PROFILE },
+  { id: 2, title: 'login', link: PATH.LOGIN },
+];

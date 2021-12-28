@@ -1,79 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import s from './App.module.css';
-import style from './components/navigation/Navigation.module.css';
+import { Preloader } from './components';
+import { Header } from './components/Header/Header';
+import { RoutesPart } from './components/Routes/Routes';
+import { PATH, requestStatus } from './enum';
+import { useAppSelector } from './hooks';
 import { ReturnComponentType } from './types';
 
-import {
-  Popup,
-  ConfirmPassword,
-  CreateNewPassword,
-  Login,
-  Navigation,
-  Preloader,
-  Profile,
-  SignUpContainer,
-  PageError404,
-  Cards,
-} from 'components';
-import { Card } from 'components/cards/Card';
-import { Test } from 'components/Test';
-import { PATH } from 'enum';
-import { useAppSelector } from 'hooks';
-import { initializeAppTC } from 'store';
-import { getIsInitialized } from 'store/selectors';
-import st from 'style/Common.module.css';
+/* import { PATH } from 'enum'; */
+import { getIsInitialized, getStatus, initializeAppTC } from 'store';
 
 export const App = (): ReturnComponentType => {
-  const [showMenu, setShowMenu] = useState(false);
-  const isInitialized = useAppSelector(getIsInitialized);
+  const initialized = useAppSelector(getIsInitialized);
+  const isLoading = useAppSelector(getStatus);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initializeAppTC());
   }, [dispatch]);
-  if (!isInitialized) {
-    return (
-      <div className={s.preloaderWrap}>
-        <Preloader />
-      </div>
-    );
+
+  if (!initialized) {
+    return <Navigate to={PATH.LOGIN} />;
   }
 
-  // 1
-
-  const showMenuHandler = (): void => {
-    setShowMenu(!showMenu);
-  };
   return (
-    <div className={s.app}>
-      <div className={s.layout}>
+    <div>
+      {isLoading === requestStatus.loading ? (
+        <Preloader />
+      ) : (
         <div>
-          <button className={st.btn} onClick={showMenuHandler}>
-            Show menu
-          </button>
+          <Header />
+          <RoutesPart />
         </div>
-        {showMenu ? <Navigation /> : <div className={style.nav} />}
-
-        <div className={s.main}>
-          <Routes>
-            <Route path={PATH.LOGIN} element={<Login />} />
-            <Route path={PATH.REGISTRATION} element={<SignUpContainer />} />
-            <Route path={PATH.PROFILE} element={<Profile />} />
-            <Route path={PATH.PAGE_404} element={<PageError404 />} />
-            <Route path={PATH.CONFIRM_PASSWORD} element={<ConfirmPassword />} />
-            <Route path={PATH.POPUP} element={<Popup />} />
-            <Route path={PATH.CREATE_NEW_PASSWORD} element={<CreateNewPassword />} />
-            <Route path={PATH.CARDS} element={<Cards />}>
-              <Route path=":cardsPack_id" element={<Cards />} />
-            </Route>
-            <Route path={PATH.CARD} element={<Card />} />
-            <Route path="/" element={<Test />} />
-          </Routes>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
+
+/*
+<div className={s.app}>
+  <Header />
+  <div className={s.layout}>
+    <div className={s.main}>
+      <RoutesPart />
+    </div>
+  </div>
+</div>
+*/

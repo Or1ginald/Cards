@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { CustomInput } from '../customInput';
 
@@ -13,11 +13,11 @@ import { useAppSelector, useInput } from 'hooks';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
-  setErrorMessagePassAC,
   logInTC,
+  setErrorMessagePassAC,
 } from 'store';
 import { setAppStatusAC } from 'store/reducers';
-import { getIsDataLoaded, getStatus } from 'store/selectors';
+import { getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
 import { isEmailValid, isPasswordValid } from 'utils';
@@ -33,7 +33,7 @@ export const Login = (): ReturnComponentType => {
 
   const dispatch = useDispatch();
 
-  const isDataLoaded = useAppSelector(getIsDataLoaded);
+  /* const isDataLoaded = useAppSelector(getIsDataLoaded); */
   /* const errorMessage = useAppSelector(getErrorMessage); */
   const isLoading = useAppSelector(getStatus);
   const errorPassMessage = useAppSelector(getErrorValidMessage);
@@ -58,9 +58,6 @@ export const Login = (): ReturnComponentType => {
       dispatch(setAppStatusAC(requestStatus.succeeded));
     }
   };
-  if (isDataLoaded) {
-    return <Navigate to={PATH.PROFILE} />;
-  }
 
   return (
     <div className={style.mainContainer}>
