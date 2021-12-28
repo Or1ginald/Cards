@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import { CustomInput } from '../customInput';
 
@@ -13,6 +13,7 @@ import { useAppSelector, useInput } from 'hooks';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
+  getIsDataLoaded,
   logInTC,
   setErrorMessagePassAC,
 } from 'store';
@@ -36,6 +37,7 @@ export const Login = (): ReturnComponentType => {
   /* const isDataLoaded = useAppSelector(getIsDataLoaded); */
   /* const errorMessage = useAppSelector(getErrorMessage); */
   const isLoading = useAppSelector(getStatus);
+  const isAuth = useAppSelector(getIsDataLoaded);
   const errorPassMessage = useAppSelector(getErrorValidMessage);
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
 
@@ -58,6 +60,9 @@ export const Login = (): ReturnComponentType => {
       dispatch(setAppStatusAC(requestStatus.succeeded));
     }
   };
+  if (isAuth) {
+    return <Navigate to={PATH.PROFILE} />;
+  }
 
   return (
     <div className={style.mainContainer}>
