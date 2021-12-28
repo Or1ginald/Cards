@@ -40,8 +40,6 @@ export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
   };
   const lastPage = paginationRange[paginationRange.length - 1];
   const ulClassName = currentPage === 1 ? 'pagination-item disabled' : 'pagination-item';
-  const liSelected =
-    currentPage === lastPage ? 'pagination-item disabled' : 'pagination-item';
 
   return (
     <ul className="pagination-container">
@@ -49,20 +47,35 @@ export const Pagination = (props: PaginationPropsType): ReturnComponentType => {
       <li className={ulClassName} onClick={onPrevious}>
         <div className="arrow left" />
       </li>
-      {paginationRange.map((pageNumber: any) => {
-        if (pageNumber === DOTS) {
-          return <li className="pagination-item dots">&#8230;</li>;
-        }
-        const liDisabled =
+      {paginationRange.map((pageNumber: string | number) => {
+        const listItemClassName =
           pageNumber === currentPage ? 'pagination-item selected' : 'pagination-item';
 
+        if (pageNumber === DOTS) {
+          return (
+            <li
+              className="pagination-item dots"
+              key={pageNumber + Math.random().toString()}
+            >
+              &#8230;
+            </li>
+          );
+        }
+
         return (
-          <li className={liDisabled} onClick={() => onPageChange(pageNumber)}>
+          <li
+            className={listItemClassName}
+            onClick={() => onPageChange(pageNumber as number)}
+            key={pageNumber}
+          >
             {pageNumber}
           </li>
         );
       })}
-      <li className={liSelected} onClick={onNext}>
+      <li
+        className={lastPage ? 'pagination-item disabled' : 'pagination-item'}
+        onClick={onNext}
+      >
         <div className="arrow right" />
       </li>
     </ul>

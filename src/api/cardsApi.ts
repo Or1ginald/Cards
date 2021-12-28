@@ -3,30 +3,24 @@ import { AxiosResponse } from 'axios';
 import { instance } from './apiConfig';
 
 export const cardsAPI = {
-  getCards(cardsPackId: string, answer: string, question: string) {
-    return instance.get<AxiosResponse<ResponseType>>('cards/card', {
-      params: { cardsPackId, answer, question },
-    });
+  getCards(cardsPackId: string) {
+    return instance.get<ResponseType>(`cards/card?cardsPack_id=${cardsPackId}`);
   },
   deleteCard(_id: string) {
-    return instance.delete<AxiosResponse<ResponseType>>(`cards/card?=${_id}`, {});
+    return instance.delete<AxiosResponse<ResponseType>>(`cards/card?id=${_id}`);
   },
-  addNewCard(params: AddCardType) {
-    return instance.post<cardType, AxiosResponse<any>>('cards/card', {
-      params: { params },
-    });
+  addNewCard(card: AddCardType) {
+    return instance.post<cardType, AxiosResponse<any>>('cards/card', { card });
   },
-  updateCard({ _id, answer, question }: cardType) {
-    return instance.put<cardType, any>('cards/card', {
-      card: { _id, answer, question },
-    });
+  updateCard(updateCard: updateCardType) {
+    return instance.put<cardType, any>('cards/card', { updateCard });
   },
 };
 
 // types
 
 export type AddCardType = {
-  // cardsPack_id: string;
+  cardsPack_id: string;
   answer: string;
   question: string;
   grade: number;
@@ -55,4 +49,10 @@ export type ResponseType = {
   page: number;
   pageCount: number;
   packUserId: string;
+};
+
+export type updateCardType = {
+  _id: string;
+  question: string;
+  answer: string;
 };

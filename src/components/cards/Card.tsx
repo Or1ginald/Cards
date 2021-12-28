@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import s from './cards.module.css';
@@ -8,7 +7,6 @@ import s from './cards.module.css';
 import { Preloader } from 'components';
 import { PATH, requestStatus } from 'enum';
 import { useAppSelector, useInput } from 'hooks';
-import { addCardTC } from 'store/reducers/cards';
 import { getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
@@ -16,24 +14,25 @@ import { ReturnComponentType } from 'types';
 export const Card = (): ReturnComponentType => {
   const { value: question, handleValue: handleQuestion } = useInput('');
   const { value: answer, handleValue: handleAnswer } = useInput('');
-  const grade = useAppSelector(state => state.cards.grade);
+  /* const grade = useAppSelector(state => state.cards.grade);
   const shots = useAppSelector(state => state.cards.shots);
-  const dispatch = useDispatch();
+  // const cardsPackId = useAppSelector(state => state.decks);
+  const dispatch = useDispatch(); */
   const navigate = useNavigate();
   const isLoading = useAppSelector(getStatus);
   const onClickHandlerCancel = (): void => {
     navigate(PATH.CARDS);
   };
 
-  const onClickAddCard = (): void => {
-    dispatch(addCardTC({ question, answer, grade, shots }));
-  };
+  /* const onClickAddCard = (): void => {
+    dispatch(addCardTC({ cardsPack_id, question, answer, grade, shots }));
+  }; */
   return (
     <div className={style.mainContainer}>
       {isLoading === requestStatus.loading ? (
         <Preloader />
       ) : (
-        <div className={style.content}>
+        <div className={s.contentCard}>
           <div className={style.contentWrap}>
             <h2> Card </h2>
             <div className={s.container}>
@@ -54,7 +53,7 @@ export const Card = (): ReturnComponentType => {
               <button className={s.btn} onClick={onClickHandlerCancel}>
                 Cancel
               </button>
-              <button className={s.btn} onClick={onClickAddCard}>
+              <button className={s.btn} onClick={() => {}}>
                 Add card
               </button>
             </div>
