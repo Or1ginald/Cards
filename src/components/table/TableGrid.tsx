@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import { PATH } from '../../enum';
 import { useAppSelector } from '../../hooks';
 import { getErrorNetworkMessage, setErrorMessageNetworkAC } from '../../store';
 import { ReturnComponentType } from '../../types';
@@ -11,12 +9,15 @@ import { CustomButton } from '../customButton';
 
 import { deckTemplate, removeDeckTC } from './decksTC';
 import { EditableSpan } from './EditableSpan';
-import { Sort } from './Sort/Sort';
+import { sortReducer } from './SortReducer';
 import style from './TableGrid.module.css';
 
 export const TableGrid = (): ReturnComponentType => {
-  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cardPacks = useAppSelector(state => state.decks.cardPacks);
+
+  const [dates, setDates] = useState<deckTemplate[]>(cardPacks);
+
+  const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
 
   const dispatch = useDispatch();
 
@@ -26,7 +27,12 @@ export const TableGrid = (): ReturnComponentType => {
   };
   const onUpdateClick = (): void => {};
 
-  const finalCardPacks = cardPacks.map((cardPack: deckTemplate) => (
+  const sortUp = (): void =>
+    setDates(sortReducer(cardPacks, { type: 'sort', payload: 'up' }));
+  const sortDown = (): void =>
+    setDates(sortReducer(cardPacks, { type: 'sort', payload: 'down' }));
+
+  const finalDates = dates.map((cardPack: deckTemplate) => (
     <tr key={cardPack._id}>
       <td>
         <EditableSpan value={cardPack.name} id={cardPack._id} />
@@ -38,7 +44,6 @@ export const TableGrid = (): ReturnComponentType => {
         <div className={style.btns}>
           <CustomButton title="update" onClick={onUpdateClick} />
           <CustomButton title="delete" onClick={() => onRemoveDeckClick(cardPack._id)} />
-          <Link to={PATH.CARDS}> cards </Link>
         </div>
       </td>
     </tr>
@@ -46,11 +51,9 @@ export const TableGrid = (): ReturnComponentType => {
 
   return (
     <div>
-      <div style={{ backgroundColor: 'white', padding: '5px 0' }}>
-        {errorNetworkMessage && (
-          <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
-        )}
-      </div>
+      {errorNetworkMessage && (
+        <span style={{ color: 'red' }}> {errorNetworkMessage} </span>
+      )}
       <table className={style.table}>
         <thead>
           <tr>
@@ -59,14 +62,36 @@ export const TableGrid = (): ReturnComponentType => {
             <th>
               <div style={{ display: 'flex' }}>
                 Updated
-                <Sort />
+                <CustomButton title="down" onClick={sortDown} />
+                <CustomButton title="up" onClick={sortUp} />
               </div>
             </th>
             <th>Created</th>
             <th>What should I do</th>
           </tr>
         </thead>
-        <tbody>{finalCardPacks}</tbody>
+        <tbody>
+          {finalDates}
+          {/*  {cardPacks.map((cardPack: deckTemplate) => (
+            <tr key={cardPack._id}>
+              <td>
+                <EditableSpan value={cardPack.name} id={cardPack._id} />
+              </td>
+              <td>{cardPack.cardsCount}</td>
+              <td>{cardPack.updated}</td>
+              <td>{cardPack.user_name}</td>
+              <td>
+                <div className={style.btns}>
+                  <CustomButton title="update" onClick={onUpdateClick} />
+                  <CustomButton
+                    title="delete"
+                    onClick={() => onRemoveDeckClick(cardPack._id)}
+                  />
+                </div>
+              </td>
+            </tr>
+          ))} */}
+        </tbody>
       </table>
     </div>
   );

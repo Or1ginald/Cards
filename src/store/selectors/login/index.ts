@@ -1,1 +1,1 @@
-export { getIsDataLoaded } from './loginSelectors';
+export { getIsDataLoaded, getErrorMessage } from './loginSelectors';

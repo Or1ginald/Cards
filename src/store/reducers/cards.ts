@@ -1,11 +1,10 @@
-import { AxiosError } from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
 
 import { AddCardType, cardsAPI, cardType } from '../../api/cardsApi';
 import { requestStatus } from '../../enum';
 import { RootStoreType } from '../store';
 
-import { setAppStatusAC } from './appInitialized';
+import { setAppStatusAC, SetAppStatusActionType } from './appInitialized';
 import { setErrorMessageNetworkAC, SetErrorMessageNetworkType } from './errorReducer';
 
 type initStateType = {
@@ -25,13 +24,13 @@ const initialState: initStateType = {
   cards: [],
   answer: '',
   question: '',
-  cardsTotalCount: 5,
+  cardsTotalCount: 0,
   grade: 5,
   shots: 1,
   maxGrade: 5,
   minGrade: 3,
   page: 1,
-  pageCount: 4,
+  pageCount: 10,
   packUserId: '',
 };
 export const cardReducer = (
@@ -40,7 +39,7 @@ export const cardReducer = (
 ): initStateType => {
   switch (action.type) {
     case 'CARDS/SET_DATA_CARDS':
-      return { ...state, ...action.cards };
+      return { ...state, cards: action.cards };
     case 'CARDS/REMOVE_CARD':
       return { ...state, cards: state.cards.filter(c => c._id !== action._id) };
     case 'CARDS/ADD_CARD':
@@ -63,8 +62,8 @@ export const cardReducer = (
   }
 };
 
-export const setCardsAC = (cardsPackId: string, cards: cardType[]) =>
-  ({ type: 'CARDS/SET_DATA_CARDS', cardsPackId, cards } as const);
+export const setCardsAC = (cards: cardType[]) =>
+  ({ type: 'CARDS/SET_DATA_CARDS', cards } as const);
 
 export const removeCardAC = (_id: string) =>
   ({ type: 'CARDS/REMOVE_CARD', _id } as const);
@@ -83,31 +82,27 @@ export const updateCardAC = (_id: string, answer: string, question: string) =>
 
 export const getCardsTC =
   (cardsPackId: string) =>
-  (
-    dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>,
-    getState: () => RootStoreType,
-  ) => {
-    const { answer, question } = getState().cards;
+  (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
+    // const { answer, question } = getState().cards;
     dispatch(setAppStatusAC(requestStatus.loading));
     cardsAPI
-      .getCards(cardsPackId, answer, question)
+      .getCards(cardsPackId)
       .then(res => {
-        dispatch(setCardsAC(cardsPackId, res.data.data.cards));
+        dispatch(setCardsAC(res.data.cards));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
-        dispatch(setAppStatusAC(requestStatus.succeeded));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
         dispatch(setErrorMessageNetworkAC(errorNetwork));
-        const timeOut = 2000;
+        const timeOut = 3000;
         setTimeout(() => {
           dispatch(setErrorMessageNetworkAC(''));
         }, timeOut);
       })
       .finally(() => {
-        dispatch(setAppStatusAC(requestStatus.idle));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       });
   };
 export const removeCardTC =
@@ -120,8 +115,7 @@ export const removeCardTC =
         dispatch(removeCardAC(_id));
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
-      .catch((e: AxiosError) => {
-        dispatch(setAppStatusAC(requestStatus.succeeded));
+      .catch(e => {
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
@@ -159,8 +153,8 @@ export type updateCardType = ReturnType<typeof updateCardAC>;
 
 export type ActionTypesCards =
   | getCardsType
+  | SetAppStatusActionType
   | removeCardType
   | SetErrorMessageNetworkType
   | addCardType
-  | updateCardType
-  | ReturnType<typeof setAppStatusAC>;
+  | updateCardType;

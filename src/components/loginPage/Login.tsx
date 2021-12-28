@@ -13,12 +13,11 @@ import { useAppSelector, useInput } from 'hooks';
 import {
   getErrorNetworkMessage,
   getErrorValidMessage,
-  getIsDataLoaded,
-  logInTC,
   setErrorMessagePassAC,
+  logInTC,
 } from 'store';
 import { setAppStatusAC } from 'store/reducers';
-import { getStatus } from 'store/selectors';
+import { getIsDataLoaded, getStatus } from 'store/selectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
 import { isEmailValid, isPasswordValid } from 'utils';
@@ -34,10 +33,9 @@ export const Login = (): ReturnComponentType => {
 
   const dispatch = useDispatch();
 
-  /* const isDataLoaded = useAppSelector(getIsDataLoaded); */
+  const isDataLoaded = useAppSelector(getIsDataLoaded);
   /* const errorMessage = useAppSelector(getErrorMessage); */
   const isLoading = useAppSelector(getStatus);
-  const isAuth = useAppSelector(getIsDataLoaded);
   const errorPassMessage = useAppSelector(getErrorValidMessage);
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
 
@@ -45,7 +43,7 @@ export const Login = (): ReturnComponentType => {
     handleRememberMe(e.currentTarget.checked);
   const timeOut = 2000;
 
-  const onClickHandlerLogin = (): void => {
+  const onClickHandleLogin = (): void => {
     if (!isPasswordValid(password) || !isEmailValid(email)) {
       dispatch(setErrorMessagePassAC('invalid data ;-('));
       setTimeout(() => {
@@ -60,7 +58,7 @@ export const Login = (): ReturnComponentType => {
       dispatch(setAppStatusAC(requestStatus.succeeded));
     }
   };
-  if (isAuth) {
+  if (isDataLoaded) {
     return <Navigate to={PATH.PROFILE} />;
   }
 
@@ -98,7 +96,7 @@ export const Login = (): ReturnComponentType => {
               <Link to={PATH.CONFIRM_PASSWORD}> Forgot password </Link>
             </div>
             <div style={{ minWidth: '50px' }}>
-              <CustomButton title="Sign In" onClick={onClickHandlerLogin} />
+              <CustomButton title="Sign In" onClick={onClickHandleLogin} />
             </div>
             {/* <button onClick={onClickHandlerLogin} className={style.btn}>
               Sign In
