@@ -51,16 +51,17 @@ export const logInTC =
         dispatch(setAppStatusAC(requestStatus.succeeded));
       })
       .catch(e => {
-        dispatch(setAppStatusAC(requestStatus.succeeded));
         const errorNetwork = e.response
           ? e.response.data.error
           : `${e.message}, more details in the console`;
-
         dispatch(setErrorMessageNetworkAC(errorNetwork));
-        const timeOut = 2000;
+        const timeOut = 3000;
         setTimeout(() => {
           dispatch(setErrorMessageNetworkAC(''));
         }, timeOut);
+      })
+      .finally(() => {
+        dispatch(setAppStatusAC(requestStatus.succeeded));
       });
   };
 

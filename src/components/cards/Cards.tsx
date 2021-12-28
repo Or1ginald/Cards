@@ -18,7 +18,7 @@ import { PATH } from 'enum/pathes';
 export const Cards = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cards = useAppSelector(state => state.cards.cards);
-  // const userId = useAppSelector(state => state.cards.packUserId);
+  const userId = useAppSelector(state => state.cards.packUserId);
   console.log('cards', cards);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export const Cards = (): ReturnComponentType => {
     dispatch(setErrorMessageNetworkAC(''));
   };
   const onClickAddCard = (): void => {
-    navigate(PATH.CARD);
+    navigate(`${PATH.CARD}/${userId}`);
   };
 
   useEffect(() => {
@@ -39,9 +39,6 @@ export const Cards = (): ReturnComponentType => {
   }, [cardsPack_id]);
   return (
     <div>
-      <button className={s.btn} onClick={onClickAddCard}>
-        Add new card
-      </button>
       <table className={style.table}>
         <thead>
           <tr>
@@ -49,7 +46,11 @@ export const Cards = (): ReturnComponentType => {
             <th>Answer</th>
             <th>Last Updated</th>
             <th>Created</th>
-            <th>Actions</th>
+            <th>
+              <button className={s.btn} onClick={onClickAddCard}>
+                Add new card
+              </button>
+            </th>
           </tr>
         </thead>
         {/* */}
@@ -61,19 +62,17 @@ export const Cards = (): ReturnComponentType => {
               <td>{card.updated}</td>
               <td>{card.created}</td>
               <td>
-                {/* {userId ? ( */}
-                <div className={style.btns}>
-                  <CustomButton
-                    title="delete"
-                    onClick={() => onClickRemoveCard(card._id)}
-                  />
-                  <CustomButton title="update" onClick={() => {}} />
-                  {/* <button>update</button>
+                {userId && (
+                  <div className={style.btns}>
+                    <CustomButton
+                      title="delete"
+                      onClick={() => onClickRemoveCard(card._id)}
+                    />
+                    <CustomButton title="update" onClick={() => {}} />
+                    {/* <button>update</button>
                   <button onClick={() => onRemoveDeckClick(cardPack._id)}>delete</button> */}
-                </div>
-                {/*  ) : (
-                  ''
-                )} */}
+                  </div>
+                )}
               </td>
             </tr>
           ))}

@@ -20,7 +20,7 @@ export const Card = (): ReturnComponentType => {
   const dispatch = useDispatch(); */
   const navigate = useNavigate();
   const isLoading = useAppSelector(getStatus);
-  const onClickHandlerCancel = (): void => {
+  const onClickHandleCancel = (): void => {
     navigate(PATH.CARDS);
   };
 
@@ -50,7 +50,7 @@ export const Card = (): ReturnComponentType => {
               />
             </div>
             <div className={s.buttons}>
-              <button className={s.btn} onClick={onClickHandlerCancel}>
+              <button className={s.btn} onClick={onClickHandleCancel}>
                 Cancel
               </button>
               <button className={s.btn} onClick={() => {}}>

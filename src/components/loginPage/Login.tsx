@@ -43,7 +43,7 @@ export const Login = (): ReturnComponentType => {
     handleRememberMe(e.currentTarget.checked);
   const timeOut = 2000;
 
-  const onClickHandlerLogin = (): void => {
+  const onClickHandleLogin = (): void => {
     if (!isPasswordValid(password) || !isEmailValid(email)) {
       dispatch(setErrorMessagePassAC('invalid data ;-('));
       setTimeout(() => {
@@ -93,7 +93,7 @@ export const Login = (): ReturnComponentType => {
               <Link to={PATH.CONFIRM_PASSWORD}> Forgot password </Link>
             </div>
             <div style={{ minWidth: '50px' }}>
-              <CustomButton title="Sign In" onClick={onClickHandlerLogin} />
+              <CustomButton title="Sign In" onClick={onClickHandleLogin} />
             </div>
             {/* <button onClick={onClickHandlerLogin} className={style.btn}>
               Sign In
