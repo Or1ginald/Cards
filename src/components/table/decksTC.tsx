@@ -134,6 +134,24 @@ export const setDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
       dispatch(setErrorMessageNetworkAC(errorNetwork));
     });
 };
+export const setMyDecksTC = (): AppThunk => (dispatch: Dispatch, getState) => {
+  const { page, pageCount } = getState().decks;
+  const { _id } = getState().profilePage.profile;
+  dispatch(setAppStatusAC(requestStatus.loading));
+  decksAPI
+    .fetchMyDecks(page, pageCount, _id)
+    .then(res => {
+      dispatch(fetchDecksAC(res.data));
+      dispatch(setAppStatusAC(requestStatus.succeeded));
+    })
+    .catch((e: AxiosError) => {
+      dispatch(setAppStatusAC(requestStatus.succeeded));
+      const errorNetwork = e.response
+        ? e.response.data.error
+        : `${e.message}, more details in the console`;
+      dispatch(setErrorMessageNetworkAC(errorNetwork));
+    });
+};
 export const removeDeckTC = (id: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC(requestStatus.loading));
   decksAPI

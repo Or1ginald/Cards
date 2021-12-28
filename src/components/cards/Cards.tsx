@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { cardType } from '../../api/cardsApi';
 import { useAppSelector } from '../../hooks';
@@ -13,15 +13,13 @@ import style from '../table/TableGrid.module.css';
 
 import s from './cards.module.css';
 
-import { PATH } from 'enum/pathes';
-
 export const Cards = (): ReturnComponentType => {
   const errorNetworkMessage = useAppSelector(getErrorNetworkMessage);
   const cards = useAppSelector(state => state.cards.cards);
   const userId = useAppSelector(state => state.cards.packUserId);
   console.log('cards', cards);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const random = 100000;
   const params = useParams<'cardsPack_id'>();
@@ -30,9 +28,9 @@ export const Cards = (): ReturnComponentType => {
     dispatch(removeCardTC(_id));
     dispatch(setErrorMessageNetworkAC(''));
   };
-  const onClickAddCard = (): void => {
+  /* const onClickAddCard = (): void => {
     navigate(`${PATH.CARD}/${userId}`);
-  };
+  }; */
 
   useEffect(() => {
     dispatch(getCardsTC(cardsPack_id));
@@ -47,7 +45,7 @@ export const Cards = (): ReturnComponentType => {
             <th>Last Updated</th>
             <th>Created</th>
             <th>
-              <button className={s.btn} onClick={onClickAddCard}>
+              <button className={s.btn} onClick={() => {}}>
                 Add new card
               </button>
             </th>

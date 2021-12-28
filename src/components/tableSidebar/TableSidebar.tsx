@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootStoreType } from '../../store';
-import { deckTemplate, fetchDecksAC, setDecksTC } from '../table/decksTC';
+import { deckTemplate, fetchDecksAC, setMyDecksTC } from '../table/decksTC';
 
 import s from './tableSidebar.module.css';
 
@@ -31,7 +31,7 @@ export const TableSidebar = React.memo(() => {
     );
   };
   const onAllButtonClick = (): void => {
-    dispatch(setDecksTC());
+    dispatch(setMyDecksTC());
   };
   return (
     <div className={s.tableSidebar}>

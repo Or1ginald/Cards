@@ -18,6 +18,11 @@ export const decksAPI = {
       params: { page, pageCount },
     });
   },
+  fetchMyDecks(page: number, pageCount: number, userId: string) {
+    return instance.get<any, AxiosResponse<ResponseDeckType>>('cards/pack', {
+      params: { page, pageCount, userId },
+    });
+  },
   addNewDeck(cardsPack: addNewDeckType) {
     return instance.post<addNewDeckType, AxiosResponse<any>>('cards/pack', { cardsPack });
   },
