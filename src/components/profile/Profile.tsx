@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, NavLink } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import noneAvatarImage from '../../assets/avatar.png';
 import { InitialStateProfileType } from '../../store/reducers/profile';
@@ -11,10 +11,9 @@ import { profileAPI } from 'api/loginApi';
 import { Preloader } from 'components/preloader/Preloader';
 import { PATH } from 'enum/pathes';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { RootStoreType } from 'store';
-import { logOutTC, setUserDataAC } from 'store/reducers/login';
+import { getIsDataLoaded, RootStoreType } from 'store';
+import { setUserDataAC } from 'store/reducers/login';
 import { getStatus } from 'store/selectors/app/appSelectors';
-import { getIsDataLoaded } from 'store/selectors/login/loginSelectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
 
@@ -63,9 +62,9 @@ export const Profile = (): ReturnComponentType => {
     }
   };
 
-  const onClickLogOut = (): void => {
+  /*  const onClickLogOut = (): void => {
     dispatch(logOutTC());
-  };
+  }; */
 
   if (!isAuth) {
     return <Navigate to={PATH.LOGIN} />;
@@ -78,13 +77,13 @@ export const Profile = (): ReturnComponentType => {
       ) : (
         <div className={style.content}>
           <h2> Profile </h2>
-          {isAuth ? (
+          {/*   {isAuth ? (
             <div>
               <CustomButton title=" Log out" onClick={onClickLogOut} />
             </div>
           ) : (
             <NavLink to={PATH.LOGIN}>Login</NavLink>
-          )}
+          )} */}
           <img
             alt="avatar_image"
             className={style.avatar}
