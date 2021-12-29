@@ -10,7 +10,7 @@ type ButtonPropsType = {
 
 export const CustomButton = React.memo((props: ButtonPropsType) => {
   const { onClick, title, disabled } = props;
-  const onButtonClick = (): void => {
+  const onButtonClick = (): any => {
     onClick();
   };
   return (

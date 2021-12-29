@@ -1,6 +1,7 @@
+import { AxiosError } from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { cardsAPI, cardType, ResponseType } from '../../api/cardsApi';
+import { AddCardType, cardsAPI, cardType, ResponseType } from '../../api/cardsApi';
 import { requestStatus } from '../../enum';
 import { RootStoreType } from '../store';
 
@@ -48,11 +49,11 @@ export const cardReducer = (
       return {
         ...state,
         cards: state.cards.map(c =>
-          c._id === action.dataUpdate._id
+          c._id === action._id
             ? {
                 ...c,
-                question: action.dataUpdate.question,
-                answer: action.dataUpdate.answer,
+                question: action.question,
+                answer: action.answer,
               }
             : c,
         ),
@@ -70,14 +71,12 @@ export const removeCardAC = (_id: string) =>
 
 export const addCardAC = (card: cardType) => ({ type: 'CARDS/ADD_CARD', card } as const);
 
-export const updateCardAC = (_id: string, answer: string, question: string) =>
+export const updateCardAC = (_id: string, question: string, answer: string) =>
   ({
     type: 'CARDS/UPDATE_CARD',
-    dataUpdate: {
-      _id,
-      answer,
-      question,
-    },
+    _id,
+    question,
+    answer,
   } as const);
 
 export const getCardsTC =
@@ -123,7 +122,7 @@ export const removeCardTC =
       });
   };
 
-export const addCardTC =
+/* export const addCardTC =
   (cardsPackId: string) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
     dispatch(setAppStatusAC(requestStatus.loading));
@@ -131,24 +130,34 @@ export const addCardTC =
       dispatch(setCardsAC(res.data));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     });
-  };
-/* export const addCardTC =
+  }; */
+export const addCardTC =
   (payload: AddCardType) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
     dispatch(setAppStatusAC(requestStatus.loading));
-    cardsAPI.addNewCard(payload).then(res => {
-      const newCard = res.data.cards;
-      dispatch(addCardAC(newCard));
-      dispatch(setAppStatusAC(requestStatus.succeeded));
-    });
-  }; */
+    cardsAPI
+      .addNewCard(payload)
+      .then(res => {
+        const newCard = res.data;
+        dispatch(addCardAC(newCard));
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+      })
+      .catch((e: AxiosError) => {
+        const errorNetwork = e.response
+          ? e.response.data.error
+          : `${e.message}, more details in the console`;
+        dispatch(setErrorMessageNetworkAC(errorNetwork));
+      })
+      .finally(() => {
+        dispatch(setAppStatusAC(requestStatus.succeeded));
+      });
+  };
 
 export const updateCardTC =
-  (dataUpdate: cardType) =>
+  (_id: string, question: string, answer: string, cardsPackId: string) =>
   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypesCards>) => {
     dispatch(setAppStatusAC(requestStatus.loading));
-    cardsAPI.updateCard(dataUpdate).then(res => {
-      const { _id, question, answer } = res.data.cards;
+    cardsAPI.updateCard({ _id, cardsPackId }).then(() => {
       dispatch(updateCardAC(_id, question, answer));
       dispatch(setAppStatusAC(requestStatus.succeeded));
     });
