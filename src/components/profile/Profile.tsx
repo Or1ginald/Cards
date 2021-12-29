@@ -1,36 +1,49 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Link, Navigate, NavLink } from 'react-router-dom';
 
 import noneAvatarImage from '../../assets/avatar.png';
 import { InitialStateProfileType } from '../../store/reducers/profile';
+import { CustomButton } from '../customButton';
 
+import { profileAPI } from 'api/loginApi';
 import { Preloader } from 'components/preloader/Preloader';
 import { PATH } from 'enum/pathes';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { RootStoreType } from 'store';
-import { logOutTC } from 'store/reducers/login';
+import { logOutTC, setUserDataAC } from 'store/reducers/login';
 import { getStatus } from 'store/selectors/app/appSelectors';
 import { getIsDataLoaded } from 'store/selectors/login/loginSelectors';
 import style from 'style/Common.module.css';
 import { ReturnComponentType } from 'types';
 
 export const Profile = (): ReturnComponentType => {
-  // const userName = useSelector<RootStoreType, any>(state => state.login.name);
   const userData = useSelector<RootStoreType, InitialStateProfileType>(
     state => state.profilePage,
   );
-  const dispatch = useDispatch();
   const isAuth = useAppSelector(getIsDataLoaded);
   const isLoading = useAppSelector(getStatus);
-
   const { avatar } = userData.profile;
 
   const [name, setName] = useState(userData.profile.name);
   const [email, setEmail] = useState(userData.profile.email);
-
   const [editMode, setEditMode] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  const data = {
+    avatar:
+      'https://tlgrm.ru/_/stickers/837/98f/83798fe7-d57e-300a-93fa-561e3027691e/2.jpg',
+    name,
+    email,
+  };
+
+  const onSendButtonClick = (): void => {
+    profileAPI.updateProfile(data).then(res => {
+      dispatch(setUserDataAC(res.data.updatedUser));
+    });
+  };
 
   const onChangeHandlerName = (event: ChangeEvent<HTMLInputElement>): void => {
     setName(event.currentTarget.value);
@@ -65,21 +78,19 @@ export const Profile = (): ReturnComponentType => {
       ) : (
         <div className={style.content}>
           <h2> Profile </h2>
+          {isAuth ? (
+            <div>
+              <CustomButton title=" Log out" onClick={onClickLogOut} />
+            </div>
+          ) : (
+            <NavLink to={PATH.LOGIN}>Login</NavLink>
+          )}
           <img
             alt="avatar_image"
             className={style.avatar}
             src={avatar !== null ? avatar : noneAvatarImage}
           />
           <input type="file" className={style.avatar} onChange={onPhotoSelected} />
-          {isAuth ? (
-            <div>
-              <button className={style.btn} onClick={onClickLogOut}>
-                Log out
-              </button>
-            </div>
-          ) : (
-            <NavLink to={PATH.LOGIN}>Login</NavLink>
-          )}
           <br />
           {editMode ? (
             <input
@@ -89,7 +100,7 @@ export const Profile = (): ReturnComponentType => {
               onBlur={hideEditForm}
             />
           ) : (
-            <span onDoubleClick={activateEditForm}>{name}</span>
+            <span onDoubleClick={activateEditForm}> userName: {name}</span>
           )}
           <br />
           {editMode ? (
@@ -100,9 +111,19 @@ export const Profile = (): ReturnComponentType => {
               onBlur={hideEditForm}
             />
           ) : (
-            <span onDoubleClick={activateEditForm}>{email}</span>
+            <span onDoubleClick={activateEditForm}> userEmail: {email}</span>
           )}
           <br />
+
+          <div>
+            please, follow: <Link to={PATH.PACKS}> packs </Link>
+          </div>
+          <div>
+            <CustomButton title="Send" onClick={onSendButtonClick} />
+            <span>
+              change <br /> your profile
+            </span>
+          </div>
         </div>
       )}
     </div>

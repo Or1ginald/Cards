@@ -64,11 +64,6 @@ export const profileReducer = (
           error: null as string | null,
         },
       };
-    // case 'SET_ERROR_MESSAGE':
-    //   return {
-    //     ...state,
-    //     error: action.error,
-    //   };
     default:
       return state;
   }
@@ -91,50 +86,6 @@ export const logOutUserProfile = (profile: ProfileResponseDataType) =>
     type: 'LOGOUT_USER_PROFILE',
     profile,
   } as const);
-
-// export const getAuthLoginData = () => (dispatch: ThunkDispatch<AppStateType, undefined, ActionTypes>) => {
-//   return authAPI.me()
-//     .then(response => {
-//       if (response.data.resultCode === 0) {                     //проверка залогинен пользователь или нет
-//         let {id, login, email} = response.data.data
-//         dispatch(setAuthUserData(id, login, email, true));
-//
-//       }
-//     });
-// }
-
-// export const logIn =
-//   (data: LoginParamsType) =>
-//     (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
-//       authAPI
-//         .login(data)
-//         .then(response => {
-//           const { email, rememberMe } = response.data;
-//           dispatch(setAuthLoginData(email, rememberMe, true));
-//         })
-//         .catch(e => {
-//           const error = e.response
-//             ? e.response.data.error
-//             : `${e.message}, more details in the console`;
-//           dispatch(setErrorMessage(error));
-//         });
-//     };
-//
-// export const getUserData = () => (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
-//   (dispatch: ThunkDispatch<RootStoreType, undefined, ActionTypes>) => {
-//     authAPI.logOut().then(() => {
-//       const { _id, name, verified } = response.data;
-//       dispatch(setUserData(_id, name, verified));
-//     }
-//     });
-// }
-
-// export const uploadUserPhotoThunk = (image: File) => async (dispatch: Dispatch) => {
-//   const response = await ProfileAPI.uploadUserPhoto(image)
-//   if (response.data.resultCode === 0) {
-//     dispatch(UploadUserPhoto(response.data.data.photos))
-//   }
-// }
 
 // type;
 export type setUserProfileType = ReturnType<typeof setUserProfile>;

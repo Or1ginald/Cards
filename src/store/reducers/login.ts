@@ -19,6 +19,20 @@ export const initialState: InitialStateDataType = {
   error: null,
 };
 
+export type UserType = {
+  _id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+  publicCardPacksCount: number; // количество колод
+  created: Date;
+  updated: Date;
+  isAdmin: boolean;
+  verified: boolean; // подтвердил ли почту
+  rememberMe: boolean;
+  error?: string;
+};
+
 export const loginReducer = (
   state: InitialStateDataType = initialState,
   action: ActionTypesLogin,
@@ -34,6 +48,7 @@ export const loginReducer = (
         ...state,
         error: action.error,
       };
+
     default:
       return state;
   }
@@ -44,6 +59,9 @@ export const setAuthLoginDataAC = (isAuth: boolean) =>
 
 export const setErrorMessageAC = (error: Nullable<string>) =>
   ({ type: 'LOGIN/SET_ERROR_MESSAGE', error } as const);
+
+export const setUserDataAC = (user: UserType) =>
+  ({ type: 'LOGIN/SET_USER_DATA', user } as const);
 
 export const logInTC =
   (data: LoginParamsType) =>

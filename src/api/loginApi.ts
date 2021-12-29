@@ -34,6 +34,7 @@ export const profileAPI = {
 export type UpdateProfileType = {
   name: string;
   avatar: Nullable<string>;
+  email?: Nullable<string>;
 };
 export type LoginParamsType = {
   email: string;
