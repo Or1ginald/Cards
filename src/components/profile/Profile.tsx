@@ -62,10 +62,6 @@ export const Profile = (): ReturnComponentType => {
     }
   };
 
-  /*  const onClickLogOut = (): void => {
-    dispatch(logOutTC());
-  }; */
-
   if (!isAuth) {
     return <Navigate to={PATH.LOGIN} />;
   }
@@ -77,13 +73,6 @@ export const Profile = (): ReturnComponentType => {
       ) : (
         <div className={style.content}>
           <h2> Profile </h2>
-          {/*   {isAuth ? (
-            <div>
-              <CustomButton title=" Log out" onClick={onClickLogOut} />
-            </div>
-          ) : (
-            <NavLink to={PATH.LOGIN}>Login</NavLink>
-          )} */}
           <img
             alt="avatar_image"
             className={style.avatar}

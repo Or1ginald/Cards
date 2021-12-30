@@ -17,15 +17,12 @@ export const Header = (): ReturnComponentType => {
     dispatch(logOutTC());
   };
 
-  /*  if (!isAuth) {
-    return <Navigate to={PATH.LOGIN} />;
-  } */
   return (
     <div className={s.containerHeader}>
       <div>
         <NavLink to={PATH.PACKS}> packs </NavLink>---
         <NavLink to={PATH.PROFILE}> profile </NavLink>---
-        <NavLink to={PATH.REGISTRATION}> register </NavLink>---
+        {/* <NavLink to={PATH.REGISTRATION}> register </NavLink>--- */}
       </div>
       {isAuth && (
         <button className={s.btnHeader} onClick={onClickLogOut}>
