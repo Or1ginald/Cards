@@ -3,7 +3,7 @@
 .mainContainer {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     height: 100%;
 
 }
@@ -32,8 +32,6 @@ input[type=checkbox]{
     border-radius: 10px;
     border: solid 2px #424242;
     box-shadow: 0 0 37px 0 rgba(255, 255, 255, 0.49);
-    height: 600px;
-    width: 400px;
 }
 
 .btn {
